@@ -14,6 +14,7 @@ namespace CocktailMagician
     {
         public static void Main(string[] args)
         {
+            int x = 5;
             CreateWebHostBuilder(args).Build().Run();
         }
 
