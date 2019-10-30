@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CocktailMagician", "CocktailMagician\CocktailMagician.csproj", "{393E14BA-EDD8-4FF9-86C7-212D443EC13E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{393E14BA-EDD8-4FF9-86C7-212D443EC13E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{393E14BA-EDD8-4FF9-86C7-212D443EC13E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{393E14BA-EDD8-4FF9-86C7-212D443EC13E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{393E14BA-EDD8-4FF9-86C7-212D443EC13E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CC206696-846B-48C7-A12E-D1DDAEED98B3}
+	EndGlobalSection
+EndGlobal
