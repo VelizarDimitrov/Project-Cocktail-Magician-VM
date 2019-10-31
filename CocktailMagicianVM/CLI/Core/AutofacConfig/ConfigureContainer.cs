@@ -12,6 +12,7 @@ namespace CLI.Core.AutofacConfig
         {
             var builder = new ContainerBuilder();
             builder.RegisterModule<ServiceModule>();
+            builder.RegisterModule<CoreModule>();
             return builder.Build();
         }
     }
