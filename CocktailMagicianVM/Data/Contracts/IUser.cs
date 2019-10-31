@@ -20,5 +20,6 @@ namespace Data.Contracts
         ICollection<CocktailRating> CocktailRatings { get; set; }
         ICollection<CocktailComment> CocktailComments { get; set; }
         ICollection<UserBar> FavoriteBars { get; set; }
+        ICollection<Notification> Notifications { get; set; }
     }
 }

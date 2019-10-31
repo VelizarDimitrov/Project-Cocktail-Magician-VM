@@ -26,12 +26,12 @@ namespace Data.Models
         public Country Country { get; set; }
         public int? CityId { get; set; }
         public City City { get; set; }
-
         public ICollection<BarRating> BarRatings { get; set; }
         public ICollection<BarComment> BarComments { get; set; }
         public ICollection<CocktailRating> CocktailRatings { get; set; }
         public ICollection<CocktailComment> CocktailComments { get; set; }
         public ICollection<UserBar> FavoriteBars { get; set; }
+        public ICollection<Notification> Notifications { get; set; }
 
     }
 }
