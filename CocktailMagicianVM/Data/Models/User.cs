@@ -31,6 +31,7 @@ namespace Data.Models
         public ICollection<CocktailRating> CocktailRatings { get; set; }
         public ICollection<CocktailComment> CocktailComments { get; set; }
         public ICollection<UserBar> FavoriteBars { get; set; }
+        public ICollection<UserCocktail> FavoriteCocktails { get; set; }
         public ICollection<Notification> Notifications { get; set; }
 
     }

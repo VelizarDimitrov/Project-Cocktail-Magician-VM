@@ -14,5 +14,6 @@ namespace Data.Models
         public ICollection<CocktailComment> Comments { get; set; }
         public ICollection<BarCocktail> Bars { get; set; }
         public ICollection<CocktailIngredient> Ingredients { get; set; }
+        public ICollection<UserCocktail> FavoritedBy { get; set; }
     }
 }
