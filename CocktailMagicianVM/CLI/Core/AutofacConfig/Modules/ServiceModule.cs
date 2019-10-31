@@ -9,7 +9,7 @@ namespace CLI.Core.AutofacConfig.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<AccountsService>().As<IAccountsService>().SingleInstance();
+            builder.RegisterType<AccountService>
             builder.RegisterType<CocktailService>().As<ICocktailService>().SingleInstance();
             builder.RegisterType<BarService>().As<IBarService>().SingleInstance();
             builder.RegisterType<CocktailMagicianDatabaseContext>().AsSelf().SingleInstance();
