@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ServiceLayer
+namespace ServiceLayer.Contracts
 {
-    public class CocktailService
+    public interface IHashing
     {
     }
 }

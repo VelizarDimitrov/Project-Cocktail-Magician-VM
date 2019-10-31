@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ServiceLayer.Contracts
 {
-    interface IBarService
+    public interface IBarService
     {
     }
 }

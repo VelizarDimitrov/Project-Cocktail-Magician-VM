@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ServiceLayer.Contracts
 {
-    interface IAccountService
+    public interface IAccountService
     {
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ServiceLayer
 {
-    public class CocktailService
+    public class Hashing
     {
     }
 }

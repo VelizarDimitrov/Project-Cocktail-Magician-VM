@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ServiceLayer.Contracts
 {
-    interface ICocktailService
+    public interface ICocktailService
     {
     }
 }
