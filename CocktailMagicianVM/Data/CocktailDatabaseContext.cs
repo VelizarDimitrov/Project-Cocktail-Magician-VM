@@ -1,4 +1,5 @@
-﻿using Data.Models;
+﻿using Data.Configuration;
+using Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -54,7 +55,18 @@ namespace Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new UserConfiguration());        
+            modelBuilder.ApplyConfiguration(new BarCocktailConfiguration());
+            modelBuilder.ApplyConfiguration(new BarCommentConfiguration());
+            modelBuilder.ApplyConfiguration(new BarConfiguration());
+            modelBuilder.ApplyConfiguration(new BarRatingConfiguration());
+            modelBuilder.ApplyConfiguration(new CityConfiguration());
+            modelBuilder.ApplyConfiguration(new CocktailCommentConfiguration());
+            modelBuilder.ApplyConfiguration(new CocktailIngredientConfiguration());
+            modelBuilder.ApplyConfiguration(new CocktailRatingConfiguration());
+            modelBuilder.ApplyConfiguration(new NotificationConfiguration());
+            modelBuilder.ApplyConfiguration(new UserBarConfiguration());
+            modelBuilder.ApplyConfiguration(new UserCocktailConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
             base.OnModelCreating(modelBuilder);
         }
     }
