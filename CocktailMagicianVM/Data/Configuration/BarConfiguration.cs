@@ -7,20 +7,19 @@ using System.Text;
 
 namespace Data.Configuration
 {
-    public class UserConfiguration : IEntityTypeConfiguration<User>
+    class BarConfiguration : IEntityTypeConfiguration<Bar>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public void Configure(EntityTypeBuilder<Bar> builder)
         {
             builder
                 .HasOne(p => p.City)
-                .WithMany(p => p.Users)
+                .WithMany(p => p.Bars)
                 .HasForeignKey(p => p.CityId);
 
             builder
                 .HasOne(p => p.Country)
-                .WithMany(p => p.Users)
+                .WithMany(p => p.Bars)
                 .HasForeignKey(p => p.CountryId);
-          
         }
     }
 }

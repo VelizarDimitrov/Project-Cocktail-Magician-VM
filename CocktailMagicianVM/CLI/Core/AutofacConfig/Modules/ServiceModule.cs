@@ -1,9 +1,6 @@
 ﻿using Autofac;
 using ServiceLayer;
 using ServiceLayer.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Data;
 
 namespace CLI.Core.AutofacConfig.Modules

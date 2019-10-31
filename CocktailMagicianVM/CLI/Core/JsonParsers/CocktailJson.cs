@@ -1,10 +1,11 @@
-﻿using System;
+﻿using CLI.Core.JasonParsers.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace CLI.Core.JasonParsers
 {
-    class CocktailJason
+    public class CocktailJson : ICocktailJson
     {
         
     }

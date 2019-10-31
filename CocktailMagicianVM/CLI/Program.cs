@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Autofac;
+using CLI.Core.AutofacConfig;
+using CLI.Core.Contracts;
 
 namespace CLI
 {
@@ -6,7 +8,9 @@ namespace CLI
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var container = ConfigureContainer.Setup();
+            var engine = container.Resolve<IEngine>();
+            engine.Run();
         }
     }
 }

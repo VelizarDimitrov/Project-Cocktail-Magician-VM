@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CLI.Core.JasonParsers.Contracts
 {
-    interface ICocktailJason
+    public interface ICocktailJson
     {
     }
 }
