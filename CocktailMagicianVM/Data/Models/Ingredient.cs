@@ -5,10 +5,15 @@ using System.Text;
 
 namespace Data.Models
 {
-   public class Ingredient:IIngredient
+    public class Ingredient : IIngredient
     {
-      public  int Id { get; set; }
-      public  string Name { get; set; }
+        public Ingredient()
+        {
+            Cocktails = new List<CocktailIngredient>(); 
+        }
+
+        public  int Id { get; set; }
+        public  string Name { get; set; }
         public byte Primary { get; set; }
         public ICollection<CocktailIngredient> Cocktails { get; set; }
     }
