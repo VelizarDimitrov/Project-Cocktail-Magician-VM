@@ -4,49 +4,63 @@
     "FirstName": "Velizar",
     "LastName": "Dimitrov",
     "Password": "123321",
-    "AccountType": "Librarian"
+    "AccountType": "Librarian",
+    "Country": "USA",
+    "City": "Miami"
   },
   {
     "UserName": "NotMimo",
     "FirstName": "Manuel",
     "LastName": "Mihailov",
     "Password": "123321",
-    "AccountType": "Librarian"
+    "AccountType": "Librarian",
+    "Country": "USA",
+    "City": "New York"
   },
   {
     "UserName": "KiroBog",
     "FirstName": "Kiril",
     "LastName": "Stanoev",
     "Password": "123321",
-    "AccountType": "Member"
+    "AccountType": "Member",
+    "Country": "USA",
+    "City": "New York"
   },
   {
     "UserName": "Sarah21",
     "FirstName": "Sarah",
     "LastName": "Connor",
     "Password": "123321",
-    "AccountType": "Member"
+    "AccountType": "Member",
+    "Country": "Russia",
+    "City": "Moscow"
   },
   {
     "UserName": "Harvey21",
     "FirstName": "Harvey",
     "LastName": "Dent",
     "Password": "123321",
-    "AccountType": "Member"
+    "AccountType": "Member",
+    "Country": "USA",
+    "City": "New York"
   },
   {
     "UserName": "Jack21",
     "FirstName": "Jack",
     "LastName": "The Ripper",
     "Password": "123321",
-    "AccountType": "Member"
+    "AccountType": "Member",
+    "Country": "England",
+    "City": "London"
   },
   {
     "UserName": "EdoBog",
     "FirstName": "Eduard",
     "LastName": "Kenobi",
     "Password": "123321",
-    "AccountType": "Member"
+    "AccountType": "Member",
+    "Country": "Italy",
+    "City": "Rome"
   }
 
 ]
