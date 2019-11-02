@@ -1,5 +1,6 @@
 ﻿using Data;
 using Data.Models;
+using Data.SolutionPreLoad.JsonParsers;
 using Newtonsoft.Json;
 using ServiceLayer.Contracts;
 using System;
@@ -24,7 +25,7 @@ namespace ServiceLayer
         public async Task DatabaseCocktailFill()
         {
             string drinksToRead = File.ReadAllText(@"../../../../Data/SolutionPreload/Cocktails.json");
-            List<CocktailJason> listOfDrinks = JsonConvert.DeserializeObject<List<CocktailJson>>(drinksToRead);
+            List<CocktailJson> listOfDrinks = JsonConvert.DeserializeObject<List<CocktailJson>>(drinksToRead);
 
             if (dbContext.Cocktail.Count() == 0)
             {
