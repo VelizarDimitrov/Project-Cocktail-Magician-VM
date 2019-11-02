@@ -1,80 +1,359 @@
-[
+﻿[
   {
-    "Name": "V.Dimitrov",
-    "Address": "Velizar",
-    "Description": "Dimitrov",
-    "Country": "123321",
-    "City": "Librarian"
-  },
-  {
-    "Name": "V.Dimitrov",
-    "Address": "Velizar",
-    "Description": "Dimitrov",
-    "Country": "123321",
-    "City": "Librarian"
+    "Name": "The Anthologist",
+    "Address": "58 GRESHAM STREET",
+    "Description": "Located right in the heart of the City, The Anthologist is the ideal backdrop for all your drink and food needs, from breakfast meetings to client updates over lunch, after work drinks or dinner with friends. Sample new wines or vintages from across the globe, a unique range of innovative cocktails and relaxed all-day dining fare.",
+    "Country": "England",
+    "City": "London"
   },
   {
-    "Name": "V.Dimitrov",
-    "Address": "Velizar",
-    "Description": "Dimitrov",
-    "Country": "123321",
-    "City": "Librarian"
+    "Name": "The Drift",
+    "Address": "SALESFORCE TOWER110 BISHOPSGATEEC2N 4AY",
+    "Description": "Located on the ground floor of Salesforce Tower on Bishopsgate, The Drift is a stunning venue from the team that brought you The Folly, The Anthologist, The Parlour and The Refinery. A sanctuary in the heart of the City, The Drift brims with quirky collectibles, hidden alcoves, a mixology table and fine dining nook, whilst offering delights such as a flambé menu, a crustacea bar and innovative funfair cocktails.",
+    "Country": "England",
+    "City": "London"
   },
   {
-    "Name": "V.Dimitrov",
-    "Address": "Velizar",
-    "Description": "Dimitrov",
-    "Country": "123321",
-    "City": "Librarian"
+    "Name": "The Little Fable",
+    "Address": "3 FLEET PLACELONDON, EC4M 7RD",
+    "Description": "Recently refurbished and inspired by fables and fairytales, like its big sister The Fable, Little Fable will take you worlds away. Tucked behind City Thameslink station, Little Fable offers the perfect everyday escape. From creative cocktails and wines from all over the world to our enticing menu of snacks and handcrafted pizzas - prepare to be enchanted, inspired and indulged.",
+    "Country": "England",
+    "City": "London"
   },
   {
-    "Name": "V.Dimitrov",
-    "Address": "Velizar",
-    "Description": "Dimitrov",
-    "Country": "123321",
-    "City": "Librarian"
+    "Name": "The Listing",
+    "Address": "CANNON GREEN, BUSH LANE, EC4R 0AA",
+    "Description": "The Listing is located adjacent to Cannon Green – only 2 minutes walk from Cannon Street Station in the heart of the city – in a striking glazed, double-height podium with a large terrace for outdoor dining. Whether you are enjoying an early morning power breakfast after a session at the gym, wrapping up the business of the day by sipping and supping cocktails, or indulging in an intimate dinner for two, this is a destination for everyone, to enjoy all day long and well into the night.",
+    "Country": "England",
+    "City": "London"
   },
   {
-    "Name": "V.Dimitrov",
-    "Address": "Velizar",
-    "Description": "Dimitrov",
-    "Country": "123321",
-    "City": "Librarian"
+    "Name": "The Pagination",
+    "Address": "9 CABOT SQUARE, LONDON, E14 4EB",
+    "Description": "Perfectly positioned on the riverside in Canary Wharf, next to the bridge leading over to West India Quay, The Pagination is the perfect antidote to busy London life. With industrial inspired details, exposed metals, and soft handwoven textures, it offers a sanctuary, day or night and the expansive terrace offers alfresco drinking and dining in both the warmer months and the colder due to the abundance of blankets and hot water bottles to keep you snug.",
+    "Country": "England",
+    "City": "London"
   },
   {
-    "Name": "V.Dimitrov",
-    "Address": "Velizar",
-    "Description": "Dimitrov",
-    "Country": "123321",
-    "City": "Librarian"
+    "Name": "The Refinery",
+    "Address": "12 NEW STREET SQUARE",
+    "Description": "Conveniently located between Fleet Street and Chancery Lane, but nestled away in the peaceful New Street Square, The Refinery offers the perfect escape from the bustling city. With floor-to-ceiling windows, the gorgeous space is flooded with light and offers a cozy alfresco terrace and semi-private mezzanine to boot.",
+    "Country": "England",
+    "City": "London"
   },
   {
-    "Name": "V.Dimitrov",
-    "Address": "Velizar",
-    "Description": "Dimitrov",
-    "Country": "123321",
-    "City": "Librarian"
+    "Name": "The-Commission",
+    "Address": "TERMINAL 4 - HEATHROW AIRPORT",
+    "Description": "Start your travels off on a high at The Commission, the new bar & restaurant by Drake & Morgan located airside at Heathrow's Terminal 4. Open from first to last flight, stop in and enjoy drinks and dining in sumptuous surroundings.",
+    "Country": "England",
+    "City": "London"
   },
   {
-    "Name": "V.Dimitrov",
-    "Address": "Velizar",
-    "Description": "Dimitrov",
-    "Country": "123321",
-    "City": "Librarian"
+    "Name": "The Sipping Room",
+    "Address": "16 HERTSMERE ROAD, WEST INDIA QUAY",
+    "Description": " An escape from the everyday, The Sipping Room specializes in thoughtful, inspired menus, locally sourced ingredients, and innovative, handcrafted cocktails. Retreat from the world while you enjoy our unrivalled service in the most welcoming environment. Our stylish outdoor terrace provides the perfect alfresco respite throughout the seasons.",
+    "Country": "England",
+    "City": "London"
   },
   {
-    "Name": "V.Dimitrov",
-    "Address": "Velizar",
-    "Description": "Dimitrov",
-    "Country": "123321",
-    "City": "Librarian"
+    "Name": "The Allegory",
+    "Address": "1A PRINCIPAL PLACE, WORSHIP STREET",
+    "Description": "In the heart of Shoreditch's happening hub, Principal Place, The Allegory is an everyday escape in London’s buzzing unsquare mile. Linger over a long brunch before finishing with an espresso martini. Enjoy quick catch-ups over pastries and freshly ground coffee, wholesome sharing platters and creative cocktails with colleagues; these one-of-a-kind experiences will be found at The Allegory. With a beautiful alfresco terrace, large open plan bar and cozy candlelit corners, this is a destination you'll want to return to again and again.",
+    "Country": "England",
+    "City": "London"
   },
-    {
-    "Name": "V.Dimitrov",
-    "Address": "Velizar",
-    "Description": "Dimitrov",
-    "Country": "123321",
-    "City": "Librarian"
+  {
+    "Name": "The Happenstance",
+    "Address": "10 PATERNOSTER SQUARE",
+    "Description": "The best things happen by happenstance. Stunning location, stylish interiors and distinct food & drink offerings - you will happen upon us and never want to leave. With unrivalled service and a beautiful terrace overlooking St Paul's Cathedral, it is the perfect setting for alfresco drinks and all day dining.",
+    "Country": "England",
+    "City": "London"
   },
-
+  {
+    "Name": "Sweet Liberty",
+    "Address": "237-B 20th St., Miami Beach, FL 33139",
+    "Description": "Situated in the up-and-coming Collins Park area alongside the Bass Art Museum, Sweet Liberty offers guests world-class cocktails and creative American food. Conceived and operated by award-winning bartender John Lermayer and Dan Binkiewicz along with restaurateur David Martinez, Sweet Liberty brings an intelligent selection of food and drink from sophisticated to simple to downright delicious.",
+    "Country": "USA",
+    "City": "Miami"
+  },
+  {
+    "Name": "Broken Shaker",
+    "Address": "2727 Indian Creek Dr., Miami Beach, Florida 33140",
+    "Description": " Escape to our backyard oasis and revel in the Tales of Cocktail’s award-winning Best American Hotel Bar. The Broken Shaker’s handcrafted cocktails are composed of elixirs, syrups and infusions made from garden herbs and spice, and fresh-pressed produce and exotic ingredients from around the world. Our skilled mixologists are shaking up the perfect blend of ingredients and international flavors to complete your Miami Beach getaway!",
+    "Country": "USA",
+    "City": "Miami"
+  },
+  {
+    "Name": "Racket",
+    "Address": "150 NW 24th St, Miami, FL 33127",
+    "Description": "Rácket is Wynwood’s premier destination for an up-scale bar, lounge and nightlife experience, brought to the neighborhood by Homecookin’ Hospitality Group. Think elegant Wynwood mixed with eclectic entertainment and sophisticated craftsmanship. Upon entering the venue, one is greeted with a covered-atrium featuring a tiki-inspired rum and tequila bar. As you continue into the main room, guests revel around a central sky-lit, live wood-edge, rolled steel island bar where one can enjoy seasonal ingredient craft cocktails and a selection of neighborhood beers. Make your way to the back and you’ll find a staircase that leads you to a separate bar and vibe. rácket serves as a unique daytime hang out as well as a nightlife destination, all under one roof. The food menu is available daily from 1PM to 11PM, which features a twist on classics, like the truffle flat bread or the rácket Panini made with prosciutto, pesto, goat cheese, arugula and fig jam on sourdough bread. ",
+    "Country": "USA",
+    "City": "Miami"
+  },
+  {
+    "Name": "Astra",
+    "Address": "2121 NW 2nd Ave, Miami, FL 33127",
+    "Description": "ASTRA is the ideal location to impress as you watch spectacular sunsets, sip on the finest wines and spirits and make new friends. Lounge on overstuffed sofas as you enjoy music nightly from a host of international DJs and live bands and take in the 360 degree sweeping views of Wynwood, Miami.",
+    "Country": "USA",
+    "City": "Miami"
+  },
+  {
+    "Name": "Sugar",
+    "Address": "Rooftop, Miami",
+    "Description": "Sugar, our 40th floor rooftop bar and garden, offers cocktails and Asian tapas. Relax and watch day turn into night as you take in the panoramic view overlooking the downtown Miami skyline and surrounding waterways below.",
+    "Country": "USA",
+    "City": "Miami"
+  },
+  {
+    "Name": "The Anderson",
+    "Address": "NE 79th St",
+    "Description": "A NEIGHBORHOOD BAR WITH GREAT FOOD,COCKTAILS, MUSIC AND VIBES.",
+    "Country": "USA",
+    "City": "Miami"
+  },
+  {
+    "Name": "Rose Bar at Delano",
+    "Address": "South Beach",
+    "Description": "Delano's Rose Bar, a glamorous and sophisticated space, is a cocktail aficionado's enclave. It is the perfect spot for a drink, a quiet conversation, and the ideal perch for lobby people-watching. Cocktail service is offered in a relaxed setting, from the Lobby Lounge to the outdoor terrace. A light food menu with bites from Leynia at Delano South Beach is also available.",
+    "Country": "USA",
+    "City": "Miami"
+  },
+  {
+    "Name": "The Regent Cocktail Club",
+    "Address": "1690 Collins Ave., Miami Beach, FL 33139",
+    "Description": "Step into our cocktail bar and lounge and expect to be transported to the simplicity and elegance of the 1940’s. Inspired by our first location in the renovated, art deco Regent Hotel in Miami Beach, you’ll find our cocktail menu is a mix of traditional classics like Negronis and Manhattans, as well as a menu that changes daily and features lesser known rum cocktails inspired by Havana nights.",
+    "Country": "USA",
+    "City": "Miami"
+  },
+  {
+    "Name": "Kaido",
+    "Address": "Unit 217, 151 Northeast 41st Street, Little Haiti",
+    "Description": "KAIDO is a Japanese-inspired cocktail lounge set to open in Miami’s Design District in November 2018. Guests will enjoy a cozy Tokyo-style drinking den nestled in one of Miami’s most artistically driven areas, featuring innovative cocktails by in-house mixologist Nico de Soto and thoughtfully prepared Asian dishes developed by renowned chef Brad Kilgore. As night falls, Kaido’s sleek décor—including a custom made 1,000 Butterfly Knife chandelier—and DJ-ready sound system will make this second-floor lounge a leading force in South Florida’s cocktail renaissance and Miami Design District’s entertainment evolution.",
+    "Country": "USA",
+    "City": "Miami"
+  },
+  {
+    "Name": "Story NightClub",
+    "Address": "136 Collins Ave, Miami Beach, FL 33139-7235",
+    "Description": "INCE OPENING IN 2012, STORY HAS BECOME AN UNPARALLELED, HIGH-ENERGY NIGHTLIFE EXPERIENCE LOCATED IN THE HEART OF MIAMI BEACH. STORY IS THE BRAINCHILD OF NIGHTLIFE MOGUL DAVID GRUTMAN AND MIAMI MARKETING GROUP, THE COMPANY BEHIND THE WORLD FAMOUS LIV AT FONTAINEBLEAU.THE EXPANSIVE 27,000-SQUARE-FOOT SPACE IS EQUIPPED WITH A STATE-OF-THE ART INFINITE HYBRID SOUND SYSTEM IN ADDITION TO ITS CONCERT STYLE LIGHTING AND VISUALS WHICH ARE TRULY UNMATCHED BY ANY OTHER NIGHTCLUB IN MIAMI BEACH.STORY’S IN-HOUSE PRODUCTION & DESIGN TEAM TRANSFORMS THE VENUE ON A NIGHTLY BASIS INTO AN EXTRAVAGANT CIRCUS-STYLE SETTING WHERE NOTHING IS SHOCKING.STORY INCORPORATES CUTTING-EDGE DESIGN AND A SOPHISTICATED FEEL THAT COMPLIMENTS A PREMIUM BOTTLE SERVICE EXPERIENCE WITH 60 EXCLUSIVE VIP TABLES & FIVE FULL-SERVICE BARS.",
+    "Country": "USA",
+    "City": "Miami"
+  },
+  {
+    "Name": "Noor Electro",
+    "Address": "23/12 Tverskaya Ulitsa. Metro Mayakovskaya",
+    "Description": "Situated in stylish uptown neighborhood just a short walk from the Red Square, it is your friendly elaborate next-door bar, but with a touch of Russia's ethereal chic. Mixology is taken very seriously here, with all the ingredients as natural as they get, and liquor flowing down like water. Service is attentive yet subtle, tuned to make you feel at home away from home. If one was to describe Noor Bar in three words, they would be as follows: respectable, authentic, classy.",
+    "Country": "Russia",
+    "City": "Moscow"
+  },
+  {
+    "Name": "Berlin Bar",
+    "Address": "14 Bolshaya Sadovaya Ulitsa, Bldg. 6. Metro Mayakovskaya",
+    "Description": "Founded by celebrity German expat and DJ Chris Helmbrecht, Berlin Bar is a design-driven bar, a masterpiece by award-winning Berlin designer Thilo Ferdinand Reich, known for his work at popular Berlin bars Saint Jean and The Coven. Apart from the Berlin vibe, there’s also a very Berlinesque cocktail menu, which is the hard work of Sergey Niyazov of the Chateau De Fantomas, Bar Belka, Bruce Lee and Suzuran Bar fame. You can find a wide range of beverages, which will set you back 500-550Rbl., quite reasonably for a bar in central Moscow. Some of the signature drinks include the Vegan Sour (Bulleit Bourbon infused pop corn, Maghreb spices, Mattcha foam and Vegan Mom’s), Chris Betrunken (translated from German as “drunk Chris”, after the founder of the bar) and the Gruene Suppe (“Green Soup” i.e. Absolut Pear, sorrel, lime and sugar). If you so choose, the able bar staff can make you a good old classic, too.",
+    "Country": "Russia",
+    "City": "Moscow"
+  },
+  {
+    "Name": "Propaganda",
+    "Address": "7 Bolshoi Zlatoustinsky Pereulok. Metro Lubyanka",
+    "Description": "Propaganda is a cult metropolitan institution located near the metro stations Lubyanka and Kitay-Gorod. During the day it is a cozy cafe, and at night - a club with theme parties that are held strictly on schedule. In Propaganda you can safely order long-known dishes - the menu and prices do not change for years: sandwiches, salmon and Caesar salad enjoy a reputation of “the most delicious in the city”. An inexpensive business lunch is served on weekdays.",
+    "Country": "Russia",
+    "City": "Moscow"
+  },
+  {
+    "Name": "Gazgolder",
+    "Address": "5 Nizhny Susalny Pereulok, Bldg. 6. Metro Kurskaya",
+    "Description": "Gazgolder Club was opened in March 2005 in one of the buildings of an old gas factory, built in the mid-19th century. The club immediately gained popularity with the Moscow advanced audience. Here, at the famous techno parties, the main philosophy of which is interesting quality music, their sets were played by Luciano, Steve Lawler, Audio Fly and many others.",
+    "Country": "Russia",
+    "City": "Moscow"
+  },
+  {
+    "Name": "Time Out Bar",
+    "Address": "Bolshaya Sadovaya Ulitsa. Metro Mayakovskaya",
+    "Description": "The Time Out Bar, located on the very roof of the Beijing Tower, will appeal to those who appreciate original cocktails, unusual surroundings and closed establishments. The “Time Out Bar” decided to specialize in cocktails and make a show and a “chip” out of this process: every day the best “mixologists” from Moscow work here: Alexander Kan, Marat Saddarov, Vyacheslav Lankin, Dmitry Sokolov, and on weekends and holidays invite teams from the best bars of different countries that make cocktails to high-quality and fiery music.",
+    "Country": "Russia",
+    "City": "Moscow"
+  },
+  {
+    "Name": "Strelka Bar",
+    "Address": "14 Bersenevskaya Naberezhnaya, Bldg. 5. Metro Polyanka",
+    "Description": "Strelka Bar is the social heart of Strelka Institute. The eclectic interior brings together art deco elements with Italian and Scandinavian design from the 1960s and ‘70s. Guests can choose from an extensive cocktail list and an international menu, that includes seasonal dishes and local ingredients. The summertime rooftop terrace overlooks the Moscow River, and kiosk in the courtyard offers street food menu. Every weekend bar hosts parties with a special music program, from dj-sets to live performances. All profits from the bar support Strelka Institute.",
+    "Country": "Russia",
+    "City": "Moscow"
+  },
+  {
+    "Name": "Denis Simatchev Bar",
+    "Address": "12 Stoleshnikov Pereulok, Bldg. 2. Metro Lubyanka",
+    "Description": "Founded by designer Denis Simachev in the 2000s, this club quickly became a traditional hangout for Moscow’s fashionable sets. The kitschy interior features mirrors, chandeliers and washbasins in the middle of the dance floor. The music is consistently good and so are the cocktails. Simachev also offers some delicious bar snacks. It’s crowded on the weekends, so dress smart to pass face control.",
+    "Country": "Russia",
+    "City": "Moscow"
+  },
+  {
+    "Name": "Icon Club",
+    "Address": "Bolotnaya Naberezhnaya",
+    "Description": "ICON Moscow is one of the most ambitious and successful club projects, opened in autumn 2012. The club is focused on the premium audience and pays attention especially to the events, show programs and the newest musical trends. The first and only club in the «luxury» segment with a capacity of more than 2.000 people on the dancefloor and over 500 guests in VIP lounge . Each week there are parties with famous DJs, Russian and foreign stars and as well as creative thematic events.",
+    "Country": "Russia",
+    "City": "Moscow"
+  },
+  {
+    "Name": "Duran Bar",
+    "Address": "Rochdelskaya St",
+    "Description": "Opened in 2015 Duran Bar has become one of the hottest clubs on the Moscow nightlife scene. This place is pretty big and includes a restaurant area, large summer verandah and the main hall that has a long bar table. Duran is located at the reconstructed premises of an old textile factory in close proximity to the Russian White House.",
+    "Country": "Russia",
+    "City": "Moscow"
+  },
+  {
+    "Name": "Artel Bessonitsa & Shakti Terrace",
+    "Address": "Bolotnaya Naberezhnaya, 9",
+    "Description": "An outstanding creative team amazes the guests. During the working week the venue is a fancy restaurant named SHAKTI Terrace. But every weekend at night it transforms to an exclusive nightclub with a summer terrace. So you can start your evening with a dinner and cocktails watching some live concert and after experience best mainstream, house and techhouse djs of Moscow and beyond.",
+    "Country": "Russia",
+    "City": "Moscow"
+  },
+  {
+    "Name": "Mace",
+    "Address": "East Village",
+    "Description": "MACE IS A HIDDEN GEM. Perhaps that’s due in part to its far-flung East Village location, but more likely it’s because it’s only been open a few months. Despite its relative newcomer status – it’s obviously already caught the industry’s eye – it feels like the bar that New York was missing. Spare but polished décor, an eclectic soundtrack (check out its killer Spotify playlist), warm service and exceptional cocktails add up to the kind of place you want to drink in, again and again.",
+    "Country": "USA",
+    "City": "New York"
+  },
+  {
+    "Name": "The Long Island Bar",
+    "Address": "Cobble Hill",
+    "Description": "The Long Island Bar & Restaurant was owned and run for over 50 years by Emma Sullivan, her husband Buddy, and her cousins Pepita and Maruja.  Buddy and Emma took over the bar from Emma's father, Ramon Montero, who opened it in 1951.  Emma and her cousins still live a block from the bar, and four generations of their family are based in the bar's surrounding neighborhoods.",
+    "Country": "USA",
+    "City": "New York"
+  },
+  {
+    "Name": "Elsa",
+    "Address": "Cobble Hill",
+    "Description": "Manhattan’s invasion of Brooklyn is no secret: You can now wander off the Kings County side of the L and right into a SoulCycle or a Starbucks. And Elsa is yet another East River stowaway: After shuttering in Alphabet City in 2014, the bar has been reincarnated in Cobble Hill. And while you might get smacked over the head with aesthetic déjà vu upon entering the new destination (same industrial-glam layout, same ancient sewing machine moonlighting as a beer tap), the spot lacks the cozy European vibes and friendly service the original was lauded for. That difference could be due to the piercing ambient chatter, the distracted servers (cocktails for a party of two were routinely doled out at different times) or the bearded bros littering their table with beer bottles outside on a recent Thursday night. This new Elsa lacks a certain je n'ais se quoi that made her predecessor so popular.",
+    "Country": "USA",
+    "City": "New York"
+  },
+  {
+    "Name": "The Dead Rabbit",
+    "Address": "Financial District",
+    "Description": ": FOLLOW THE TALE OF DEAD RABBIT FOUNDER JOHN MORRISSEY’S TIMETRAVELING ESCAPADES IN 1970S NEW YORK CITY, WITH DRINKS CREATED AROUND EACH CHAPTER. THE MENU STARTS OFF LIGHT AND SUBTLE AND DRINKS GET PROGRESSIVELY STRONGER AS THE STORY CONTINUES. SO, START WITH A SHERRY COBBLER AND END WITH A SMOKIN' HOT APPLEJACK TODDY.  ALL, OF COURSE, ARTFULLY PREPARED BY BARTENDERS WHO HAVE TRULY MASTERED THEIR CRAFT. THEY SAY THAT EVERYTHING STARTS WITH THE BLUES, DON’T THEY? R&B, SOUL, JAZZ, ROCK, HIP HOP: THIS IS WHERE THEY ALL COME FROM.  AND TODAY THE SPIRIT OF THE BLUES IS ALIVE AND WELL, AND ITS NAME IS MARA KAYE. SHE’LL BE HERE EVERY WEDNESDAY IN THE PARLOR FROM 8PM THROUGH 11PM. YOU SHOULD BE HERE TOO.",
+    "Country": "USA",
+    "City": "New York"
+  },
+  {
+    "Name": "Grimm Artisanal Ales",
+    "Address": "East Williamsburg",
+    "Description": "Grimm Artisanal Ales is a Brooklyn-based brewery founded in 2013 by Joe and Lauren Grimm after nearly a decade of tinkering with fermentation. Grimm specializes in concise, elegant ales epitomizing the creative, experimental spirit of the American artisanal beer revolution. With each limited edition release, we seek to push the boundaries of style and flavor in order to create beers with the utmost depth and complexity. For five years, Grimm operated as a nomadic brewery. Joe and Lauren would develop each recipe in the kitchen of their Gowanus apartment and travel to existing breweries near and far to craft their commercial beers. In June 2018, they opened their permanent location in the East Williamsburg neighborhood of Brooklyn, NY.",
+    "Country": "USA",
+    "City": "New York"
+  },
+  {
+    "Name": "Maison Premiere",
+    "Address": "Williamsburg",
+    "Description": "Maison Premiere is rooted in the traditions and ceremony of oyster bars and absinthe cafés, where at-hand service paired with frank advice about daily shellfish and quenching wines serve as well as the recipes from old bar manuals. We are inspired by the hotel lobbies and grand restaurants of New York, Paris, and New Orleans, replete with late-night diners brooding over bivalves and wading through glasses of pastis and absinthe. We offer our guests a list of over thirty oyster varieties, all sourced through direct, established relationships with the farmers. Our absinthe list features the largest selection in the United States and in homage to the ceremony and story of the infamous spirit, we offer perhaps the grandest version of traditional absinthe service. Showcased in the center of our bar is a meticulously fabricated replica of the absinthe fountain located in the famed Olde Absinthe House in New Orleans.",
+    "Country": "USA",
+    "City": "New York"
+  },
+  {
+    "Name": "Angel's Share",
+    "Address": "East Village",
+    "Description": "Walk through an unmarked side door at the front of Japanese restaurant Village Yokocho, and you’ll find yourself in perhaps the classiest joint in the East Village. Angel’s Share remains completely unknown to some of its neighbors, and that duality is part of its charm. Standing around and groups of four or more are not allowed—but this is really a date place anyway, offering a stellar view of Stuyvesant Square and excellent cocktails, including one of the city’s best grasshoppers. The rotating list of inventive quaffs is organized by spirit, though the tuxedoed bartenders will gladly surprise you with a custom concoction.",
+    "Country": "USA",
+    "City": "New York"
+  },
+  {
+    "Name": "The Aviary",
+    "Address": "Upper West Side",
+    "Description": "The Aviary NYC provides an interactive journey for guests, where inventive cocktails and small food plates complement the drink experience. Unique to the New York City location, The Aviary NYC offers an all-day menu where the team’s progressive and creative approach to inventing interesting flavor combinations are featured in unexpected ways. Reflecting the core principles of the Chicago flagship, while incorporating the historically-rich cocktail culture of New York City paired with panoramic views of Central Park and the Manhattan skyline, the 90-seat Aviary NYC provides visitors with an experience like no other.",
+    "Country": "USA",
+    "City": "New York"
+  },
+  {
+    "Name": "La Compagnie des Vins Surnaturels",
+    "Address": "Little Italy",
+    "Description": "A PIECE OF PARIS LIVES ON CENTRE STREET, AT THE INTERSECTION OF NOLITA, SOHO, AND LITTLE ITALY, WITH COLORFUL, CASUALLY ELEGANT DESIGN REMINISCENT OF OUR SAINT-GERMAIN FLAGSHIP. ON THE MENU, 1000-PLUS WINE REFERENCES HAVE BEEN SELECTED FROM THE WORLD OVER, INCLUDING 30 BY THE GLASS. IF THE MAJORITY OF THE LIST IS OF FRENCH ORIGIN, WE ALSO INVITE GUESTS TO DISCOVER LESSER-KNOWN REGIONS SUCH AS LEBANON, ISRAEL, GREECE, HUNGARY, AND BRAZIL. A SEASONAL TAPAS MENU HAS BEEN DESIGNED TO HIGHLIGHT AND COMPLEMENT THE WINES.",
+    "Country": "USA",
+    "City": "New York"
+  },
+  {
+    "Name": "Dutch Kills",
+    "Address": "Long Island City",
+    "Description": "By now, bar pioneer Sasha Petraske’s formula is pretty familiar: natty bartenders, precise drinks and little (if any) signage. What separates Long Island City's Dutch Kills from the rest is space. The plentiful elbow room makes it a comfortable place to enjoy cocktails like the rye-based Garibaldi, made with lime juice, Campari and mellow white grapes. The Infante takes the familiar pairing of tequila and lime, and lightens it up with homemade orgeat (rosewater and almond syrup) and nutmeg. The cocktail price tag of $8–$11 is a welcome break from the $16-a-drink norm across the river. And if you go on a weekday, you can escape the city crowds as well.",
+    "Country": "USA",
+    "City": "New York"
+  },
+  {
+    "Name": "Fleur Room",
+    "Address": "105 W 28th St",
+    "Description": "The glass-encased lounge on Moxy Chelsea’s 35th floor has showstopping, 360-degree views of the Manhattan skyline, from the Statue of Liberty to the Empire State Building. The design by Rockwell Group adds a glamorous touch to the botanical theme with rich floral fabrics, a copper-clad bar, a water droplet chandelier, and a massive vintage disco ball that once graced the infamous LA club Vertigo.  At the touch of a button, the glass walls of the lounge retract to create an alfresco sky veranda.",
+    "Country": "USA",
+    "City": "New York"
+  },
+  {
+    "Name": "Coffee Pot",
+    "Address": "Via del Politeama, 12",
+    "Description": "EVERY RECIPE IS PREPARED AND BALANCED TO OBTAIN AN INNOVATIVE, LIGHT AND HEALTHY MENU. COFFEE POT’S DINNER EXPERIENCE PERFECTLY MIXES TASTES AND FLAVOURS OF THE FUSION KITCHEN AND THE MIXOLOGY BAR.",
+    "Country": "Italy",
+    "City": "Rome"
+  },
+  {
+    "Name": "Open Baladin",
+    "Address": "Via degli Specchi, 6",
+    "Description": "This is a great restaurant/birreria with a really good selection of microbrews and imported beers as well as a really great selection of food to go along with it. This place came highly recommended by the host at our B&B, and she doesn't live anywhere near this place. It's kind of a trek for her to come here, and it's totally worth it.",
+    "Country": "Italy",
+    "City": "Rome"
+  },
+  {
+    "Name": "Blackmarket Hall",
+    "Address": "Via de Ciancaleoni, 31",
+    "Description": "The Blackmarket Hall is a hidden place in the heart of Rome's oldest district. Born in the former Overlook Hotel located in the heart of Rione Monti in Rome. The Blackmarket Hall is a versatile location suitable for different contexts, graceful for the areas in which it is divided. 2 floors hosting 4 halls and 2 welcoming gardens, excellent for an intimate meeting. From dinner until late at night, the Blackmarket Hall offers a refined and never boring fusion cuisine together with perhaps the most famous ten-year history in the environment of the best mixology bars. The Blackmarket Hall is attentive to the entertainment of its customers and offers concerts ranging from swing to cover bands, from English indie rock to experimental instruments.",
+    "Country": "Italy",
+    "City": "Rome"
+  },
+  {
+    "Name": "Sacripante Gallery",
+    "Address": "Via Panisperna, 59",
+    "Description": "Built into the bones of an old convent, Sacripante strives to mix the old with the new, the very essence of its neighborhood, Monti. As you step inside this dual art gallery and bar, you pass by the old stone walls on which hang modern paintings and photographs made by local artists. It’s divided into small rooms, their interiors designed by an innovative Italian architect, and each boasts comfortable couches and gentle light that create a feeling of perfect intimacy.",
+    "Country": "Italy",
+    "City": "Rome"
+  },
+  {
+    "Name": "The Gin Corner",
+    "Address": "Via di Pallacorda, 2",
+    "Description": "Located within the Hotel Adriano, The Gin Corner is the first bar in Italy dedicated entirely to Gin. Not only is it a hotel bar, but it is also a hangout for those passionate about gin and more. The Gin Corner, located in the Hotel Adriano, was inaugurated in June 2013 and is open every night from 6pm to 12am.",
+    "Country": "Italy",
+    "City": "Rome"
+  },
+  {
+    "Name": "Zuma Bar & Lounge",
+    "Address": "Via della Fontanella Borghese, 48 – Palazzo Fendi",
+    "Description": "Zuma Bar Lounge is a cozy place to start your night. Our range of cocktails is made of quality ingredients and served with style.",
+    "Country": "Italy",
+    "City": "Rome"
+  },
+  {
+    "Name": "Baccano",
+    "Address": "Via Delle Muratte, 23",
+    "Description": "In the heart of Rome, beautifully located in the picturesque Via delle Muratte, which connects the Trevi Fountain to Via del Corso, Baccano is the true Mediterranean bistro of the capital. Inspired by the best international experiences, intriguing and enveloping allure of the Paris of the beginning of the century and metropolitan contemporary of the New York local, Baccano fascinates with an extremely refined retro touch and at the same time speaks of authentic Mediterranean flavors, strongly rooted in tradition.",
+    "Country": "Italy",
+    "City": "Rome"
+  },
+  {
+    "Name": "Stadlin",
+    "Address": "Via Antonio Pacinotti, 83",
+    "Description": "Fish, Mediterranean, Vegetarian, Street food, good selection of wines.  Städlin is a bit record store, a bit underground clubs, a bit wine / cocktail bar… Modern concept that combines a night of music and cuisine to a positive and stimulating environment. The advice for all those who want to spend an evening Underground at 360 degree Städlin proposes evenings based on rich aperitifs , cocktails with dj-sets in the American bar and live performing artists of the electronic and techno music .",
+    "Country": "Italy",
+    "City": "Rome"
+  },
+  {
+    "Name": "The Sanctuary Eco Retreat",
+    "Address": "Retreat-Via delle Terme di Traiano 4a",
+    "Description": "There are no barriers between the restaurant and nature: wherever a living room is, every table is a memory, the light radiates the environment and the music full of air.",
+    "Country": "Italy",
+    "City": "Rome"
+  },
+  {
+    "Name": "La Cabala",
+    "Address": "Via dei Soldati",
+    "Description": "A stone's throw from Piazza Navona, overlooking the Lungotevere, in a splendid 15th century building, is the La Cabala Disco of Rome. The historic building that houses the Hostaria dell'Orso is located on 3 floors: the piano bar, the large restaurant with the large loggia overlooking the Tiber, and the disco on the top floor, with one of the views most beautiful in Rome and the historic center. The latter, furnished with comfortable sofas, has been redesigned for those who wish to have fun in an elegant space but above all in a pleasant and exclusive environment. The Thursday evening named Mamma mia che Cabala is inimitable. Extraordinary the Friday disco evening, organized with attention to detail by an expert staff, and the Saturday evening, for a select audience, however over 25 years. The piano bar deserves a separate chapter. The skill of pianists and good company make the atmosphere lively and engaging. With the help of music, in fact, the Roman salon turns into a meeting place for boys and girls, the ideal place to start and end the evening. La Cabala is one of the most requested places in the capital. For this reason, a reservation is required. La Cabala .. where the Dolce Vita lives again !!",
+    "Country": "Italy",
+    "City": "Rome"
+  },
 ]
