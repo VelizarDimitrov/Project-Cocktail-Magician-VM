@@ -7,7 +7,6 @@ namespace Data.Contracts
 {
    public interface ICocktailIngredient
     {
-        string Comment { get; set; }
         int IngredientId { get; set; }
         Ingredient Ingredient { get; set; }
         int CocktailId { get; set; }

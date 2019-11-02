@@ -10,5 +10,6 @@ namespace Data.SolutionPreLoad.JsonParsers
         public string Name { get; set; }
         public string Description { get; set; }
         public string[] Ingredient { get; set; }
+        public string PhotoPath { get; set; }
     }
 }
