@@ -46,18 +46,18 @@ namespace ServiceLayer
 
         public async Task AddBarAsync(string name, string address, string description, string countryName, string cityName, byte[] barCover)
         {
-            if (await dbContext.Country.Where(p => p.Name.ToLower() == countryName.ToLower()).CountAsync() == 0)
+            if (await dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).CountAsync() == 0)
             {
                 await countryService.CreateCountryAsync(countryName);
             }
 
-            if (await dbContext.City.Where(p => p.Name.ToLower() == cityName.ToLower()).CountAsync() == 0)
+            if (await dbContext.Cities.Where(p => p.Name.ToLower() == cityName.ToLower()).CountAsync() == 0)
             {
                 await cityService.CreateCityAsync(cityName, countryName);
             }
 
-            var country = await dbContext.Country.Where(p => p.Name.ToLower() == countryName.ToLower()).FirstAsync();
-            var city = await dbContext.City.Where(p => p.Name.ToLower() == countryName.ToLower()).FirstAsync();
+            var country = await dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).FirstAsync();
+            var city = await dbContext.Cities.Where(p => p.Name.ToLower() == countryName.ToLower()).FirstAsync();
             var bar = new Bar()
             {
                 Name = name,
@@ -66,13 +66,13 @@ namespace ServiceLayer
                 Country = country,
                 City = city
             };
-            await dbContext.Bar.AddAsync(bar);
+            await dbContext.Bars.AddAsync(bar);
             await dbContext.SaveChangesAsync();
         }
 
         public async Task<int> BarsCountAsync()
         {
-            var bars = await dbContext.Bar.CountAsync();
+            var bars = await dbContext.Bars.CountAsync();
             return bars;
         }
     }

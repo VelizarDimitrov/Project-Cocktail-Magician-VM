@@ -8,6 +8,6 @@ namespace Data.SolutionPreLoad.JsonParsers.Contracts
     {
         string Name { get; set; }
         string Description { get; set; }
-        string[] Ingredient { get; set; }
+        string[] Ingredients { get; set; }
     }
 }

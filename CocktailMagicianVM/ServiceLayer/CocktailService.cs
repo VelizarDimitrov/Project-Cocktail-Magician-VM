@@ -1,8 +1,10 @@
 ﻿using Data;
+using Data.Models;
 using Data.SolutionPreLoad.JsonParsers;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using ServiceLayer.Contracts;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -30,12 +32,12 @@ namespace ServiceLayer
                 item.PhotoPath = @"../../../../Data/SolutionPreload/CocktailPhotos/"+String.Join('-',item.Name.Split(" ")).ToLower();
             }
 
-            if (dbContext.Cocktail.Count() == 0)
+            if (dbContext.Cocktails.Count() == 0)
             {
                 foreach (var item in listOfDrinks)
                 {
                     var photo = File.ReadAllBytes(item.PhotoPath);
-                    await CreateDrinkAsync(item.Name, item.Description, item.Ingredient, photo);
+                    await CreateDrinkAsync(item.Name, item.Description, item.Ingredients, photo);
                 }
             }
         }
@@ -48,13 +50,13 @@ namespace ServiceLayer
                 Description = description,
                 Photo = photo
             };
-            await dbContext.Cocktail.AddAsync(cocktail);
+            await dbContext.Cocktails.AddAsync(cocktail);
             await dbContext.SaveChangesAsync();
 
             var ingCounter = 0;
             foreach (var item in ingredients)
             {
-                if (await dbContext.Ingredient.Where(p => p.Name == item.ToLower()).CountAsync() == 0)
+                if (await dbContext.Ingredients.Where(p => p.Name == item.ToLower()).CountAsync() == 0)
                 {
                     if (ingCounter == 0)
                         await CreateIngredientAsync(item, 1);
@@ -68,8 +70,8 @@ namespace ServiceLayer
 
         public async Task AddIngredientToCocktailAsync(string cocktailName, string ingredientName)
         {
-            var cocktail = await dbContext.Cocktail.FirstAsync(p=>p.Name==cocktailName);
-            var ingredient = await dbContext.Ingredient.FirstAsync(p => p.Name == ingredientName);
+            var cocktail = await dbContext.Cocktails.FirstAsync(p=>p.Name==cocktailName);
+            var ingredient = await dbContext.Ingredients.FirstAsync(p => p.Name == ingredientName);
             var link = new CocktailIngredient()
             {
                 Cocktail = cocktail,
@@ -87,13 +89,13 @@ namespace ServiceLayer
                 Primary = primary
             };
 
-            await dbContext.Ingredient.AddAsync(ingredient);
+            await dbContext.Ingredients.AddAsync(ingredient);
             await dbContext.SaveChangesAsync();
         }
 
         public async Task<Ingredient> GetIngredientAsync(string name)
         {
-            var ingredient = await dbContext.Ingredient.Where(p => p.Name == name.ToLower()).FirstAsync();
+            var ingredient = await dbContext.Ingredients.Where(p => p.Name == name.ToLower()).FirstAsync();
             return ingredient;
         }
     }

@@ -9,21 +9,22 @@ namespace Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Cocktail",
+                name: "Cocktails",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true)
+                    Description = table.Column<string>(nullable: true),
+                    Photo = table.Column<byte[]>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cocktail", x => x.Id);
+                    table.PrimaryKey("PK_Cocktails", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Country",
+                name: "Countries",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -32,11 +33,11 @@ namespace Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Country", x => x.Id);
+                    table.PrimaryKey("PK_Countries", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Ingredient",
+                name: "Ingredients",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -46,11 +47,11 @@ namespace Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ingredient", x => x.Id);
+                    table.PrimaryKey("PK_Ingredients", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "City",
+                name: "Cities",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -60,11 +61,11 @@ namespace Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_City", x => x.Id);
+                    table.PrimaryKey("PK_Cities", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_City_Country_CountryId",
+                        name: "FK_Cities_Countries_CountryId",
                         column: x => x.CountryId,
-                        principalTable: "Country",
+                        principalTable: "Countries",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -74,28 +75,27 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     IngredientId = table.Column<int>(nullable: false),
-                    CocktailId = table.Column<int>(nullable: false),
-                    Comment = table.Column<string>(nullable: true)
+                    CocktailId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CocktailIngredient", x => new { x.IngredientId, x.CocktailId });
                     table.ForeignKey(
-                        name: "FK_CocktailIngredient_Cocktail_CocktailId",
+                        name: "FK_CocktailIngredient_Cocktails_CocktailId",
                         column: x => x.CocktailId,
-                        principalTable: "Cocktail",
+                        principalTable: "Cocktails",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CocktailIngredient_Ingredient_IngredientId",
+                        name: "FK_CocktailIngredient_Ingredients_IngredientId",
                         column: x => x.IngredientId,
-                        principalTable: "Ingredient",
+                        principalTable: "Ingredients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Bar",
+                name: "Bars",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -108,23 +108,23 @@ namespace Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Bar", x => x.Id);
+                    table.PrimaryKey("PK_Bars", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Bar_City_CityId",
+                        name: "FK_Bars_Cities_CityId",
                         column: x => x.CityId,
-                        principalTable: "City",
+                        principalTable: "Cities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Bar_Country_CountryId",
+                        name: "FK_Bars_Countries_CountryId",
                         column: x => x.CountryId,
-                        principalTable: "Country",
+                        principalTable: "Countries",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "User",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -141,17 +141,17 @@ namespace Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_User_City_CityId",
+                        name: "FK_Users_Cities_CityId",
                         column: x => x.CityId,
-                        principalTable: "City",
+                        principalTable: "Cities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_User_Country_CountryId",
+                        name: "FK_Users_Countries_CountryId",
                         column: x => x.CountryId,
-                        principalTable: "Country",
+                        principalTable: "Countries",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -167,15 +167,15 @@ namespace Data.Migrations
                 {
                     table.PrimaryKey("PK_BarCocktail", x => new { x.BarId, x.CocktailId });
                     table.ForeignKey(
-                        name: "FK_BarCocktail_Bar_BarId",
+                        name: "FK_BarCocktail_Bars_BarId",
                         column: x => x.BarId,
-                        principalTable: "Bar",
+                        principalTable: "Bars",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_BarCocktail_Cocktail_CocktailId",
+                        name: "FK_BarCocktail_Cocktails_CocktailId",
                         column: x => x.CocktailId,
-                        principalTable: "Cocktail",
+                        principalTable: "Cocktails",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -192,15 +192,15 @@ namespace Data.Migrations
                 {
                     table.PrimaryKey("PK_BarComment", x => new { x.BarId, x.UserId });
                     table.ForeignKey(
-                        name: "FK_BarComment_Bar_BarId",
+                        name: "FK_BarComment_Bars_BarId",
                         column: x => x.BarId,
-                        principalTable: "Bar",
+                        principalTable: "Bars",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_BarComment_User_UserId",
+                        name: "FK_BarComment_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -217,15 +217,15 @@ namespace Data.Migrations
                 {
                     table.PrimaryKey("PK_BarRating", x => new { x.BarId, x.UserId });
                     table.ForeignKey(
-                        name: "FK_BarRating_Bar_BarId",
+                        name: "FK_BarRating_Bars_BarId",
                         column: x => x.BarId,
-                        principalTable: "Bar",
+                        principalTable: "Bars",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_BarRating_User_UserId",
+                        name: "FK_BarRating_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -242,15 +242,15 @@ namespace Data.Migrations
                 {
                     table.PrimaryKey("PK_CocktailComment", x => new { x.UserId, x.CocktailId });
                     table.ForeignKey(
-                        name: "FK_CocktailComment_Cocktail_CocktailId",
+                        name: "FK_CocktailComment_Cocktails_CocktailId",
                         column: x => x.CocktailId,
-                        principalTable: "Cocktail",
+                        principalTable: "Cocktails",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CocktailComment_User_UserId",
+                        name: "FK_CocktailComment_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -267,21 +267,21 @@ namespace Data.Migrations
                 {
                     table.PrimaryKey("PK_CocktailRating", x => new { x.UserId, x.CocktailId });
                     table.ForeignKey(
-                        name: "FK_CocktailRating_Cocktail_CocktailId",
+                        name: "FK_CocktailRating_Cocktails_CocktailId",
                         column: x => x.CocktailId,
-                        principalTable: "Cocktail",
+                        principalTable: "Cocktails",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CocktailRating_User_UserId",
+                        name: "FK_CocktailRating_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Notification",
+                name: "Notifications",
                 columns: table => new
                 {
                     id = table.Column<int>(nullable: false)
@@ -294,11 +294,11 @@ namespace Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Notification", x => x.id);
+                    table.PrimaryKey("PK_Notifications", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Notification_User_UserId",
+                        name: "FK_Notifications_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -314,15 +314,15 @@ namespace Data.Migrations
                 {
                     table.PrimaryKey("PK_UserBar", x => new { x.UserId, x.BarId });
                     table.ForeignKey(
-                        name: "FK_UserBar_Bar_BarId",
+                        name: "FK_UserBar_Bars_BarId",
                         column: x => x.BarId,
-                        principalTable: "Bar",
+                        principalTable: "Bars",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserBar_User_UserId",
+                        name: "FK_UserBar_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -338,28 +338,18 @@ namespace Data.Migrations
                 {
                     table.PrimaryKey("PK_UserCocktail", x => new { x.UserId, x.CocktailId });
                     table.ForeignKey(
-                        name: "FK_UserCocktail_Cocktail_CocktailId",
+                        name: "FK_UserCocktail_Cocktails_CocktailId",
                         column: x => x.CocktailId,
-                        principalTable: "Cocktail",
+                        principalTable: "Cocktails",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserCocktail_User_UserId",
+                        name: "FK_UserCocktail_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Bar_CityId",
-                table: "Bar",
-                column: "CityId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Bar_CountryId",
-                table: "Bar",
-                column: "CountryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BarCocktail_CocktailId",
@@ -377,8 +367,18 @@ namespace Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_City_CountryId",
-                table: "City",
+                name: "IX_Bars_CityId",
+                table: "Bars",
+                column: "CityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bars_CountryId",
+                table: "Bars",
+                column: "CountryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cities_CountryId",
+                table: "Cities",
                 column: "CountryId");
 
             migrationBuilder.CreateIndex(
@@ -397,19 +397,9 @@ namespace Data.Migrations
                 column: "CocktailId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Notification_UserId",
-                table: "Notification",
+                name: "IX_Notifications_UserId",
+                table: "Notifications",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_User_CityId",
-                table: "User",
-                column: "CityId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_User_CountryId",
-                table: "User",
-                column: "CountryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserBar_BarId",
@@ -420,6 +410,16 @@ namespace Data.Migrations
                 name: "IX_UserCocktail_CocktailId",
                 table: "UserCocktail",
                 column: "CocktailId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_CityId",
+                table: "Users",
+                column: "CityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_CountryId",
+                table: "Users",
+                column: "CountryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -443,7 +443,7 @@ namespace Data.Migrations
                 name: "CocktailRating");
 
             migrationBuilder.DropTable(
-                name: "Notification");
+                name: "Notifications");
 
             migrationBuilder.DropTable(
                 name: "UserBar");
@@ -452,22 +452,22 @@ namespace Data.Migrations
                 name: "UserCocktail");
 
             migrationBuilder.DropTable(
-                name: "Ingredient");
+                name: "Ingredients");
 
             migrationBuilder.DropTable(
-                name: "Bar");
+                name: "Bars");
 
             migrationBuilder.DropTable(
-                name: "Cocktail");
+                name: "Cocktails");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Users");
 
             migrationBuilder.DropTable(
-                name: "City");
+                name: "Cities");
 
             migrationBuilder.DropTable(
-                name: "Country");
+                name: "Countries");
         }
     }
 }

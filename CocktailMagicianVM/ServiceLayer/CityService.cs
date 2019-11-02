@@ -20,18 +20,18 @@ namespace ServiceLayer
 
         public async Task CreateCityAsync(string cityName, string countryName)
         {
-            if (await dbContext.Country.Where(p => p.Name.ToLower() == countryName.ToLower()).CountAsync() == 0)
+            if (await dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).CountAsync() == 0)
             {
                 await countryService.CreateCountryAsync(countryName);
             }
-            var country = await dbContext.Country.Where(p => p.Name.ToLower() == countryName.ToLower()).FirstAsync();
+            var country = await dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).FirstAsync();
 
             var city1 = new City()
             {
                 Name = cityName,
                 Country = country
             };
-            await dbContext.City.AddAsync(city1);
+            await dbContext.Cities.AddAsync(city1);
             await dbContext.SaveChangesAsync();
         }
     }

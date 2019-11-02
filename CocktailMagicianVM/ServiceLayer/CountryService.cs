@@ -20,13 +20,13 @@ namespace ServiceLayer
         }
         public async Task CreateCountryAsync(string countryName)
         {
-            if (await dbContext.Country.Where(p => p.Name.ToLower() == countryName.ToLower()).CountAsync() == 0)
+            if (await dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).CountAsync() == 0)
             {
                 var country1 = new Country()
                 {
                     Name = countryName
                 };
-                await dbContext.Country.AddAsync(country1);
+                await dbContext.Countries.AddAsync(country1);
                 await dbContext.SaveChangesAsync();
             }
             else

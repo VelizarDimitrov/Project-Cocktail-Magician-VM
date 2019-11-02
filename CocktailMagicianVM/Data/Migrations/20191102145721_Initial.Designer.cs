@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(CocktailDatabaseContext))]
-    [Migration("20191031130900_Initial")]
+    [Migration("20191102145721_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,7 +43,7 @@ namespace Data.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("Bar");
+                    b.ToTable("Bars");
                 });
 
             modelBuilder.Entity("Data.Models.BarCocktail", b =>
@@ -103,7 +103,7 @@ namespace Data.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("City");
+                    b.ToTable("Cities");
                 });
 
             modelBuilder.Entity("Data.Models.Cocktail", b =>
@@ -116,9 +116,11 @@ namespace Data.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<byte[]>("Photo");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Cocktail");
+                    b.ToTable("Cocktails");
                 });
 
             modelBuilder.Entity("Data.Models.CocktailComment", b =>
@@ -141,8 +143,6 @@ namespace Data.Migrations
                     b.Property<int>("IngredientId");
 
                     b.Property<int>("CocktailId");
-
-                    b.Property<string>("Comment");
 
                     b.HasKey("IngredientId", "CocktailId");
 
@@ -176,7 +176,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Country");
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("Data.Models.Ingredient", b =>
@@ -191,7 +191,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Ingredient");
+                    b.ToTable("Ingredients");
                 });
 
             modelBuilder.Entity("Data.Models.Notification", b =>
@@ -214,7 +214,7 @@ namespace Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Notification");
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("Data.Models.User", b =>
@@ -249,7 +249,7 @@ namespace Data.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Data.Models.UserBar", b =>

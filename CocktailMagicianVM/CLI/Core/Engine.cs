@@ -18,7 +18,9 @@ namespace CLI.Core
 
         public void Run()
         {
-            
+            aService.DatabaseUserFillAsync();
+            cService.DatabaseCocktailFillAsync();
+            bService.DatabaseBarFillASync();
         }
     }
 }

@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Data.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Data.Models
 {
-   public class CocktailComment
+   public class CocktailComment:ICocktailComment
     {
      public  string Comment { get; set; }
      public  int UserId { get; set; }

@@ -42,22 +42,22 @@ namespace ServiceLayer
         }
         public async  Task<IList<User>> FindAllUsersAsync()
         {
-          return await dbContext.User.ToListAsync();
+          return await dbContext.Users.ToListAsync();
         }
         public async Task  AddAccountAsync(string userName, string firstName, string lastName, string password, string accountType,string countryName,string cityName)
         {
-            if (await dbContext.Country.Where(p => p.Name.ToLower() == countryName.ToLower()).CountAsync() == 0)
+            if (await dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).CountAsync() == 0)
             {
                 await countryService.CreateCountryAsync(countryName);
             }
             
-            if (await dbContext.City.Where(p => p.Name.ToLower() == cityName.ToLower()).CountAsync() == 0)
+            if (await dbContext.Cities.Where(p => p.Name.ToLower() == cityName.ToLower()).CountAsync() == 0)
             {
                 await cityService.CreateCityAsync(cityName,countryName);
             }
 
-            var country =await dbContext.Country.Where(p => p.Name.ToLower() == countryName.ToLower()).FirstAsync();
-            var city =await dbContext.City.Where(p => p.Name.ToLower() == countryName.ToLower()).FirstAsync();
+            var country =await dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).FirstAsync();
+            var city =await dbContext.Cities.Where(p => p.Name.ToLower() == countryName.ToLower()).FirstAsync();
             var user = new User()
             {
                 UserName = userName,
@@ -69,7 +69,7 @@ namespace ServiceLayer
                 Country=country,
                 City=city
             };
-            await dbContext.User.AddAsync(user);
+            await dbContext.Users.AddAsync(user);
             await dbContext.SaveChangesAsync();
 
         }   
