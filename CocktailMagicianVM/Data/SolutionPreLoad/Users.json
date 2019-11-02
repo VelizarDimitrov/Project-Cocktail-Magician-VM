@@ -4,7 +4,7 @@
     "FirstName": "Velizar",
     "LastName": "Dimitrov",
     "Password": "123321",
-    "AccountType": "Librarian",
+    "AccountType": "Cocktail Magician",
     "Country": "USA",
     "City": "Miami"
   },
@@ -13,7 +13,7 @@
     "FirstName": "Manuel",
     "LastName": "Mihailov",
     "Password": "123321",
-    "AccountType": "Librarian",
+    "AccountType": "Cocktail Magician",
     "Country": "USA",
     "City": "New York"
   },
@@ -22,7 +22,7 @@
     "FirstName": "Kiril",
     "LastName": "Stanoev",
     "Password": "123321",
-    "AccountType": "Member",
+    "AccountType": "Bar Crawler",
     "Country": "USA",
     "City": "New York"
   },
@@ -31,7 +31,7 @@
     "FirstName": "Sarah",
     "LastName": "Connor",
     "Password": "123321",
-    "AccountType": "Member",
+    "AccountType": "Bar Crawler",
     "Country": "Russia",
     "City": "Moscow"
   },
@@ -40,7 +40,7 @@
     "FirstName": "Harvey",
     "LastName": "Dent",
     "Password": "123321",
-    "AccountType": "Member",
+    "AccountType": "Bar Crawler",
     "Country": "USA",
     "City": "New York"
   },
@@ -49,7 +49,7 @@
     "FirstName": "Jack",
     "LastName": "The Ripper",
     "Password": "123321",
-    "AccountType": "Member",
+    "AccountType": "Bar Crawler",
     "Country": "England",
     "City": "London"
   },
@@ -58,7 +58,7 @@
     "FirstName": "Eduard",
     "LastName": "Kenobi",
     "Password": "123321",
-    "AccountType": "Member",
+    "AccountType": "Cocktail Magician",
     "Country": "Italy",
     "City": "Rome"
   }

@@ -7,6 +7,11 @@ namespace Data.Models
 {
    public class City:ICity
     {
+        public City()
+        {
+            Users = new List<User>();
+            Bars = new List<Bar>();
+        }
         public int Id { get; set; }
         public string Name { get; set; }
         public int? CountryId { get; set; }

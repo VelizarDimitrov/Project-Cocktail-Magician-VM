@@ -7,6 +7,12 @@ namespace Data.Models
 {
    public class Country:ICountry
     {
+        public Country()
+        {
+            Cities = new List<City>();
+            Users = new List<User>();
+            Bars = new List<Bar>();
+        }
         public int Id { get; set; }
         public string Name { get; set; }
         public ICollection<City> Cities { get; set; }

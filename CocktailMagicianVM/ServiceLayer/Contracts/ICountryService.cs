@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ServiceLayer.Contracts
 {
-    public interface IHashing
+   public interface ICountryService
     {
-        string Hash(string password);
-
-        bool Verify(string password, string hash);
+        Task CreateCountryAsync(string countryName);
     }
 }

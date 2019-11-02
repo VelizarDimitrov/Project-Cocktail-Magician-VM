@@ -10,6 +10,13 @@ namespace Data.Models
     {
         public User()
         {
+            BarRatings = new List<BarRating>();
+            BarComments = new List<BarComment>();
+            CocktailRatings = new List<CocktailRating>();
+            CocktailComments = new List<CocktailComment>();
+            FavoriteBars = new List<UserBar>();
+            FavoriteCocktails = new List<UserCocktail>();
+            Notifications = new List<Notification>();
         }
 
         public int Id { get; set; }
