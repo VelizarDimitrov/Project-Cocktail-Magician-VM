@@ -1,52 +1,127 @@
 [
   {
-    "UserName": "V.Dimitrov",
-    "FirstName": "Velizar",
-    "LastName": "Dimitrov",
-    "Password": "123321",
-    "AccountType": "Librarian"
+    "Name": "White Russian",
+    "Description": "The White Russian was first mixed up back in 1949 when Gustave Tops, a Belgian bartender, dreamt up two luxurious cocktails, the Black and the White Russian. The difference? Isn't it obvious? The Black Russian lacks cream.",
+    "Ingredients": [ "Vodka", "Half and half", "Coffee liqueur" ]
   },
   {
-    "UserName": "NotMimo",
-    "FirstName": "Manuel",
-    "LastName": "Mihailov",
-    "Password": "123321",
-    "AccountType": "Librarian"
+    "Name": "Ancient Old Fashioned",
+    "Description": "At Hutong, an NYC restaurant inspired by northern Chinese cuisine, bartenders fat-wash bourbon with sesame oil for this clever riff on an Old Fashioned. If you have any sesame-infused bourbon leftover (unlikely), it also makes a tasty Highball with tonic.",
+    "Ingredients": [ "bourbon", "Hennessy Black", "Benedictine", "Bittermens Xocolatl Mole bitters", "lantern chili" ]
   },
   {
-    "UserName": "KiroBog",
-    "FirstName": "Kiril",
-    "LastName": "Stanoev",
-    "Password": "123321",
-    "AccountType": "Member"
+    "Name": "Citrus Highball",
+    "Description": "Highballs are a favorite drink to make at home, especially after a long day. Not only is this recipe super easy with only two ingredients, it’s also beautifully balanced.",
+    "Ingredients": [ "Aperol", "grapefruit soda", "Orange twist" ]
   },
   {
-    "UserName": "Sarah21",
-    "FirstName": "Sarah",
-    "LastName": "Connor",
-    "Password": "123321",
-    "AccountType": "Member"
+    "Name": "Sweet New Year",
+    "Description": "Dipping apple slices into honey is a (delicious) part of celebrating Rosh Hashanah, the Jewish New Year. Those same flavors feature in this autumnal twist on a classic Old Fashioned.",
+    "Ingredients": [ "apple brandy", "honey syrup", "Angostura bitters", "Apple slices", "Cinnamon" ]
   },
   {
-    "UserName": "Harvey21",
-    "FirstName": "Harvey",
-    "LastName": "Dent",
-    "Password": "123321",
-    "AccountType": "Member"
+    "Name": "Lavender Sidecar",
+    "Description": "This drink uses lavender bitters and syrup to play on the floral notes of VS Cognac, an abbreviation that stands for “Very Special.” VS Cognacs are made from eau-de-vie that is at least two years old.",
+    "Ingredients": [ "VS Cognac", "lemon juice", "lavender syrup", "lavender bitters", "lemon wheel" ]
   },
   {
-    "UserName": "Jack21",
-    "FirstName": "Jack",
-    "LastName": "The Ripper",
-    "Password": "123321",
-    "AccountType": "Member"
+    "Name": "Perfect Circle",
+    "Description": "Whether you’re fixing punch for a party or hosting an intimate dinner, this make-ahead Campari punch from Maggie Hoffman’s “Batch Cocktails” is the set-it-and-forget-it of drinks. Now all you have to do is finalize the guest list.",
+    "Ingredients": [ "Campari", "chilled fino", "dry sparkling wine" ]
   },
   {
-    "UserName": "EdoBog",
-    "FirstName": "Eduard",
-    "LastName": "Kenobi",
-    "Password": "123321",
-    "AccountType": "Member"
+    "Name": "Nutty Screwdriver",
+    "Description": "The Screwdriver is one of the most basic cocktails in any bartender’s repertoire. In fact, some professionals don’t actually count it as a cocktail, saying it contains too few essential ingredients.",
+    "Ingredients": [ "vodka", "Amaretto", "lime juice", "orange juice" ]
+  },
+  {
+    "Name": "Moscow Mule",
+    "Description": "The Moscow Mule was first introduced to the world in Manhattan in 1941. As the story goes, a bartender had mistakenly ordered too much ginger beer, and invented this drink to unload excess stock. It had the added benefit of featuring vodka, a spirit that wasn’t yet super mainstream.",
+    "Ingredients": [ "vodka", "ginger beer", "lime juice" ]
+  },
+  {
+    "Name": "Cinnamon Smoked Screwdriver",
+    "Description": "We’ve all sipped on a Screwdriver at one point in our lives. (If we were really adventurous, maybe we added grenadine and made it a Vodka Sunrise.) I’ve decided to bring some holiday flavor to this  two-ingredient classic I enjoyed frequently as a college student. I bought a little extra balance with triple sec and introduced an additional aroma to the drink with smoked cinnamon.",
+    "Ingredients": [ "vodka", "triple sec", "orange juice" ]
+  },
+  {
+    "Name": "Duke Lemington",
+    "Description": "It’s easy to hate on the vodka Martini. The progression of ordering one follows a general descent from optimism (James Bond drinks these, why not?) to despair (this is basically just cold vodka). But there are a few simple adjustments to take the vodka Martini from gross to Duke Ellington-level smooth, sultry, and savvy.",
+    "Ingredients": [ "lemon vodka", "dry vermouth", "citrus bitters", "rosemary simple syrup" ]
+  },
+  {
+    "Name": "Vodka Sparkler",
+    "Description": "As in a good friendship, balance in a cocktail is everything. We settled on a great sweet vermouth we had in the fridge to pair with our gift. To lengthen the cocktail, we grabbed the bottle of sparkling wine that, as luck would have it, was sitting next to the vermouth. With all of these powerful ingredients coming together, we had to add a little simple syrup in the end to sweeten the deal, but only enough to unify this delicious libation.",
+    "Ingredients": [ "vodka", "sweet vermouth", "simple syrup", "sparkling wine", "ice", "Orange twist" ]
+  },
+  {
+    "Name": "Skrewdriver",
+    "Description": "One of the world's simplest -- and most popular -- cocktails, the Screwdriver appears to have first been mixed as early as the late 1920s, by oil workers in the Middle East.",
+    "Ingredients": [ "Vodka", "Orange juice" ]
+  },
+  {
+    "Name": "Bloody Mary",
+    "Description": "Whether it's over brunch or before hopping on an airplane, the Bloody Mary is a firmly entrenched cultural icon.",
+    "Ingredients": [ "Vodka", "Tomato juice", "lemon Juice", "Worcestershire", "Pepper", "Celery salt" ]
+  },
+  {
+    "Name": "Cosmopolitan",
+    "Description": "For a generation of Americans the Cosmo(politan) will be forever associated with Sex & The City. The drink has semi-disputed origins, but it's clear that NYC's The Odeon put it on the map in the late 80s and early 90s.",
+    "Ingredients": [ "Vodka", "Cranberry juice", "Lime", "Triple Sec" ]
+  },
+  {
+    "Name": "Harvey Wallbanger",
+    "Description": "If you've ever wondered what bars use that triangular bottle of yellow liquor for (Galliano), it's the decidedly disco-era Harvey Wallbanger. In fact, the Wallbanger is one of that decade's iconic drinks.",
+    "Ingredients": [ "Vodka", "orange juice", "Galliano" ]
+  },
+  {
+    "Name": "Fuzzy Pink Flamingo",
+    "Description": "This bright and bubbly twist on the Daiquiri, one of my favorite cocktails, features a bit of grenadine and sparkling wine to make things festive. It’s perfect for summertime happy hours or weekend brunches.",
+    "Ingredients": [ "rum", "lime juice", "grenadine", "simple syrup", "Champagne", "Lime wheel" ]
+  },
+  {
+    "Name": "Tropical Toddy",
+    "Description": "This tropical hot toddy, named for its use of Hamilton Pimento Dram, a Jamaican allspice liqueur, is incredibly versatile. Try it with bourbon, rum, or apple brandy.",
+    "Ingredients": [ "bourbon", "honey syrup", "lemon juice", "Hamilton Pimento Dram", "warm water", "Lemon zest" ]
+  },
+  {
+    "Name": "Cold Night Collins",
+    "Description": "While in pursuit of a winterized Tom Collins, I somehow found myself thinking about Daiquiris. To my delight, by combining a Daiquiri base with the length of a Collins, you can create an easy-drinking hybrid that is perfect for colder weather.",
+    "Ingredients": [ "white rum", "Benedictine", "lime juice", "simple syrup", "tonic water" ]
+  },
+  {
+    "Name": "Ultimate Aperol Spritz",
+    "Description": "From northeastern Italy comes this easy, breezy cocktail with widespread appeal. Crisp Prosecco offsets bright and bitter(ish) Aperol, and that final splash of soda keeps things balanced. Green olives are a traditional garnish, but an orange wedge also works beautifully.",
+    "Ingredients": [ "Aperol", "Prosecco", "Club soda", "Orange wedge" ]
+  },
+  {
+    "Name": "Down in Flames",
+    "Description": "From Normandie, a new restaurant in Portland, Ore., comes this boozy, moody cocktail. Developed by Judson Winquist, Normandie’s co-owner and an industry veteran, it drinks like a smoky Old Fashioned, with a split base of high-proof rye and mezcal.",
+    "Ingredients": [ "mezcal", "rye whiskey", "Punt e Mes", "triple sec", "crème de cacao", "mole bitters", "Orange peel" ]
+  },
+  {
+    "Name": "Grasshopper:",
+    "Description": "The Grasshopper, a sweet, minty after-dinner drink is one of the rare, respected non-Absinthe-based green cocktails.",
+    "Ingredients": [ "crème de menthe", "crème de cacao", "Half and half" ]
+  },
+  {
+    "Name": "Last Word",
+    "Description": "The Negroni gets a lot of attention as everyone’s favorite equal-parts cocktail. If you prefer a gin drink that’s more herbal and refreshing, however, consider the Last Word. It’s made with gin, green Chartreuse, and fresh lime, plus Maraschino liqueur for a touch of sweetness.",
+    "Ingredients": [ "gin", "Chartreuse", "Maraschino liqueur", "lime juice" ]
+  },
+  {
+    "Name": "Tiki Bonfire",
+    "Description": "The orange juice, grenadine, and pineapple syrup are all base flavors here, and the lime juice gives it a nice citrusy jolt. I couldn't help but add some overproof rum at the end to give it a great tiki effect.",
+    "Ingredients": [ "white rum", "overproof rum", "Angostura bitters", "orange juice", "lime juice", "grenadine", "pineapple syrup" ]
+  },
+  {
+    "Name": "Painkiller",
+    "Description": "The Painkiller was first made in the British Virgin Islands with Pusser’s Navy Rum. You may notice it on menus with the numbers #2, #3, and #4 after its name; that indicates how many ounces of rum are used. It’s essentially a boozier Piña Colada, and is sure to drown any and all sorrows.",
+    "Ingredients": [ "Rum", "pineapple juice", "orange juice", "cream of coconut" ]
+  },
+  {
+    "Name": "Caribbean Old Fashioned",
+    "Description": "Tropical bitters are phenomenal in tiki cocktails, but I thought they might also shine here. I love how you taste the light citrus notes alongside mango and passion fruit. It’s like a ticket straight to the Caribbean.",
+    "Ingredients": [ "white rum", "aged rum", "demerara syrup", "tropical bitters" ]
   }
-
 ]
