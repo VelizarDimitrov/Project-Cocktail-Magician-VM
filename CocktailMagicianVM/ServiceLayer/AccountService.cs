@@ -30,7 +30,7 @@ namespace ServiceLayer
         {
             string userstoread = File.ReadAllText(@"../../../../Data/SolutionPreload/Users.json");
             List<UserJson> listOfUsers = JsonConvert.DeserializeObject<List<UserJson>>(userstoread);
-            if ((await FindAllUsersAsync()).Count == 0)
+            if (dbContext.Users.Count() == 0)
             {
                 foreach (var item in listOfUsers)
                 {
@@ -40,10 +40,11 @@ namespace ServiceLayer
             }
 
         }
-        public async  Task<IList<User>> FindAllUsersAsync()
-        {
-          return await dbContext.Users.ToListAsync();
-        }
+        //public async  Task<IList<User>> FindAllUsersAsync()
+        //{
+        //  List<User> users = await dbContext.Users.ToListAsync();
+        //    return users;
+        //}
         public async Task  AddAccountAsync(string userName, string firstName, string lastName, string password, string accountType,string countryName,string cityName)
         {
             if (await dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).CountAsync() == 0)

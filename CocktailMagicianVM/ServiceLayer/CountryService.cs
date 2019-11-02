@@ -11,12 +11,10 @@ namespace ServiceLayer
     public class CountryService:ICountryService
     {
         private readonly CocktailDatabaseContext dbContext;
-        private readonly ICityService cityService;
 
-        public CountryService(CocktailDatabaseContext dbContext, ICityService cityService)
+        public CountryService(CocktailDatabaseContext dbContext)
         {
             this.dbContext = dbContext;
-            this.cityService = cityService;
         }
         public async Task CreateCountryAsync(string countryName)
         {

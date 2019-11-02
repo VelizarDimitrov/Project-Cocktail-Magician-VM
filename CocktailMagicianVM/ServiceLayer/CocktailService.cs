@@ -15,12 +15,10 @@ namespace ServiceLayer
     public class CocktailService : ICocktailService
     {
         private readonly CocktailDatabaseContext dbContext;
-        private readonly IAccountService aService;
 
-        public CocktailService(CocktailDatabaseContext dbContext, IAccountService aService)
+        public CocktailService(CocktailDatabaseContext dbContext)
         {
             this.dbContext = dbContext;
-            this.aService = aService;
         }
         public async Task DatabaseCocktailFillAsync()
         {
