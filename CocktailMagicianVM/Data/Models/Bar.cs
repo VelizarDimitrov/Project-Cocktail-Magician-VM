@@ -7,6 +7,13 @@ namespace Data.Models
 {
     public class Bar : IBar
     {
+        public Bar()
+        {
+            Ratings = new List<BarRating>();
+            Comments = new List<BarComment>();
+            Cocktails = new List<BarCocktail>();
+            FavoritedBy = new List<UserBar>();
+        }
         public int Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
