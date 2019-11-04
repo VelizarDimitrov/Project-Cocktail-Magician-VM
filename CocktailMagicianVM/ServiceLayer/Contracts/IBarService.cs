@@ -7,7 +7,7 @@ namespace ServiceLayer.Contracts
 {
     public interface IBarService
     {
-        Task DatabaseBarFillASync();
+        void DatabaseBarFill();
         Task AddBarAsync(string name, string address, string description, string countryName, string cityName, byte[] barCover);
         Task<int> BarsCountAsync();
     }

@@ -8,7 +8,7 @@ namespace ServiceLayer.Contracts
 {
     public interface ICocktailService
     {
-        Task DatabaseCocktailFillAsync();
+        void DatabaseCocktailFill();
         Task CreateDrinkAsync(string name, string description, string[] ingredients, byte[] photo);
         Task AddIngredientToCocktailAsync(string cocktailName, string ingredientName);
         Task CreateIngredientAsync(string name, byte primary);

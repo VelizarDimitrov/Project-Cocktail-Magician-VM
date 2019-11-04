@@ -26,7 +26,7 @@ namespace ServiceLayer
             this.cityService = cityService;
             this.dbContext = dbContext;
         }
-        public async Task DatabaseUserFillAsync()
+        public void DatabaseUserFill()
         {
             string userstoread = File.ReadAllText(@"../../../../Data/SolutionPreload/Users.json");
             List<UserJson> listOfUsers = JsonConvert.DeserializeObject<List<UserJson>>(userstoread);
@@ -34,7 +34,7 @@ namespace ServiceLayer
             {
                 foreach (var item in listOfUsers)
                 {
-                  await AddAccountAsync(item.UserName, item.FirstName, item.LastName, item.Password, item.AccountType,item.Country,item.City);
+                  AddAccount(item.UserName, item.FirstName, item.LastName, item.Password, item.AccountType,item.Country,item.City);
                 }
 
             }
@@ -58,7 +58,7 @@ namespace ServiceLayer
             }
 
             var country =await dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).FirstAsync();
-            var city =await dbContext.Cities.Where(p => p.Name.ToLower() == countryName.ToLower()).FirstAsync();
+            var city =await dbContext.Cities.Where(p => p.Name.ToLower() == cityName.ToLower()).FirstAsync();
             var user = new User()
             {
                 UserName = userName,
@@ -73,6 +73,38 @@ namespace ServiceLayer
             await dbContext.Users.AddAsync(user);
             await dbContext.SaveChangesAsync();
 
-        }   
+        }
+
+
+        // Non-Async version of methods for Pre-Load
+        public void AddAccount(string userName, string firstName, string lastName, string password, string accountType, string countryName, string cityName)
+        {
+            if (dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).Count() == 0)
+            {
+                countryService.CreateCountry(countryName);
+            }
+
+            if (dbContext.Cities.Where(p => p.Name.ToLower() == cityName.ToLower()).Count() == 0)
+            {
+                cityService.CreateCity(cityName, countryName);
+            }
+
+            var country = dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).First();
+            var city = dbContext.Cities.Where(p => p.Name.ToLower() == cityName.ToLower()).First();
+            var user = new User()
+            {
+                UserName = userName,
+                FirstName = firstName,
+                LastName = lastName,
+                Password = hasher.Hash(password),
+                AccountType = accountType,
+                AccountStatus = "Active",
+                Country = country,
+                City = city
+            };
+            dbContext.Users.Add(user);
+            dbContext.SaveChanges();
+
+        }
     }
 }

@@ -25,17 +25,17 @@ namespace ServiceLayer
             this.countryService = countryService;
             this.cityService = cityService;
         }
-        public async Task DatabaseBarFillASync()
+        public void DatabaseBarFill()
         {
             string barstoread = File.ReadAllText(@"../../../../Data/SolutionPreload/Bars.json");
             List<BarJson> listOfBars = JsonConvert.DeserializeObject<List<BarJson>>(barstoread);
 
-            if ((await BarsCountAsync()) == 0)
+            if (dbContext.Bars.Count() == 0)
             {
                 foreach (var item in listOfBars)
                 {
                     byte[] barCover =File.ReadAllBytes(item.BarCoverPath);
-                    await AddBarAsync(item.Name, item.Address, item.Description, item.Country, item.City,barCover);
+                    AddBar(item.Name, item.Address, item.Description, item.Country, item.City,barCover);
                    
                 }
 
@@ -57,7 +57,7 @@ namespace ServiceLayer
             }
 
             var country = await dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).FirstAsync();
-            var city = await dbContext.Cities.Where(p => p.Name.ToLower() == countryName.ToLower()).FirstAsync();
+            var city = await dbContext.Cities.Where(p => p.Name.ToLower() == cityName.ToLower()).FirstAsync();
             var bar = new Bar()
             {
                 Name = name,
@@ -74,6 +74,34 @@ namespace ServiceLayer
         {
             var bars = await dbContext.Bars.CountAsync();
             return bars;
+        }
+
+        // Non-Async version of methods for Pre-Load
+
+        public void AddBar(string name, string address, string description, string countryName, string cityName, byte[] barCover)
+        {
+            if (dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).Count() == 0)
+            {
+                countryService.CreateCountry(countryName);
+            }
+
+            if (dbContext.Cities.Where(p => p.Name.ToLower() == cityName.ToLower()).Count() == 0)
+            {
+                cityService.CreateCity(cityName, countryName);
+            }
+
+            var country = dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).First();
+            var city = dbContext.Cities.Where(p => p.Name.ToLower() == cityName.ToLower()).First();
+            var bar = new Bar()
+            {
+                Name = name,
+                Address = address,
+                Description = description,
+                Country = country,
+                City = city
+            };
+            dbContext.Bars.Add(bar);
+            dbContext.SaveChanges();
         }
     }
 }

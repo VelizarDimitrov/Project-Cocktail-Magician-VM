@@ -8,5 +8,6 @@ namespace ServiceLayer.Contracts
    public interface ICityService
     {
         Task CreateCityAsync(string cityName, string countryName);
+        void CreateCity(string cityName, string countryName);
     }
 }

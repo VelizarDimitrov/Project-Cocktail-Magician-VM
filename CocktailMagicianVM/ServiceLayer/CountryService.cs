@@ -32,5 +32,24 @@ namespace ServiceLayer
                 throw new ArgumentException("Country with that name already exists!");
             }
         }
+
+        // Non-Async version of methods for Pre-Load
+
+        public void CreateCountry(string countryName)
+        {
+            if (dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).Count() == 0)
+            {
+                var country1 = new Country()
+                {
+                    Name = countryName
+                };
+                dbContext.Countries.Add(country1);
+                dbContext.SaveChanges();
+            }
+            else
+            {
+                throw new ArgumentException("Country with that name already exists!");
+            }
+        }
     }
 }

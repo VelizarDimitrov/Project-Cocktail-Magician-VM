@@ -1,5 +1,6 @@
 ﻿using CLI.Core.Contracts;
 using ServiceLayer.Contracts;
+using System;
 
 namespace CLI.Core
 {
@@ -18,9 +19,10 @@ namespace CLI.Core
 
         public void Run()
         {
-            aService.DatabaseUserFillAsync();
-            cService.DatabaseCocktailFillAsync();
-            bService.DatabaseBarFillASync();
+            aService.DatabaseUserFill();
+            cService.DatabaseCocktailFill();
+            bService.DatabaseBarFill();
+            
         }
     }
 }

@@ -20,14 +20,14 @@ namespace ServiceLayer
         {
             this.dbContext = dbContext;
         }
-        public async Task DatabaseCocktailFillAsync()
+        public void DatabaseCocktailFill()
         {
             string drinksToRead = File.ReadAllText(@"../../../../Data/SolutionPreload/Cocktails.json");
             List<CocktailJson> listOfDrinks = JsonConvert.DeserializeObject<List<CocktailJson>>(drinksToRead);
 
             foreach (var item in listOfDrinks)
             {
-                item.PhotoPath = @"../../../../Data/SolutionPreload/CocktailPhotos/"+String.Join('-',item.Name.Split(" ")).ToLower();
+                item.PhotoPath = @"../../../../Data/SolutionPreload/CocktailPhotos/"+String.Join('-',item.Name.Split(" ")).ToLower()+".jpg";
             }
 
             if (dbContext.Cocktails.Count() == 0)
@@ -35,7 +35,7 @@ namespace ServiceLayer
                 foreach (var item in listOfDrinks)
                 {
                     var photo = File.ReadAllBytes(item.PhotoPath);
-                    await CreateDrinkAsync(item.Name, item.Description, item.Ingredients, photo);
+                    CreateDrink(item.Name, item.Description, item.Ingredients, photo);
                 }
             }
         }
@@ -96,5 +96,69 @@ namespace ServiceLayer
             var ingredient = await dbContext.Ingredients.Where(p => p.Name == name.ToLower()).FirstAsync();
             return ingredient;
         }
+
+
+
+
+
+        // Non-Async version of methods for Pre-Load
+
+        public void CreateDrink(string name, string description, string[] ingredients, byte[] photo)
+        {
+            var cocktail = new Cocktail()
+            {
+                Name = name,
+                Description = description,
+                Photo = photo
+            };
+            dbContext.Cocktails.Add(cocktail);
+            dbContext.SaveChanges();
+
+            var ingCounter = 0;
+            foreach (var item in ingredients)
+            {
+                if (dbContext.Ingredients.Where(p => p.Name == item.ToLower()).Count() == 0)
+                {
+                    if (ingCounter == 0)
+                        CreateIngredient(item, 1);
+                    else
+                        CreateIngredient(item, 0);
+                }
+                ingCounter++;
+                AddIngredientToCocktail(cocktail.Name, item.ToLower());
+            }
+        }
+
+        public void AddIngredientToCocktail(string cocktailName, string ingredientName)
+        {
+            var cocktail = dbContext.Cocktails.First(p => p.Name == cocktailName);
+            var ingredient = dbContext.Ingredients.First(p => p.Name == ingredientName);
+            var link = new CocktailIngredient()
+            {
+                Cocktail = cocktail,
+                Ingredient = ingredient
+            };
+            dbContext.CocktailIngredient.Add(link);
+            dbContext.SaveChanges();
+        }
+
+        public void CreateIngredient(string name, byte primary)
+        {
+            var ingredient = new Ingredient()
+            {
+                Name = name.ToLower(),
+                Primary = primary
+            };
+
+            dbContext.Ingredients.Add(ingredient);
+            dbContext.SaveChanges();
+        }
+
+        public Ingredient GetIngredient(string name)
+        {
+            var ingredient = dbContext.Ingredients.Where(p => p.Name == name.ToLower()).First();
+            return ingredient;
+        }
+
     }
 }

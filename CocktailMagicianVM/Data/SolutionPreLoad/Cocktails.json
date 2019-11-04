@@ -55,7 +55,7 @@
     "Ingredients": [ "vodka", "sweet vermouth", "simple syrup", "sparkling wine", "ice", "Orange twist" ]
   },
   {
-    "Name": "Skrewdriver",
+    "Name": "Screwdriver",
     "Description": "One of the world's simplest -- and most popular -- cocktails, the Screwdriver appears to have first been mixed as early as the late 1920s, by oil workers in the Middle East.",
     "Ingredients": [ "Vodka", "Orange juice" ]
   },
@@ -100,7 +100,7 @@
     "Ingredients": [ "mezcal", "rye whiskey", "Punt e Mes", "triple sec", "crème de cacao", "mole bitters", "Orange peel" ]
   },
   {
-    "Name": "Grasshopper:",
+    "Name": "Grasshopper",
     "Description": "The Grasshopper, a sweet, minty after-dinner drink is one of the rare, respected non-Absinthe-based green cocktails.",
     "Ingredients": [ "crème de menthe", "crème de cacao", "Half and half" ]
   },

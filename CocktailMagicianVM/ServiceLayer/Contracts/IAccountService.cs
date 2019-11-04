@@ -8,7 +8,7 @@ namespace ServiceLayer.Contracts
 {
     public interface IAccountService
     {
-        Task DatabaseUserFillAsync();
+        void DatabaseUserFill();
         Task AddAccountAsync(string userName, string firstName, string lastName, string password, string accountType, string countryName, string cityName);
         //Task<IList<User>> FindAllUsersAsync();
     }
