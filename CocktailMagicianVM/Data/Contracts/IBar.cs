@@ -11,6 +11,7 @@ namespace Data.Contracts
         string Name { get; set; }
         string Address { get; set; }
         string Description { get; set; }
+        byte[] BarCover { get; set; }
         int? CityId { get; set; }
         City City { get; set; }
         int? CountryId { get; set; }

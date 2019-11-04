@@ -103,6 +103,7 @@ namespace Data.Migrations
                     Name = table.Column<string>(nullable: true),
                     Address = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
+                    BarCover = table.Column<byte[]>(nullable: true),
                     CityId = table.Column<int>(nullable: true),
                     CountryId = table.Column<int>(nullable: true)
                 },

@@ -63,6 +63,7 @@ namespace ServiceLayer
                 Name = name,
                 Address=address,
                 Description=description,
+                BarCover = barCover,
                 Country = country,
                 City = city
             };
@@ -97,6 +98,7 @@ namespace ServiceLayer
                 Name = name,
                 Address = address,
                 Description = description,
+                BarCover=barCover,
                 Country = country,
                 City = city
             };

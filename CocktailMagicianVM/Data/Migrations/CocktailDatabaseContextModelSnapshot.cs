@@ -27,6 +27,8 @@ namespace Data.Migrations
 
                     b.Property<string>("Address");
 
+                    b.Property<byte[]>("BarCover");
+
                     b.Property<int?>("CityId");
 
                     b.Property<int?>("CountryId");
