@@ -106,5 +106,17 @@ namespace ServiceLayer
             dbContext.SaveChanges();
 
         }
+        public async Task<User> FindUserWebAsync(string userName, string password)
+        {
+            var user = await dbContext.Users              
+               .Where(p => p.UserName == userName)
+               .FirstOrDefaultAsync();
+            if (user == null || !this.hasher.Verify(password, user.Password))
+            {
+                throw new ArgumentException("username or password incorrect");
+            }
+
+            return user;
+        }
     }
 }

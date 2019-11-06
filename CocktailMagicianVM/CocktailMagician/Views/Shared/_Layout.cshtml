@@ -75,30 +75,43 @@
                                 <a href="restaurant.html">Catalog</a>
                                 <ul>
                                     <li><a href="restaurant.html">Bar Search</a></li>
-                                    <li><a href="restaurant-grid.html">City Search</a></li>
+                                    <li><a href="restaurant-grid.html">Cocktail Search</a></li>
                                 </ul>
                             </li>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li>
+                                    <a href="#">User</a>
+                                    <ul>
+                                        <li><a href="user-profile.html">Profile</a></li>
+                                        <li><a href="user-profile-update.html">Profile Update</a></li>
+                                        <li><a href="user-favourite-restaurant.html">Favorite Bars</a></li>
+                                        <li><a href="user-favourite-restaurant.html">Favorite Cocktails</a></li>
+                                    </ul>
+                                </li>
 
-                            <li>
-                                <a href="#">User</a>
-                                <ul>
-                                    <li><a href="user-empty.html">Dashboard - Empty</a></li>
-                                    <li><a href="user-profile.html">Profile</a></li>
-                                    <li><a href="user-profile-update.html">Profile Update</a></li>
-                                    <li><a href="user-favourite-restaurant.html">Favourite Restaurant</a></li>
-                                    <li><a href="user-change-pass.html">Change Password</a></li>
-                                </ul>
-                            </li>
+                            }
                         </ul>
 
                     </div><!--/.nav-collapse -->
-
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="nav-mini-wrapper">
+                            <ul class="nav-mini sign-in">
+                                <li><a href="login.html">logout</a></li>                        
+                            </ul>
+                        </div>
+                    }
+                    else
+                    {
                     <div class="nav-mini-wrapper">
                         <ul class="nav-mini sign-in">
-                            <li><a href="login.html">login</a></li>
+                            <li><a asp-action="Login" asp-controller="Auth">login</a></li>
                             <li><a href="login.html">register</a></li>
                         </ul>
                     </div>
+
+                    }
 
                 </div>
 

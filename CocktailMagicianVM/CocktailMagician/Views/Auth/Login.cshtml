@@ -1,0 +1,174 @@
+﻿@model LoginViewModel
+<!-- start Main Wrapper -->
+<div class="main-wrapper">
+
+    <!-- start hero-header -->
+    <div class="breadcrumb-wrapper">
+
+        <div class="container">
+
+            <ol class="breadcrumb-list">
+                <li><a href="index.html">Home</a></li>
+                <li><span>Login</span></li>
+            </ol>
+
+        </div>
+
+    </div>
+    <!-- end hero-header -->
+
+    <div class="error-page-wrapper">
+
+        <div class="container">
+
+            <div class="row">
+
+
+
+                <!-- login container -->
+
+                <div class="login-container">
+                    <!-- Combined Form Content -->
+                    <div class="login-container-content">
+                        <ul class="nav nav-tabs nav-justified">
+                            <li class="active link-one"><a href="#login-block" data-toggle="tab"><i class="fa fa-sign-in"></i>Sign In</a></li>
+                            <li class="link-two"><a href="#register-block" data-toggle="tab"><i class="fa fa-pencil"></i>Sign Up</a></li>
+                            <li class="link-three"><a href="#contact-block" data-toggle="tab"><i class="fa fa-envelope"></i>Contact</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active fade in" id="login-block">
+                                <!-- Login Block Form -->
+                                <div class="login-block-form">
+                                    <!-- Heading -->
+                                    <h4>Sign In to your Account</h4>
+                                    <!-- Border -->
+                                    <div class="bor bg-orange"></div>
+                                    <!-- Form -->
+                                    <form class="form" role="form" method="post"asp-action="Login" asp-controller="Auth">
+                                        <!-- Form Group -->
+                                        <div class="form-group">
+                                            <!-- Label -->
+                                            <label class="control-label">Username</label>
+                                            <!-- Input -->
+                                            <input type="text" class="form-control"asp-for="@Model.UserName" placeholder="Enter Username">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Password</label>
+                                            <input type="password" class="form-control"asp-for="@Model.Password" placeholder="Enter Password">
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox"> Remember
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <!-- Button -->
+                                            <button type="submit" class="btn btn-primary">Sign In</button>&nbsp;
+                                            <button type="submit" class="btn btn-primary btn-inverse">Reset</button>
+                                        </div>
+                                        <div class="form-group">
+                                            <a href="account-forgot-password-page.html" class="black">Forget Password ?</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="register-block">
+                                <div class="register-block-form">
+                                    <!-- Heading -->
+                                    <h4>Create the New Account</h4>
+                                    <!-- Border -->
+                                    <div class="bor bg-orange"></div>
+                                    <!-- Form -->
+                                    <form class="form" role="form">
+                                        <!-- Form Group -->
+                                        <div class="form-group">
+                                            <!-- Label -->
+                                            <label class="control-label">Name</label>
+                                            <!-- Input -->
+                                            <input type="text" class="form-control" placeholder="Enter Name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Email</label>
+                                            <input type="text" class="form-control" placeholder="Enter Email">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Password</label>
+                                            <input type="password" class="form-control" placeholder="Enter Password">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Confirm Password</label>
+                                            <input type="password" class="form-control" placeholder="Re-type password again">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Your Country</label>
+                                            <select class="form-control" id="country">
+                                                <option>Select Your Country</option>
+                                                <option>India</option>
+                                                <option>USA</option>
+                                                <option>London</option>
+                                                <option>Canada</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <!-- Checkbox -->
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox"> By register, I read & accept  <a href="#">the terms</a>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <!-- Buton -->
+                                            <button type="submit" class="btn btn-primary">Submit</button>&nbsp;
+                                            <button type="submit" class="btn btn-primary btn-inverse">Reset</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="contact-block">
+                                <!-- Contact Block Form -->
+                                <div class="contact-block-form">
+                                    <h4>Contact Form</h4>
+                                    <!-- Border -->
+                                    <div class="bor bg-orange"></div>
+                                    <!-- Form -->
+                                    <form class="form" role="form">
+                                        <!-- Form Group -->
+                                        <div class="form-group">
+                                            <label class="control-label">Name</label>
+                                            <input type="text" class="form-control" placeholder="Enter Name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Email</label>
+                                            <input type="text" class="form-control" placeholder="Enter Email">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Subject</label>
+                                            <input type="text" class="form-control" placeholder="Enter Subject">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="comments" class="control-label">Comments</label>
+                                            <textarea class="form-control" id="comments" rows="5" placeholder="Enter Comments"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <!-- Buton -->
+                                            <button type="submit" class="btn btn-primary">Submit</button>&nbsp;
+                                            <button type="submit" class="btn btn-primary btn-inverse">Reset</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+    </div>
