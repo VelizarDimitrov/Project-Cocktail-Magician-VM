@@ -5026,6 +5026,12 @@ ul.work-expereince-interest li .icon {
     position: relative;
 }
 
+.footer-atbottom {
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+}
+
 .main-footer a {
     color: rgba(255, 255, 255, 0.5);
     font-weight: 400;

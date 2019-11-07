@@ -70,7 +70,7 @@ namespace CocktailMagician.Controllers
         //    }
         //}
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Logout()
         {
             await this.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -106,5 +106,17 @@ namespace CocktailMagician.Controllers
         private RedirectToActionResult BackToHome()
           => RedirectToAction("Index", "Home");
 
+        public async Task<IActionResult> CheckIfUsernameAvailable(string username)
+        {
+            var user = await aService.FindUserByUserName(username);
+            if (user == null)
+            {
+                return Json("available");
+            }
+            else
+            {
+                return Json("unavailable");
+            }
+        }
     }
 }

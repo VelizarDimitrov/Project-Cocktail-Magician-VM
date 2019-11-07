@@ -19,46 +19,33 @@ namespace ServiceLayer
         private readonly ICountryService countryService;
         private readonly ICityService cityService;
         private readonly CocktailDatabaseContext dbContext;
-        public AccountService(CocktailDatabaseContext dbContext, IHashing hasher,ICountryService countryService,ICityService cityService)
+        public AccountService(CocktailDatabaseContext dbContext, IHashing hasher, ICountryService countryService, ICityService cityService)
         {
             this.hasher = hasher;
             this.countryService = countryService;
             this.cityService = cityService;
             this.dbContext = dbContext;
         }
-        public void DatabaseUserFill()
-        {
-            string userstoread = File.ReadAllText(@"../../../../Data/SolutionPreload/Users.json");
-            List<UserJson> listOfUsers = JsonConvert.DeserializeObject<List<UserJson>>(userstoread);
-            if (dbContext.Users.Count() == 0)
-            {
-                foreach (var item in listOfUsers)
-                {
-                  AddAccount(item.UserName, item.FirstName, item.LastName, item.Password, item.AccountType,item.Country,item.City);
-                }
 
-            }
-
-        }
         //public async  Task<IList<User>> FindAllUsersAsync()
         //{
         //  List<User> users = await dbContext.Users.ToListAsync();
         //    return users;
         //}
-        public async Task  AddAccountAsync(string userName, string firstName, string lastName, string password, string accountType,string countryName,string cityName)
+        public async Task AddAccountAsync(string userName, string firstName, string lastName, string password, string accountType, string countryName, string cityName)
         {
             if (await dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).CountAsync() == 0)
             {
                 await countryService.CreateCountryAsync(countryName);
             }
-            
+
             if (await dbContext.Cities.Where(p => p.Name.ToLower() == cityName.ToLower()).CountAsync() == 0)
             {
-                await cityService.CreateCityAsync(cityName,countryName);
+                await cityService.CreateCityAsync(cityName, countryName);
             }
 
-            var country =await dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).FirstAsync();
-            var city =await dbContext.Cities.Where(p => p.Name.ToLower() == cityName.ToLower()).FirstAsync();
+            var country = await dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).FirstAsync();
+            var city = await dbContext.Cities.Where(p => p.Name.ToLower() == cityName.ToLower()).FirstAsync();
             var user = new User()
             {
                 UserName = userName,
@@ -67,15 +54,36 @@ namespace ServiceLayer
                 Password = hasher.Hash(password),
                 AccountType = accountType,
                 AccountStatus = "Active",
-                Country=country,
-                City=city
+                Country = country,
+                City = city
             };
             await dbContext.Users.AddAsync(user);
             await dbContext.SaveChangesAsync();
 
         }
 
+        public async Task<User> FindUserByUserName(string userName)
+        {
+            var user = await dbContext.Users
+                 .Where(p => p.UserName == userName)
+                 .FirstOrDefaultAsync();
+            return user;
+        }
 
+        public void DatabaseUserFill()
+        {
+            string userstoread = File.ReadAllText(@"../../../../Data/SolutionPreload/Users.json");
+            List<UserJson> listOfUsers = JsonConvert.DeserializeObject<List<UserJson>>(userstoread);
+            if (dbContext.Users.Count() == 0)
+            {
+                foreach (var item in listOfUsers)
+                {
+                    AddAccount(item.UserName, item.FirstName, item.LastName, item.Password, item.AccountType, item.Country, item.City);
+                }
+
+            }
+
+        }
         // Non-Async version of methods for Pre-Load
         public void AddAccount(string userName, string firstName, string lastName, string password, string accountType, string countryName, string cityName)
         {
@@ -108,7 +116,7 @@ namespace ServiceLayer
         }
         public async Task<User> FindUserWebAsync(string userName, string password)
         {
-            var user = await dbContext.Users              
+            var user = await dbContext.Users
                .Where(p => p.UserName == userName)
                .FirstOrDefaultAsync();
             if (user == null || !this.hasher.Verify(password, user.Password))

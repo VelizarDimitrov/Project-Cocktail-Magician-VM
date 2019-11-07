@@ -11,6 +11,7 @@ namespace ServiceLayer.Contracts
         void DatabaseUserFill();
         Task AddAccountAsync(string userName, string firstName, string lastName, string password, string accountType, string countryName, string cityName);
         Task<User> FindUserWebAsync(string userName, string password);
+        Task<User> FindUserByUserName(string username);
         //Task<IList<User>> FindAllUsersAsync();
     }
 }
