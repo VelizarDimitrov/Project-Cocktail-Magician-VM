@@ -84,32 +84,34 @@
                                         <!-- Form Group -->
                                         <div class="form-group">
                                             <label class="control-label">Username</label>
-                                            <input type="text" onchange="CheckIfFree(this.value)" class="form-control" placeholder="Enter Username">
+                                            <input asp-for="UserName" type="text" oninput="CheckIfFree(this.value)" class="form-control" placeholder="Enter Username">
                                             <span id="username-validation" hidden="hidden" style="color: red;" class="text-danger">Username is already taken</span>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">First Name</label>
-                                            <input type="text" class="form-control" placeholder="Enter First Name">
+                                            <input asp-for="FirstName" type="text" class="form-control" placeholder="Enter First Name">
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">Last Name</label>
-                                            <input type="text" class="form-control" placeholder="Enter Last Name">
+                                            <input asp-for="LastName" type="text" class="form-control" placeholder="Enter Last Name">
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">Password</label>
-                                            <input type="password" class="form-control" placeholder="Enter Password">
+                                            <input asp-for="Password" oninput="CheckIfPassConfirmed()" id="password" type="password" class="form-control" placeholder="Enter Password">
+                                            <span id="password-length" hidden="hidden" style="color: red;" class="text-danger">Password must be at least 6 characters long</span>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">Confirm Password</label>
-                                            <input type="password" class="form-control" placeholder="Re-type password again">
+                                            <input oninput="CheckIfPassConfirmed()" id="password-confirm" type="password" class="form-control" placeholder="Re-type password again">
+                                            <span id="password-validation" hidden="hidden" style="color: red;" class="text-danger">Passwords do not match</span>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">Country</label>
-                                            <input type="text" class="form-control" placeholder="Enter Country Name">
+                                            <input asp-for="Country" type="text" class="form-control" placeholder="Enter Country Name">
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">City</label>
-                                            <input type="text" class="form-control" placeholder="Enter City Name">
+                                            <input asp-for="City" type="text" class="form-control" placeholder="Enter City Name">
                                         </div>
                                         <div class="form-group">
                                             <!-- Buton -->
@@ -127,8 +129,30 @@
     </div>
 </div>
 <script>
-    function CheckIfFree(username)
-    {
+    const CheckIfPassConfirmed = function () {
+        let password = document.getElementById("password").value;
+        let confirmed = document.getElementById('password-confirm').value;
+        const passValidSpan = $('#password-validation');
+        const passLengthSpan = $('#password-length');
+        if (password === confirmed) {
+            passValidSpan.attr('hidden', 'hidden');
+            document.getElementById("register-button").disabled = false;
+        }
+        else {
+            passValidSpan.removeAttr('hidden', 'hidden');
+            document.getElementById("register-button").disabled = true;
+        }
+        if (password.length < 6) {
+            passLengthSpan.removeAttr('hidden', 'hidden');
+            document.getElementById("register-button").disabled = true;
+        }
+        else {
+            passLengthSpan.attr('hidden', 'hidden');
+            document.getElementById("register-button").disabled = false;
+        }
+    }
+
+    function CheckIfFree(username) {
         $.ajax({
             url: '/auth/checkifusernameavailable',
             type: "GET",
@@ -143,7 +167,7 @@
                     userSpan.attr('hidden', 'hidden');
                     document.getElementById("register-button").disabled = false;
                 }
-                
+
             }
         });
     }
@@ -154,5 +178,9 @@
     }
 
     window.onload = Transparency;
+
+
+
+
 
 </script>

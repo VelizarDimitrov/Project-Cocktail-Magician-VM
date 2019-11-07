@@ -51,24 +51,24 @@ namespace CocktailMagician.Controllers
             return View("RegisterView");
         }
         [HttpPost]
-        //public async Task<IActionResult> Register(UserModel vm)
-        //{
-        //    if (!this.ModelState.IsValid)
-        //        return BackToHome();
-        //    try
-        //    {
-        //        vm.AccountType = "Member";
-        //        await this.aService.AddAccountAsync(vm.UserName, vm.FirstName, vm.LastName, vm.Password, vm.AccountType);
-        //        var user = await aService.FindUserWebAsync(vm.UserName, vm.Password);
-        //        SignInUser(user);
 
-        //        return BackToHome();
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return BackToHome();
-        //    }
-        //}
+        public async Task<IActionResult> Register(LoginViewModel vm)
+        {
+            if (!this.ModelState.IsValid)
+                return BackToHome();
+            try
+            {
+                await this.aService.AddAccountAsync(vm.UserName, vm.FirstName, vm.LastName, vm.Password, "Bar Crawler",vm.Country,vm.City);
+                var user = await aService.FindUserWebAsync(vm.UserName, vm.Password);
+                SignInUser(user);
+
+                return BackToHome();
+            }
+            catch (Exception)
+            {
+                return BackToHome();
+            }
+        }
 
         [HttpGet]
         public async Task<IActionResult> Logout()

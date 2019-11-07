@@ -9,5 +9,6 @@ namespace ServiceLayer.Contracts
     {
         Task CreateCityAsync(string cityName, string countryName);
         void CreateCity(string cityName, string countryName);
+        Task<IList<string>> GetAllCityNames();
     }
 }

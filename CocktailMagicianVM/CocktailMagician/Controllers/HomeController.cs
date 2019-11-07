@@ -5,12 +5,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CocktailMagician.Models;
+using ServiceLayer.Contracts;
 
 namespace CocktailMagician.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly ICityService cityService;
+
+        public HomeController(ICityService cityService)
+        {
+            this.cityService = cityService;
+        }
+    public IActionResult Index()
         {
             return View();
         }
@@ -24,6 +31,12 @@ namespace CocktailMagician.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public async Task<IActionResult> GetAllCities(string username)
+        {
+            var cities = (await cityService.GetAllCityNames()).ToArray();
+            return Json(cities);
         }
     }
 }

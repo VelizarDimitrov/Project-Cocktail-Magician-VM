@@ -2,6 +2,8 @@
 using Data.Models;
 using Microsoft.EntityFrameworkCore;
 using ServiceLayer.Contracts;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -33,6 +35,12 @@ namespace ServiceLayer
             };
             await dbContext.Cities.AddAsync(city1);
             await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<IList<string>> GetAllCityNames()
+        {
+            var cities = await dbContext.Cities.Select(p=>p.Name).ToListAsync();
+            return cities;
         }
 
         // Non-Async version of methods for Pre-Load
