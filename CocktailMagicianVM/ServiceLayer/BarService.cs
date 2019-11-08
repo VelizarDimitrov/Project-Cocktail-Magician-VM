@@ -105,5 +105,15 @@ namespace ServiceLayer
             dbContext.Bars.Add(bar);
             dbContext.SaveChanges();
         }
+        public async Task<IList<string>> GetAllBarNames()
+        {
+            var bars = await dbContext.Bars.Select(p => p.Name).ToListAsync();
+            return bars;
+        }
+        public async Task<IList<string>> GetBarsFromCity(string cityName)
+        {
+            var bars =await dbContext.Bars.Where(p => p.City.Name == cityName).Select(p=>p.Name).ToListAsync();
+            return bars;
+        }
     }
 }

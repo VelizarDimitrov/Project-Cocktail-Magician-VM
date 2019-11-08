@@ -61,5 +61,11 @@ namespace ServiceLayer
             dbContext.Cities.Add(city1);
             dbContext.SaveChanges();
         }
+
+        public async Task<bool> CheckifCityNameIsCorrect(string cityName)
+        {
+            bool cityExists = (await dbContext.Cities.Where(p => p.Name == cityName).CountAsync()).Equals(1);
+            return cityExists;
+        }
     }
 }
