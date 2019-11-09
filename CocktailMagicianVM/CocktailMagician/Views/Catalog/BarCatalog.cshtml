@@ -1,0 +1,301 @@
+﻿@model BarCatalogViewModel
+    <div class="breadcrumb-wrapper">
+
+        <div class="container">
+
+            <ol class="breadcrumb-list booking-step">
+                <li><a href="#">Home</a></li>
+                <li><span>All restaurant</span></li>
+            </ol>
+
+        </div>
+
+    </div>
+    <div class="main-wrapper">
+
+        <div class="second-search-restaurant-wrapper">
+
+            <div class="container">
+
+                <form>
+
+                    <div class="second-search-result-inner">
+                        <span class="labeling">Search a restaurant</span>
+                        <div class="row">
+
+                            <div class="col-xss-12 col-xs-6 col-sm-6 col-md-5">
+                                <div class="form-group form-lg">
+                                    <select id="criteria" asp-items="@Model.Criterias" class="form-control" ></select>
+                                </div>
+                            </div>
+
+                            <div class="col-xss-12 col-xs-6 col-sm-6 col-md-5">
+                                <div class="form-group form-lg">
+                                    <input id="keyword" class="form-control" placeholder="Find a Bar"/>
+                                </div>
+                            </div>
+
+                            <div class="col-xss-12 col-xs-6 col-sm-4 col-md-2">
+                                <button class="btn btn-block" id="search-catalog" onclick="SearchEventHandler()">Search</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <div class="section sm">
+
+            <div class="container">
+
+                <div class="sorting-wrappper">
+
+                    <div class="sorting-header">
+                        <h3 class="sorting-title">We found 592 restaurant</h3>
+                    </div>
+
+                    <div class="sorting-content">
+
+                        <div class="row">
+
+                            <div class="col-sm-12 col-md-7">
+
+                                <div class="row gap-10">
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label>Sort By:</label>
+                                            <select asp-items="@Model.OrderBy" id="order" class="selectpicker form-control" data-show-subtext="true"></select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-sm-12 col-md-5">
+
+                                <div class="text-right hidden-sm hidden-xs">
+                                    <button class="btn btn-toggle btn-refine collapsed" data-toggle="collapse" data-target="#refine-result">More filters</button>
+                                </div>
+                                <div class="clear"></div>
+
+                                <div class="text-right visible-sm visible-xs">
+                                    <button class="btn btn-toggle btn-refine collapsed" data-toggle="collapse" data-target="#refine-result">More filters</button>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div id="refine-result" class="collapse">
+
+                            <div class="collapse-inner clearfix">
+
+                                <div class="row">
+
+                                    <div class="col-sm-12 col-md-7">
+                                        <div class="row gap-10">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label>Rating:</label>
+                                                    <div class="sidebar-module-inner">
+                                                        <input id="price_range" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div id="search-results">
+                    <partial name="_BarSearchView" model="@Model.BarSearchViewModel" />
+                </div>
+
+                <div class="restaurant-wrapper">
+
+                    <div class="row">
+                        <div class="col-sm-4 col-md-3 mt-25">
+
+                            <div class="restaurant-list-wrapper">
+
+                                <aside class="sidebar with-filter">
+
+                                    <div class="sidebar-inner">
+
+                                        <div class="sidebar-module">
+                                            <h4 class="sidebar-title">New Bars</h4>
+
+                                            <div class="top-company-2-wrapper">
+
+                                                <div class="GridLex-gap-10">
+
+                                                    <div class="GridLex-grid-noGutter-equalHeight">
+
+                                                        <div class="GridLex-col-12_sm-12_xs-6_xss-12">
+
+                                                            <div class="top-company-2">
+                                                                <a href="#">
+
+                                                                    <div class="image">
+                                                                        <img src="images/brands/08.png" alt="image" />
+                                                                    </div>
+
+                                                                    <div class="content">
+                                                                        <h5 class="heading text-primary font700">Spice Delight</h5>
+                                                                        <p class="texting font600">Lorem ipsum dolor sit amet, consectetur and much more...</p>
+                                                                        <p class="mata-p clearfix"><span class="text-primary font700">&pound;15</span> <span class="font13">min order</span> <span class="pull-right icon"><i class="fa fa-long-arrow-right"></i></span></p>
+                                                                    </div>
+
+                                                                </a>
+
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="GridLex-col-12_sm-12_xs-6_xss-12">
+
+                                                            <div class="top-company-2">
+                                                                <a href="#">
+
+                                                                    <div class="image">
+                                                                        <img src="images/brands/09.png" alt="image" />
+                                                                    </div>
+
+                                                                    <div class="content">
+                                                                        <h5 class="heading text-primary font700">Fish Chips</h5>
+                                                                        <p class="texting font600">Lorem ipsum dolor sit amet, consectetur and much more...</p>
+                                                                        <p class="mata-p clearfix"><span class="text-primary font700">&pound;15</span> <span class="font13">min order</span> <span class="pull-right icon"><i class="fa fa-long-arrow-right"></i></span></p>
+                                                                    </div>
+
+                                                                </a>
+
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="GridLex-col-12_sm-12_xs-6_xss-12">
+
+                                                            <div class="top-company-2">
+                                                                <a href="#">
+
+                                                                    <div class="image">
+                                                                        <img src="images/brands/05.png" alt="image" />
+                                                                    </div>
+
+                                                                    <div class="content">
+                                                                        <h5 class="heading text-primary font700">Green Chilli</h5>
+                                                                        <p class="texting font600">Lorem ipsum dolor sit amet, consectetur and much more...</p>
+                                                                        <p class="mata-p clearfix"><span class="text-primary font700">&pound;15</span> <span class="font13">min order</span> <span class="pull-right icon"><i class="fa fa-long-arrow-right"></i></span></p>
+                                                                    </div>
+
+                                                                </a>
+
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="GridLex-col-12_sm-12_xs-6_xss-12">
+
+                                                            <div class="top-company-2">
+                                                                <a href="#">
+
+                                                                    <div class="image">
+                                                                        <img src="images/brands/05.png" alt="image" />
+                                                                    </div>
+
+                                                                    <div class="content">
+                                                                        <h5 class="heading text-primary font700">Green Chilli</h5>
+                                                                        <p class="texting font600">Lorem ipsum dolor sit amet, consectetur and much more...</p>
+                                                                        <p class="mata-p clearfix"><span class="text-primary font700">&pound;15</span> <span class="font13">min order</span> <span class="pull-right icon"><i class="fa fa-long-arrow-right"></i></span></p>
+                                                                    </div>
+
+                                                                </a>
+
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="GridLex-col-12_sm-12_xs-6_xss-12">
+
+                                                            <div class="top-company-2">
+                                                                <a href="#">
+
+                                                                    <div class="image">
+                                                                        <img src="images/brands/05.png" alt="image" />
+                                                                    </div>
+
+                                                                    <div class="content">
+                                                                        <h5 class="heading text-primary font700">Green Chilli</h5>
+                                                                        <p class="texting font600">Lorem ipsum dolor sit amet, consectetur and much more...</p>
+                                                                        <p class="mata-p clearfix"><span class="text-primary font700">&pound;15</span> <span class="font13">min order</span> <span class="pull-right icon"><i class="fa fa-long-arrow-right"></i></span></p>
+                                                                    </div>
+
+                                                                </a>
+
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="GridLex-col-12_sm-12_xs-6_xss-12">
+
+                                                            <div class="top-company-2">
+                                                                <a href="#">
+
+                                                                    <div class="image">
+                                                                        <img src="images/brands/05.png" alt="image" />
+                                                                    </div>
+
+                                                                    <div class="content">
+                                                                        <h5 class="heading text-primary font700">Green Chilli</h5>
+                                                                        <p class="texting font600">Lorem ipsum dolor sit amet, consectetur and much more...</p>
+                                                                        <p class="mata-p clearfix"><span class="text-primary font700">&pound;15</span> <span class="font13">min order</span> <span class="pull-right icon"><i class="fa fa-long-arrow-right"></i></span></p>
+                                                                    </div>
+
+                                                                </a>
+
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </aside>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+</div>
+<script src="~/js/BarSearch.js"></script>
+    <script>
+           const Transparency = function () {
+        $('body').attr('class', 'not-transparent-header');
+    }
+
+    window.onload = Transparency;
+
+
+    </script>

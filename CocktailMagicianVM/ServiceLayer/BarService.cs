@@ -115,5 +115,146 @@ namespace ServiceLayer
             var bars =await dbContext.Bars.Where(p => p.City.Name == cityName).Select(p=>p.Name).ToListAsync();
             return bars;
         }
+        public async Task<byte[]> FindBarPhoto(int id)
+        {
+            var bar = await FindBarByIdAsync(id);
+            return bar.BarCover;
+        }
+
+        public async Task<Bar> FindBarByIdAsync(int id)
+        {
+            var bar = await dbContext.Bars.Where(p => p.Id == id)
+                .Include(p => p.City)
+                .Include(p => p.Country)
+                .Include(p => p.Ratings)
+                .Include(p => p.Comments)
+                .Include(p => p.Cocktails)
+                .Include(p => p.FavoritedBy)
+                .FirstAsync();
+            return bar;
+
+
+
+        }
+
+        public async Task<Tuple<IList<Bar>, bool>> FindBarByNameAsync(string keyword, int page, string selectedOrderBy)
+        {
+            var bars = await dbContext.Bars
+                .Include(p => p.City)
+                .Include(p => p.Country)
+                .Include(p => p.Ratings)
+                .Include(p => p.Comments)
+                .Include(p => p.Cocktails)
+                .Include(p => p.FavoritedBy)
+               .Where(p => p.Name.ToLower().Contains(keyword.ToLower())).Skip((page - 1) * 10)
+               .ToListAsync();
+            bool lastPage = true;
+            if (bars.Count > 10)
+            {
+                lastPage = false;
+            }
+
+            var orderBars = new List<Bar>();
+            
+            switch (selectedOrderBy)
+            {
+                case "Name":
+                    orderBars = bars.OrderBy(p => p.Name).Take(10).ToList();
+                    break;
+                case "Address":
+                    orderBars = bars.OrderBy(p => p.Address).Take(10).ToList();
+                    break;
+                case "City":
+                    orderBars = bars.OrderBy(p => p.City.Name).Take(10).ToList();
+                    break;
+                case "Rating":
+                    orderBars = bars.OrderBy(p => p.Ratings.Average(x => x.Rating)).Take(10).ToList();
+                    break;
+                default:
+                    orderBars = bars.Take(10).ToList();
+                    break;
+            }
+            return new Tuple<IList<Bar>, bool>(orderBars, lastPage);
+        }
+
+        public async Task<Tuple<IList<Bar>, bool>> FindBarByAddressAsync(string keyword, int page, string selectedOrderBy)
+        {
+            var bars = await dbContext.Bars
+              .Include(p => p.City)
+              .Include(p => p.Country)
+              .Include(p => p.Ratings)
+              .Include(p => p.Comments)
+              .Include(p => p.Cocktails)
+              .Include(p => p.FavoritedBy)
+             .Where(p => p.Address.ToLower().Contains(keyword.ToLower())).Skip((page - 1) * 10)
+             .ToListAsync();
+            bool lastPage = true;
+            if (bars.Count > 10)
+            {
+                lastPage = false;
+            }
+
+            var orderBars = new List<Bar>();
+
+            switch (selectedOrderBy)
+            {
+                case "Name":
+                    orderBars = bars.OrderBy(p => p.Name).Take(10).ToList();
+                    break;
+                case "Address":
+                    orderBars = bars.OrderBy(p => p.Address).Take(10).ToList();
+                    break;
+                case "City":
+                    orderBars = bars.OrderBy(p => p.City.Name).Take(10).ToList();
+                    break;
+                case "Rating":
+                    orderBars = bars.OrderBy(p => p.Ratings.Average(x => x.Rating)).Take(10).ToList();
+                    break;
+                default:
+                    orderBars = bars.Take(10).ToList();
+                    break;
+            }
+            return new Tuple<IList<Bar>, bool>(orderBars, lastPage);
+        }
+
+        public async Task<Tuple<IList<Bar>, bool>> FindBarByCityAsync(string keyword, int page, string selectedOrderBy)
+        {
+            var bars = await dbContext.Bars
+               .Include(p => p.City)
+               .Include(p => p.Country)
+               .Include(p => p.Ratings)
+               .Include(p => p.Comments)
+               .Include(p => p.Cocktails)
+               .Include(p => p.FavoritedBy)
+              .Where(p => p.City.Name.ToLower().Contains(keyword.ToLower())).Skip((page - 1) * 10)
+              .ToListAsync();
+            bool lastPage = true;
+            if (bars.Count > 10)
+            {
+                lastPage = false;
+            }
+
+            var orderBars = new List<Bar>();
+
+            switch (selectedOrderBy)
+            {
+                case "Name":
+                    orderBars = bars.OrderBy(p => p.Name).Take(10).ToList();
+                    break;
+                case "Address":
+                    orderBars = bars.OrderBy(p => p.Address).Take(10).ToList();
+                    break;
+                case "City":
+                    orderBars = bars.OrderBy(p => p.City.Name).Take(10).ToList();
+                    break;
+                case "Rating":
+                    orderBars = bars.OrderBy(p => p.Ratings.Average(x => x.Rating)).Take(10).ToList();
+                    break;
+                default:
+                    orderBars = bars.Take(10).ToList();
+                    break;
+            }
+            return new Tuple<IList<Bar>, bool>(orderBars, lastPage);
+        }           
     }
 }

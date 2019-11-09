@@ -60,7 +60,7 @@
 
                     <div class="logo-wrapper">
                         <div class="logo">
-                            <a href="index.html"><img src="~/images/logo.png" alt="Logo" /></a>
+                            <a asp-action="Index" asp-controller="Home"><img src="~/images/logo.png" alt="Logo" /></a>
                         </div>
                     </div>
 
@@ -69,13 +69,13 @@
                         <ul class="nav navbar-nav" id="responsive-menu">
 
                             <li>
-                                <a href="index.html">Home</a>
+                                <a asp-action="Index" asp-controller="Home">Home</a>
                             </li>
 
                             <li>
                                 <a href="restaurant.html">Catalog</a>
                                 <ul>
-                                    <li><a href="restaurant.html">Bar Search</a></li>
+                                    <li><a asp-action="BarSearch" asp-controller="Catalog">Bar Search</a></li>
                                     <li><a href="restaurant-grid.html">Cocktail Search</a></li>
                                 </ul>
                             </li>
