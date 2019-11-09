@@ -1,6 +1,7 @@
 ﻿using Data.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Data.Models
@@ -27,5 +28,14 @@ namespace Data.Models
         public ICollection<BarComment> Comments { get; set; }
         public ICollection<BarCocktail> Cocktails { get; set; }
         public ICollection<UserBar> FavoritedBy { get; set; }
+
+        public double AverageRating()
+        {
+            if (Ratings.Count==0)
+            {
+                return 0;
+            }
+            return Ratings.Average(p => p.Rating);
+        }
     }
 }

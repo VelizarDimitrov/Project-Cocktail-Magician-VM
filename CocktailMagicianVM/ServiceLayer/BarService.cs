@@ -137,8 +137,11 @@ namespace ServiceLayer
 
         }
 
-        public async Task<Tuple<IList<Bar>, bool>> FindBarByNameAsync(string keyword, int page, string selectedOrderBy)
+        public async Task<Tuple<IList<Bar>, bool>> FindBarByNameAsync(string keyword, int page, string selectedOrderBy, string rating)
         {
+            var ratings = rating.Split(';');
+            var a = int.Parse(ratings[0]);
+            var b = int.Parse(ratings[1]);
             var bars = await dbContext.Bars
                 .Include(p => p.City)
                 .Include(p => p.Country)
@@ -146,14 +149,16 @@ namespace ServiceLayer
                 .Include(p => p.Comments)
                 .Include(p => p.Cocktails)
                 .Include(p => p.FavoritedBy)
-               .Where(p => p.Name.ToLower().Contains(keyword.ToLower())).Skip((page - 1) * 10)
+               .Where(p => p.Name.ToLower().Contains(keyword.ToLower()))
+               .Where(p => p.AverageRating() >= a)
+               .Where(p => p.AverageRating() <= b)
+               .Skip((page - 1) * 10)
                .ToListAsync();
             bool lastPage = true;
             if (bars.Count > 10)
             {
                 lastPage = false;
             }
-
             var orderBars = new List<Bar>();
             
             switch (selectedOrderBy)
@@ -177,7 +182,7 @@ namespace ServiceLayer
             return new Tuple<IList<Bar>, bool>(orderBars, lastPage);
         }
 
-        public async Task<Tuple<IList<Bar>, bool>> FindBarByAddressAsync(string keyword, int page, string selectedOrderBy)
+        public async Task<Tuple<IList<Bar>, bool>> FindBarByAddressAsync(string keyword, int page, string selectedOrderBy, string rating)
         {
             var bars = await dbContext.Bars
               .Include(p => p.City)
@@ -217,7 +222,7 @@ namespace ServiceLayer
             return new Tuple<IList<Bar>, bool>(orderBars, lastPage);
         }
 
-        public async Task<Tuple<IList<Bar>, bool>> FindBarByCityAsync(string keyword, int page, string selectedOrderBy)
+        public async Task<Tuple<IList<Bar>, bool>> FindBarByCityAsync(string keyword, int page, string selectedOrderBy, string rating)
         {
             var bars = await dbContext.Bars
                .Include(p => p.City)

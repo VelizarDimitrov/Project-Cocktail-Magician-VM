@@ -1,75 +1,77 @@
 ﻿@model BarSearchViewModel
     <div class="col-sm-8 col-md-9 mt-25">
-@foreach (var bar in Model.Bars)
-{
+        @foreach (var bar in Model.Bars)
+        {
 
-        <div class="restaurant-list-wrapper">
+            <div class="restaurant-list-wrapper">
 
-            <div class="restaurant-item-list">
+                <div class="restaurant-item-list">
 
-                <div class="image">
-                    <img src="@Url.Action("GetBarPhoto", "Catalog", new { id = bar.Id })" alt="image" />
-                </div>
+                    <div class="image">
+                        <img src="@Url.Action("GetBarPhoto", "Catalog", new { id = bar.Id })" alt="image" />
+                    </div>
 
-                <div class="content">
+                    <div class="content">
 
-                    <div class="restaurant-item-list-info">
+                        <div class="restaurant-item-list-info">
 
-                        <div class="row">
+                            <div class="row">
 
-                            <div class="col-sm-7 col-md-8">
+                                <div class="col-sm-7 col-md-8">
 
-                                <h4 class="heading">@bar.Name</h4>
-                                <div class="meta-div clearfix mb-25">
+                                    <h4 class="heading">@bar.Name</h4>
+                                    <div class="meta-div clearfix mb-25">
+                                    </div>
+
+                                    <p class="texing">@bar.ShortDescription</p>
                                 </div>
 
-                                <p class="texing">@bar.ShortDescription</p>
-                            </div>
+                                <div class="col-sm-5 col-md-4">
+                                    <ul class="meta-list">
+                                        <li>
+                                            <span>Location:</span>
+                                            @bar.City , @bar.Country
+                                        </li>
+                                        <li>
+                                            <span>Rating:</span>
+                                            @bar.AverageRating
+                                        </li>
+                                    </ul>
+                                </div>
 
-                            <div class="col-sm-5 col-md-4">
-                                <ul class="meta-list">
-                                    <li>
-                                        <span>Location:</span>
-                                        @bar.City , @bar.Country
-                                    </li>
-                                    <li>
-                                        <span>Rating:</span>
-                                        @bar.AverageRating
-                                    </li>
-                                </ul>
                             </div>
 
                         </div>
 
-                    </div>
+                        <div class="restaurant-item-list-bottom">
 
-                    <div class="restaurant-item-list-bottom">
+                            <div class="row">
 
-                        <div class="row">
-
-                            <div class="col-sm-7 col-md-8">
-                                <div class="sub-category">
-                                    <span>
-                                        @for (int i = 0; i < 5; i++)
-                                        {
-                                            if (i <= bar.AverageRating)
+                                <div class="col-sm-7 col-md-8">
+                                    <div class="sub-category">
+                                        <span>
+                                            @for (int i = 0; i < 5; i++)
                                             {
-                                                <span style="color: #ED1C3B;"><i class="fa fa-star"></i></span>
+                                                if (i <= bar.AverageRating)
+                                                {
+                                                    <span style="color: #ED1C3B;"><i class="fa fa-star"></i></span>
+                                                }
+                                                else
+                                                {
+                                                    <span style="color: #CCCCCC;"><i class="fa fa-star"></i></span>
+                                                }
                                             }
-                                            else
-                                            {
-                                                <span style="color: #CCCCCC;"><i class="fa fa-star"></i></span>
-                                            }
-                                        }
-                                        <span class="review">
-                                            (<span>@bar.RatingsCount</span>)
+                                            <span class="review">
+                                                (<span>@bar.RatingsCount</span>)
+                                            </span>
                                         </span>
-                                    </span>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="col-sm-5 col-md-4">
-                                <a href="#" class="btn btn-primary">Details</a>
+                                <div class="col-sm-5 col-md-4">
+                                    <a href="#" class="btn btn-primary">Details</a>
+                                </div>
+
                             </div>
 
                         </div>
@@ -79,37 +81,37 @@
                 </div>
 
             </div>
-
-        </div>
         }
-        
+
         <div hidden="hidden">
             <input id="current-page" asp-for="Page" value="@Model.Page" />
             <input id="current-criteria" asp-for="SelectedCriteria" value="@Model.SelectedCriteria" />
             <input id="current-keyword" asp-for="Keyword" value="@Model.Keyword" />
             <input id="current-order" asp-for="SelectedOrderBy" value="@Model.SelectedOrderBy" />
         </div>
-        <div class="pager-wrapper">
+        @if (Model.Bars.Count != 0)
+        {
+            <div class="pager-wrapper">
 
-            <ul class="pager-list">
-                <li class="paging-nav"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
-                <li class="paging-nav"><a href="#"><i class="fa fa-angle-left"></i></a></li>
-                <li class="number">
-                    <span class="mr-5"><span class="font600">page</span></span>
-                </li>
-                <li class="form">
-                    <form>
-                        <input type="text" value="1" class="form-control">
-                    </form>
-                </li>
-                <li class="number">
-                    <span class="mr-5">/</span> <span class="font600">79</span>
-                </li>
-                <li class="paging-nav"><a href="#">go</a></li>
-                <li class="paging-nav"><a href="#"><i class="fa fa-angle-right"></i></a></li>
-                <li class="paging-nav"><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
-            </ul>
+                <ul class="pager-list">
+                    @if (Model.Page!=1)
+                    {
+                        <li class="paging-nav"><a onclick="PrevPage()"><i class="fa fa-angle-left"></i></a></li>
+                    }
+                    <li class="number">
+                        <span class="mr-5"><span class="font600">page</span></span>
+                    </li>
+                    <li class="number">
+                        <span class="font600">@Model.Page</span>
+                    </li>
+                    @if (!Model.LastPage)
+                    {
+                        <li class="paging-nav"><a onclick="NextPage()"><i class="fa fa-angle-right"></i></a></li>
+                    }
 
-        </div>
+                </ul>
+
+            </div>
+        }
 
     </div>

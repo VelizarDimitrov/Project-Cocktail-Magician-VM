@@ -26,7 +26,7 @@ namespace CocktailMagician.Controllers
 
             return File(picture, "image/png");
         }
-        public async Task<IActionResult> BarSearchResults(string keyword, string criteria, string order, string page)
+        public async Task<IActionResult> BarSearchResults(string keyword, string criteria, string order, string page, string rating)
         {
             var model = new BarSearchViewModel()
             {
@@ -49,13 +49,13 @@ namespace CocktailMagician.Controllers
             switch (model.SelectedCriteria)
             {
                 case "Name":
-                    tuple = await barService.FindBarByNameAsync(model.Keyword, model.Page, model.SelectedOrderBy);
+                    tuple = await barService.FindBarByNameAsync(model.Keyword, model.Page, model.SelectedOrderBy, rating);
                     break;
                 case "Address":
-                    tuple = await barService.FindBarByAddressAsync(model.Keyword, model.Page, model.SelectedOrderBy);
+                    tuple = await barService.FindBarByAddressAsync(model.Keyword, model.Page, model.SelectedOrderBy, rating);
                     break;
                 case "City":
-                    tuple = await barService.FindBarByCityAsync(model.Keyword, model.Page, model.SelectedOrderBy);
+                    tuple = await barService.FindBarByCityAsync(model.Keyword, model.Page, model.SelectedOrderBy, rating);
                     break;
                 default:
                     throw new ArgumentException();
