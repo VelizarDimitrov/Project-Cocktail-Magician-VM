@@ -28,24 +28,15 @@ namespace CocktailMagician.Controllers
         }
         public async Task<IActionResult> BarSearchResults(string keyword, string criteria, string order, string page, string rating)
         {
+            Tuple<IList<Bar>, bool> tuple;
             var model = new BarSearchViewModel()
             {
-                Keyword = keyword,
+                Keyword = keyword == null ? "" : keyword,
                 SelectedCriteria = criteria,
-                SelectedOrderBy = order,
-                Searched = true
+                SelectedOrderBy = order == null ? "" : order,
+                Searched = true,
+                Page = int.Parse(page)
             };
-
-            if (model.Keyword == null)
-            {
-                model.Keyword = "";
-            }
-            if (model.SelectedOrderBy == null)
-            {
-                model.SelectedOrderBy = "";
-            }
-            model.Page = int.Parse(page);
-            Tuple<IList<Bar>, bool> tuple;
             switch (model.SelectedCriteria)
             {
                 case "Name":
@@ -60,8 +51,7 @@ namespace CocktailMagician.Controllers
                 default:
                     throw new ArgumentException();
             }
-            IList<Bar> bars = tuple.Item1;
-            foreach (var bar in bars)
+            foreach (var bar in tuple.Item1)
             {
                 model.Bars.Add(new BarViewModel(bar));
             }
