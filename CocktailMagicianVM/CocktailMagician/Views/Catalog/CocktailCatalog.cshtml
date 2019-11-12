@@ -122,7 +122,7 @@
                                 <div class="col-md-1"></div>
                                 <div class="col-md-3">
                                     Select Primary Ingredient:
-                                    <select asp-items="@Model.MainIngredients" class="selectpicker form-control" data-show-subtext="true" id="main-ingredient"></select>
+                                    <select asp-items="@Model.MainIngredients" class="selectpicker form-control" data-show-subtext="true" onchange="changeRatingFilter()" id="main-ingredient"></select>
                                 </div>
                                 <div class="col-md-1"></div>
                             </div>
@@ -134,7 +134,6 @@
                 </div>
 
             </div>
-
 
             <div class="restaurant-wrapper">
 
@@ -157,7 +156,7 @@
         const transparency = function () {
             $('body').attr('class', 'not-transparent-header');
         }
-        window.onload = transparency;
-
+    window.onload = transparency;
+    searchEventHandler();
     </script>
 }

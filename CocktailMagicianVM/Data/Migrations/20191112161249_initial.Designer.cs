@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(CocktailDatabaseContext))]
-    [Migration("20191112095226_Initial")]
-    partial class Initial
+    [Migration("20191112161249_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,6 +54,10 @@ namespace Data.Migrations
 
                     b.Property<int>("CocktailId");
 
+                    b.Property<string>("BarName");
+
+                    b.Property<string>("CocktailName");
+
                     b.HasKey("BarId", "CocktailId");
 
                     b.HasIndex("CocktailId");
@@ -69,9 +73,13 @@ namespace Data.Migrations
 
                     b.Property<int>("BarId");
 
+                    b.Property<string>("BarName");
+
                     b.Property<string>("Comment");
 
                     b.Property<int>("UserId");
+
+                    b.Property<string>("UserUserName");
 
                     b.HasKey("Id");
 
@@ -106,7 +114,11 @@ namespace Data.Migrations
 
                     b.Property<int>("UserId");
 
+                    b.Property<string>("BarName");
+
                     b.Property<int>("Rating");
+
+                    b.Property<string>("UserName");
 
                     b.HasKey("BarId", "UserId");
 
@@ -157,9 +169,13 @@ namespace Data.Migrations
 
                     b.Property<int>("CocktailId");
 
+                    b.Property<string>("CocktailName");
+
                     b.Property<string>("Comment");
 
                     b.Property<int>("UserId");
+
+                    b.Property<string>("UserName");
 
                     b.HasKey("Id");
 
@@ -175,6 +191,10 @@ namespace Data.Migrations
                     b.Property<int>("IngredientId");
 
                     b.Property<int>("CocktailId");
+
+                    b.Property<string>("CocktailName");
+
+                    b.Property<string>("IngredientName");
 
                     b.HasKey("IngredientId", "CocktailId");
 
@@ -207,7 +227,11 @@ namespace Data.Migrations
 
                     b.Property<int>("CocktailId");
 
+                    b.Property<string>("CocktailName");
+
                     b.Property<int>("Rating");
+
+                    b.Property<string>("UserUserName");
 
                     b.HasKey("UserId", "CocktailId");
 
@@ -310,6 +334,10 @@ namespace Data.Migrations
 
                     b.Property<int>("BarId");
 
+                    b.Property<string>("BarName");
+
+                    b.Property<string>("UserName");
+
                     b.HasKey("UserId", "BarId");
 
                     b.HasIndex("BarId");
@@ -322,6 +350,10 @@ namespace Data.Migrations
                     b.Property<int>("UserId");
 
                     b.Property<int>("CocktailId");
+
+                    b.Property<string>("CocktailName");
+
+                    b.Property<string>("UserUserName");
 
                     b.HasKey("UserId", "CocktailId");
 

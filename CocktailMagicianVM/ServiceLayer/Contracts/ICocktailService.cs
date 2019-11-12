@@ -14,5 +14,9 @@ namespace ServiceLayer.Contracts
         Task CreateIngredientAsync(string name, byte primary);
         Task<Ingredient> GetIngredientAsync(string name);
         Task<IList<Ingredient>> GetAllMainIngredients();
+        Task<Tuple<IList<Cocktail>, bool>> FindCocktailByNameAsync(string keyword, int page, string selectedOrderBy, string rating, string sortOrder, string mainIngredient);
+        Task<Tuple<IList<Cocktail>, bool>> FindCocktailByBarAsync(string keyword, int page, string selectedOrderBy, string rating, string sortOrder, string mainIngredient);
+        Task<Tuple<IList<Cocktail>, bool>> FindCocktailByIngredientAsync(string keyword, int page, string selectedOrderBy, string rating, string sortOrder, string mainIngredient);
+        Task<byte[]> FindCocktailPhotoAsync(int id);
     }
 }

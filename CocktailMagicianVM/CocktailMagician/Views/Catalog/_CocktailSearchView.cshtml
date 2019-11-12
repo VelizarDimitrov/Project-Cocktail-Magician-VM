@@ -7,19 +7,18 @@
 
             @foreach (var cocktail in Model.Cocktails)
             {
-                <div class="GridLex-col-3_sm-4_xs-6_xss-12">
+                <div class="GridLex-col-3_sm-4_xs-6_xss-12" style="max-width:min-content;">
 
                     <div class="top-company-2">
                         <button>
 
-                            <div class="image" style="padding:1px">
-                                <img src="@Url.Action("GetCocktailPhoto", "Catalog", new { id = cocktail.Id })" alt="image" />
+                            <div class="center-cropped"
+                                 style="background-image:url(@Url.Action("GetCocktailPhoto", "Catalog" , new { id=cocktail.Id }));">
                             </div>
 
                             <div class="content">
-                                <h5 class="heading text-primary font700">@cocktail.Name</h5>
-                                <p class="texting font600">
-                                </p>
+                                <h5 class="heading text-primary font700" style="min-height: 37px;">@cocktail.Name</h5>
+                                <p class="texting font600" style="min-width: 172px; min-height: 48px;">@cocktail.ShortDescription</p>
                                 <p class="mata-p clearfix">
                                     <span>
                                         @for (double i = 0.5; i < 5; i++)
@@ -83,31 +82,44 @@
     }
 </div>
 
+<style>
+    .center-cropped {
+  width: 100%;
+  height: 140px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+</style>
+
 <script>
     function changeRatingFilter() {
         var sortSpan = $('#sort_order_span');
+        let mainIngredient = $('#main-ingredient').val();
         let sort = sortSpan.text();
         let rating = $('#price_range').val();
         let keyword = $('#current-keyword').val();
         let criteria = $('#current-criteria').val();
         let order = $('#current-order').val();
         let page = 1;
-        $('#search-results').load('/catalog/barsearchresults', { keyword: keyword, criteria: criteria, order: order, page: page, rating: rating, sortOrder: sort });
+        $('#search-results').load('/catalog/cocktailsearchresults', { keyword: keyword, criteria: criteria, order: order, page: page, rating: rating, sortOrder: sort, mainIngredient: mainIngredient });
     }
     function changeSorting() {
+        let rating;
         var sortSpan = $('#sort_order_span');
         let sort = sortSpan.text();
-        let rating;
         if (document.getElementById('refine-result').className === "collapse") {
             rating = "0;5";
+            mainIngredient = "";
         }
         else {
             rating = $('#price_range').val();
+            mainIngredient = $('#main-ingredient').val();
         }
         let keyword = $('#current-keyword').val();
         let criteria = $('#current-criteria').val();
         let order = $('#order').val();
         let page = 1;
-        $('#search-results').load('/catalog/barsearchresults', { keyword: keyword, criteria: criteria, order: order, page: page, rating: rating, sortOrder: sort });
+        $('#search-results').load('/catalog/cocktailsearchresults', { keyword: keyword, criteria: criteria, order: order, page: page, rating: rating, sortOrder: sort, mainIngredient: mainIngredient });
     }
 </script>

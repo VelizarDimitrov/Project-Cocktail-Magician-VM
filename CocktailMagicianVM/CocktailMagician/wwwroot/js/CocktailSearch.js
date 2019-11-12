@@ -16,7 +16,7 @@ function nextPage() {
     let criteria = $('#current-criteria').val();
     let order = $('#current-order').val();
     let page = parseInt($('#current-page').val()) + 1;
-    $('#search-results').load('/catalog/cocktailsearchresults', { keyword: keyword, criteria: criteria, order: order, page: page, rating: rating, sortOrder: sort });
+    $('#search-results').load('/catalog/cocktailsearchresults', { keyword: keyword, criteria: criteria, order: order, page: page, rating: rating, sortOrder: sort, mainIngredient: mainIngredient });
 }
 function searchEventHandler() {
     let rating;
@@ -34,8 +34,7 @@ function searchEventHandler() {
     let criteria = $('#criteria').val();
     let order = $('#order').val();
     let page = 1;
-    $('#search-results').load('/catalog/cocktailsearchresults', { keyword: keyword, criteria: criteria, order: order, page: page, rating: rating, sortOrder: sort });
-}
+    $('#search-results').load('/catalog/cocktailsearchresults', { keyword: keyword, criteria: criteria, order: order, page: page, rating: rating, sortOrder: sort, mainIngredient: mainIngredient });}
 
 function prevPage() {
     let rating;
@@ -53,8 +52,7 @@ function prevPage() {
     let criteria = $('#current-criteria').val();
     let order = $('#current-order').val();
     let page = parseInt($('#current-page').val()) - 1;
-    $('#search-results').load('/catalog/cocktailsearchresults', { keyword: keyword, criteria: criteria, order: order, page: page, rating: rating, sortOrder: sort });
-
+    $('#search-results').load('/catalog/cocktailsearchresults', { keyword: keyword, criteria: criteria, order: order, page: page, rating: rating, sortOrder: sort, mainIngredient: mainIngredient });
 }
 
 const changeSortMethod = function (id) {

@@ -83,7 +83,9 @@ namespace ServiceLayer
             var link = new CocktailIngredient()
             {
                 Cocktail = cocktail,
-                Ingredient = ingredient
+                Ingredient = ingredient,
+                CocktailName = cocktail.Name,
+                IngredientName = ingredient.Name
             };
             dbContext.CocktailIngredient.Add(link);
             dbContext.SaveChanges();
@@ -148,7 +150,9 @@ namespace ServiceLayer
             var link = new CocktailIngredient()
             {
                 Cocktail = cocktail,
-                Ingredient = ingredient
+                Ingredient = ingredient,
+                CocktailName = cocktail.Name,
+                IngredientName = ingredient.Name
             };
             await dbContext.CocktailIngredient.AddAsync(link);
             await dbContext.SaveChangesAsync();
@@ -178,9 +182,160 @@ namespace ServiceLayer
             return ingredients;
         }
 
+        public async Task<Tuple<IList<Cocktail>, bool>> FindCocktailByNameAsync(string keyword, int page, string selectedOrderBy, string rating, string sortOrder, string mainIngredient)
+        {
+            bool lastPage = true;
+            List<Cocktail> cocktails;
+            var ratings = rating.Split(';');
+            var a = int.Parse(ratings[0]);
+            var b = int.Parse(ratings[1]);
+            cocktails = await dbContext.Cocktails
+                .Include(p => p.Ingredients)
+                .Include(p => p.Bars)
+                .Include(p => p.Ratings)
+                .Include(p => p.Comments)
+                .Include(p => p.FavoritedBy)
+               .Where(p => p.Name.ToLower().Contains(keyword.ToLower()))
+               .Where(p => p.Ingredients.Where(x => x.IngredientName.Contains(mainIngredient)).Any())
+               .Where(p => p.AverageRating >= a)
+               .Where(p => p.AverageRating <= b)
+               .ToListAsync();
+            switch (selectedOrderBy)
+            {
+                case "Name":
+                    if (sortOrder == "Ascending")
+                        cocktails = cocktails.OrderBy(p => p.Name).ToList();
+                    else
+                        cocktails = cocktails.OrderByDescending(p => p.Name).ToList();
+                    break;
+                //case "Bar":
+                //    if (sortOrder == "Ascending")
+                //        cocktails = cocktails.OrderBy(p => p.Bars.Name).ToList();
+                //    else
+                //        cocktails = cocktails.OrderByDescending(p => p.Bars.Name).ToList();
+                //    break;
+                case "Rating":
+                    if (sortOrder == "Ascending")
+                        cocktails = cocktails.OrderBy(p => p.AverageRating).ToList();
+                    else
+                        cocktails = cocktails.OrderByDescending(p => p.AverageRating).ToList();
+                    break;
+                default:
+                    break;
+            }
+            cocktails = cocktails.Skip((page - 1) * 12).ToList();
+            if (cocktails.Count > 12)
+            {
+                lastPage = false;
+            }
+            cocktails = cocktails.Take(12).ToList();
+            return new Tuple<IList<Cocktail>, bool>(cocktails, lastPage);
+        }
 
+        public async Task<Tuple<IList<Cocktail>, bool>> FindCocktailByBarAsync(string keyword, int page, string selectedOrderBy, string rating, string sortOrder, string mainIngredient)
+        {
+            bool lastPage = true;
+            List<Cocktail> cocktails;
+            var ratings = rating.Split(';');
+            var a = int.Parse(ratings[0]);
+            var b = int.Parse(ratings[1]);
+            cocktails = await dbContext.Cocktails
+                .Include(p => p.Ingredients)
+                .Include(p => p.Bars)
+                .Include(p => p.Ratings)
+                .Include(p => p.Comments)
+                .Include(p => p.FavoritedBy)
+               .Where(p => p.Bars.Where(x=>x.BarName.Contains(keyword.ToLower())).Any())
+               .Where(p => p.Ingredients.Where(x => x.IngredientName.Contains(mainIngredient)).Any())
+               .Where(p => p.AverageRating >= a)
+               .Where(p => p.AverageRating <= b)
+               .ToListAsync();
+            switch (selectedOrderBy)
+            {
+                case "Name":
+                    if (sortOrder == "Ascending")
+                        cocktails = cocktails.OrderBy(p => p.Name).ToList();
+                    else
+                        cocktails = cocktails.OrderByDescending(p => p.Name).ToList();
+                    break;
+                //case "Bar":
+                //    if (sortOrder == "Ascending")
+                //        cocktails = cocktails.OrderBy(p => p.Bars.Name).ToList();
+                //    else
+                //        cocktails = cocktails.OrderByDescending(p => p.Bars.Name).ToList();
+                //    break;
+                case "Rating":
+                    if (sortOrder == "Ascending")
+                        cocktails = cocktails.OrderBy(p => p.AverageRating).ToList();
+                    else
+                        cocktails = cocktails.OrderByDescending(p => p.AverageRating).ToList();
+                    break;
+                default:
+                    break;
+            }
+            cocktails = cocktails.Skip((page - 1) * 12).ToList();
+            if (cocktails.Count > 12)
+            {
+                lastPage = false;
+            }
+            cocktails = cocktails.Take(12).ToList();
+            return new Tuple<IList<Cocktail>, bool>(cocktails, lastPage);
+        }
 
-      
+        public async Task<Tuple<IList<Cocktail>, bool>> FindCocktailByIngredientAsync(string keyword, int page, string selectedOrderBy, string rating, string sortOrder, string mainIngredient)
+        {
+            bool lastPage = true;
+            List<Cocktail> cocktails;
+            var ratings = rating.Split(';');
+            var a = int.Parse(ratings[0]);
+            var b = int.Parse(ratings[1]);
+            cocktails = await dbContext.Cocktails
+                .Include(p => p.Ingredients)
+                .Include(p => p.Bars)
+                .Include(p => p.Ratings)
+                .Include(p => p.Comments)
+                .Include(p => p.FavoritedBy)
+               .Where(p => p.Ingredients.Where(x => x.IngredientName.Contains(keyword.ToLower())).Any())
+               .Where(p => p.Ingredients.Where(x => x.IngredientName.Contains(mainIngredient)).Any())
+               .Where(p => p.AverageRating >= a)
+               .Where(p => p.AverageRating <= b)
+               .ToListAsync();
+            switch (selectedOrderBy)
+            {
+                case "Name":
+                    if (sortOrder == "Ascending")
+                        cocktails = cocktails.OrderBy(p => p.Name).ToList();
+                    else
+                        cocktails = cocktails.OrderByDescending(p => p.Name).ToList();
+                    break;
+                //case "Bar":
+                //    if (sortOrder == "Ascending")
+                //        cocktails = cocktails.OrderBy(p => p.Bars.Name).ToList();
+                //    else
+                //        cocktails = cocktails.OrderByDescending(p => p.Bars.Name).ToList();
+                //    break;
+                case "Rating":
+                    if (sortOrder == "Ascending")
+                        cocktails = cocktails.OrderBy(p => p.AverageRating).ToList();
+                    else
+                        cocktails = cocktails.OrderByDescending(p => p.AverageRating).ToList();
+                    break;
+                default:
+                    break;
+            }
+            cocktails = cocktails.Skip((page - 1) * 12).ToList();
+            if (cocktails.Count > 12)
+            {
+                lastPage = false;
+            }
+            cocktails = cocktails.Take(12).ToList();
+            return new Tuple<IList<Cocktail>, bool>(cocktails, lastPage);
+        }
 
+        public async Task<byte[]> FindCocktailPhotoAsync(int id)
+        {
+            var picture = await dbContext.CocktailPhotos.FirstAsync(p => p.CocktailId == id);
+            return picture.CocktailCover;
+        }
     }
 }

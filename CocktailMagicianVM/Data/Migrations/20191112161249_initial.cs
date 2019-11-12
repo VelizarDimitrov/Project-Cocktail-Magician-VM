@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -95,7 +95,9 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     IngredientId = table.Column<int>(nullable: false),
-                    CocktailId = table.Column<int>(nullable: false)
+                    CocktailId = table.Column<int>(nullable: false),
+                    CocktailName = table.Column<string>(nullable: true),
+                    IngredientName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -183,7 +185,9 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     BarId = table.Column<int>(nullable: false),
-                    CocktailId = table.Column<int>(nullable: false)
+                    CocktailId = table.Column<int>(nullable: false),
+                    CocktailName = table.Column<string>(nullable: true),
+                    BarName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -230,7 +234,9 @@ namespace Data.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Comment = table.Column<string>(nullable: true),
                     UserId = table.Column<int>(nullable: false),
-                    BarId = table.Column<int>(nullable: false)
+                    BarId = table.Column<int>(nullable: false),
+                    BarName = table.Column<string>(nullable: true),
+                    UserUserName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -255,7 +261,9 @@ namespace Data.Migrations
                 {
                     UserId = table.Column<int>(nullable: false),
                     BarId = table.Column<int>(nullable: false),
-                    Rating = table.Column<int>(nullable: false)
+                    Rating = table.Column<int>(nullable: false),
+                    BarName = table.Column<string>(nullable: true),
+                    UserName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -282,7 +290,9 @@ namespace Data.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Comment = table.Column<string>(nullable: true),
                     UserId = table.Column<int>(nullable: false),
-                    CocktailId = table.Column<int>(nullable: false)
+                    CocktailId = table.Column<int>(nullable: false),
+                    CocktailName = table.Column<string>(nullable: true),
+                    UserName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -307,7 +317,9 @@ namespace Data.Migrations
                 {
                     UserId = table.Column<int>(nullable: false),
                     CocktailId = table.Column<int>(nullable: false),
-                    Rating = table.Column<int>(nullable: false)
+                    Rating = table.Column<int>(nullable: false),
+                    UserUserName = table.Column<string>(nullable: true),
+                    CocktailName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -354,7 +366,9 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<int>(nullable: false),
-                    BarId = table.Column<int>(nullable: false)
+                    BarId = table.Column<int>(nullable: false),
+                    BarName = table.Column<string>(nullable: true),
+                    UserName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -378,7 +392,9 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<int>(nullable: false),
-                    CocktailId = table.Column<int>(nullable: false)
+                    CocktailId = table.Column<int>(nullable: false),
+                    CocktailName = table.Column<string>(nullable: true),
+                    UserUserName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

@@ -12,12 +12,14 @@ namespace CocktailMagician.Models
         public CocktailViewModel(ICocktail cocktail)
         {
             StringBuilder stringBuilder = new StringBuilder();
-            var ingredientsText = String.Join(", ", cocktail.Ingredients.Select(p => p.Ingredient));
-            if (cocktail.Description.Length < 53)
-                stringBuilder.Append(cocktail.Description.Substring(0));
+            var ingredientsText = String.Join(", ", cocktail.Ingredients.Select(p => p.IngredientName));
+            if (ingredientsText.Length < 53)
+                stringBuilder.Append(ingredientsText.Substring(0));
             else
-                stringBuilder.Append(cocktail.Description.Substring(0, 53));
-            stringBuilder.Append("...");
+            {
+                stringBuilder.Append(ingredientsText.Substring(0, 53));
+                stringBuilder.Append("...");
+            }
             Id = cocktail.Id;
             Name = cocktail.Name;
             AverageRating = cocktail.AverageRating;

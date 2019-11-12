@@ -28,6 +28,13 @@ namespace CocktailMagician.Controllers
 
             return File(picture, "image/png");
         }
+        [HttpGet]
+        public async Task<IActionResult> GetCocktailPhoto(int id)
+        {
+            var picture = await cService.FindCocktailPhotoAsync(id);
+
+            return File(picture, "image/png");
+        }
         public async Task<IActionResult> BarSearchResults(string keyword, string criteria, string order, string page, string rating, string sortOrder)
         {
             Tuple<IList<Bar>, bool> tuple;
@@ -59,6 +66,39 @@ namespace CocktailMagician.Controllers
             }
             model.LastPage = tuple.Item2;
             return PartialView("_BarSearchView", model);
+        }
+        public async Task<IActionResult> CocktailSearchResults(string keyword, string criteria, string order, string page, string rating, string sortOrder, string mainIngredient)
+        {
+            Tuple<IList<Cocktail>, bool> tuple;
+            var model = new CocktailSearchViewModel()
+            {
+                Keyword = keyword == null ? "" : keyword,
+                SelectedCriteria = criteria,
+                SelectedOrderBy = order == null ? "" : order,
+                Searched = true,
+                Page = int.Parse(page)
+            };
+            var ing = mainIngredient == null ? "" : mainIngredient;
+            switch (model.SelectedCriteria)
+            {
+                case "Name":
+                    tuple = await cService.FindCocktailByNameAsync(model.Keyword, model.Page, model.SelectedOrderBy, rating, sortOrder, ing);
+                    break;
+                case "Bar":
+                    tuple = await cService.FindCocktailByBarAsync(model.Keyword, model.Page, model.SelectedOrderBy, rating, sortOrder, ing);
+                    break;
+                case "Ingredient":
+                    tuple = await cService.FindCocktailByIngredientAsync(model.Keyword, model.Page, model.SelectedOrderBy, rating, sortOrder, ing);
+                    break;
+                default:
+                    throw new ArgumentException();
+            }
+            foreach (var cocktail in tuple.Item1)
+            {
+                model.Cocktails.Add(new CocktailViewModel(cocktail));
+            }
+            model.LastPage = tuple.Item2;
+            return PartialView("_CocktailSearchView", model);
         }
         [HttpGet]
         public async Task<IActionResult> BarSearch()
