@@ -11,5 +11,7 @@ namespace Data.Models
         public Bar Bar { get; set; }
         public int CocktailId { get; set; }
         public Cocktail Cocktail { get; set; }
+        public string CocktailName { get; set; }
+        public string BarName { get; set; }
     }
 }

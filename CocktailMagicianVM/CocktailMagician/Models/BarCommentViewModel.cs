@@ -10,8 +10,8 @@ namespace CocktailMagician.Models
     {
         public BarCommentViewModel(IBarComment barComment)
         {
-            UserName = barComment.User.UserName;
-            BarName = barComment.Bar.Name;
+            UserName = barComment.UserUserName;
+            BarName = barComment.BarName;
             Comment = barComment.Comment;
             UserId = barComment.UserId;
             BarId = barComment.BarId;

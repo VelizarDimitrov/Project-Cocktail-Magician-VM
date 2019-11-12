@@ -1,19 +1,22 @@
 ﻿
 function nextPage() {
     let rating;
+    let mainIngredient;
     var sortSpan = $('#sort_order_span');
     let sort = sortSpan.text();
     if (document.getElementById('refine-result').className === "collapse") {
         rating = "0;5";
+        mainIngredient = "";
     }
     else {
         rating = $('#price_range').val();
+        mainIngredient = $('#main-ingredient').val();
     }
     let keyword = $('#current-keyword').val();
     let criteria = $('#current-criteria').val();
     let order = $('#current-order').val();
     let page = parseInt($('#current-page').val()) + 1;
-    $('#search-results').load('/catalog/barsearchresults', { keyword: keyword, criteria: criteria, order: order, page: page, rating: rating, sortOrder: sort });
+    $('#search-results').load('/catalog/cocktailsearchresults', { keyword: keyword, criteria: criteria, order: order, page: page, rating: rating, sortOrder: sort });
 }
 function searchEventHandler() {
     let rating;
@@ -21,15 +24,17 @@ function searchEventHandler() {
     let sort = sortSpan.text();
     if (document.getElementById('refine-result').className === "collapse") {
         rating = "0;5";
+        mainIngredient = "";
     }
     else {
         rating = $('#price_range').val();
+        mainIngredient = $('#main-ingredient').val();
     }
     let keyword = $('#keyword').val();
     let criteria = $('#criteria').val();
     let order = $('#order').val();
     let page = 1;
-    $('#search-results').load('/catalog/barsearchresults', { keyword: keyword, criteria: criteria, order: order, page: page, rating: rating, sortOrder: sort });
+    $('#search-results').load('/catalog/cocktailsearchresults', { keyword: keyword, criteria: criteria, order: order, page: page, rating: rating, sortOrder: sort });
 }
 
 function prevPage() {
@@ -38,15 +43,17 @@ function prevPage() {
     let sort = sortSpan.text();
     if (document.getElementById('refine-result').className === "collapse") {
         rating = "0;5";
+        mainIngredient = "";
     }
     else {
         rating = $('#price_range').val();
+        mainIngredient = $('#main-ingredient').val();
     }
     let keyword = $('#current-keyword').val();
     let criteria = $('#current-criteria').val();
     let order = $('#current-order').val();
     let page = parseInt($('#current-page').val()) - 1;
-    $('#search-results').load('/catalog/barsearchresults', { keyword: keyword, criteria: criteria, order: order, page: page, rating: rating, sortOrder: sort });
+    $('#search-results').load('/catalog/cocktailsearchresults', { keyword: keyword, criteria: criteria, order: order, page: page, rating: rating, sortOrder: sort });
 
 }
 

@@ -5,12 +5,15 @@ using System.Text;
 
 namespace Data.Models
 {
-   public class CocktailComment:ICocktailComment
+    public class CocktailComment : ICocktailComment
     {
-     public  string Comment { get; set; }
-     public  int UserId { get; set; }
-     public  User User { get; set; }
-     public  int CocktailId { get; set; }
-     public  Cocktail Cocktail { get; set; }
+        public int Id { get; set; }
+        public string Comment { get; set; }
+        public int UserId { get; set; }
+        public User User { get; set; }
+        public int CocktailId { get; set; }
+        public Cocktail Cocktail { get; set; }
+        public string CocktailName { get; set; }
+        public string UserName { get; set; }
     }
 }

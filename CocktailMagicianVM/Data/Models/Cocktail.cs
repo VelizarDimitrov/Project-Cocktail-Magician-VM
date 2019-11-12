@@ -19,11 +19,12 @@ namespace Data.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public byte[] Photo { get; set; }
+        public CocktailPhoto Photo { get; set; }
         public ICollection<CocktailRating> Ratings { get; set; }
         public ICollection<CocktailComment> Comments { get; set; }
         public ICollection<BarCocktail> Bars { get; set; }
         public ICollection<CocktailIngredient> Ingredients { get; set; }
         public ICollection<UserCocktail> FavoritedBy { get; set; }
+        public double AverageRating { get; set; }
     }
 }

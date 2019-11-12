@@ -26,6 +26,7 @@ namespace Data
         public DbSet<BarComment> BarComment { get; set; }
 
         public DbSet<BarRating> BarRating { get; set; }
+        public DbSet<BarPhoto> BarPhotos { get; set; }
 
         public DbSet<City> Cities { get; set; }
 
@@ -36,6 +37,7 @@ namespace Data
         public DbSet<CocktailIngredient> CocktailIngredient { get; set; }
 
         public DbSet<CocktailRating> CocktailRating { get; set; }
+        public DbSet<CocktailPhoto> CocktailPhotos { get; set; }
 
         public DbSet<Country> Countries { get; set; }
 

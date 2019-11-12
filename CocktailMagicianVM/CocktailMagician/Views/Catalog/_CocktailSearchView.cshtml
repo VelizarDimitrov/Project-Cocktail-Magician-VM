@@ -1,58 +1,30 @@
-﻿@model BarSearchViewModel
-<div class="col-sm-8 col-md-9 mt-25">
-    @foreach (var bar in Model.Bars)
-    {
+﻿@model CocktailSearchViewModel
+<div class="company-grid-wrapper top-company-2-wrapper">
 
-        <div class="restaurant-list-wrapper">
+    <div class="GridLex-gap-30">
 
-            <div class="restaurant-item-list">
+        <div class="GridLex-grid-noGutter-equalHeight">
 
-                <div class="image">
-                    <img src="@Url.Action("GetBarPhoto", "Catalog", new { id = bar.Id })" alt="image" />
-                </div>
+            @foreach (var cocktail in Model.Cocktails)
+            {
+                <div class="GridLex-col-3_sm-4_xs-6_xss-12">
 
-                <div class="content">
+                    <div class="top-company-2">
+                        <button>
 
-                    <div class="restaurant-item-list-info">
-
-                        <div class="row">
-
-                            <div class="col-sm-7 col-md-8">
-
-                                <h4 class="heading">@bar.Name</h4>
-                                <div class="meta-div clearfix mb-25">
-                                </div>
-
-                                <p class="texing">@bar.ShortDescription</p>
+                            <div class="image" style="padding:1px">
+                                <img src="@Url.Action("GetCocktailPhoto", "Catalog", new { id = cocktail.Id })" alt="image" />
                             </div>
 
-                            <div class="col-sm-5 col-md-4">
-                                <ul class="meta-list">
-                                    <li>
-                                        <span>Location:</span>
-                                        @bar.City , @bar.Country
-                                    </li>
-                                    <li>
-                                        <span>Rating:</span>
-                                        @bar.AverageRating
-                                    </li>
-                                </ul>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="restaurant-item-list-bottom">
-
-                        <div class="row">
-
-                            <div class="col-sm-7 col-md-8">
-                                <div class="sub-category">
+                            <div class="content">
+                                <h5 class="heading text-primary font700">@cocktail.Name</h5>
+                                <p class="texting font600">
+                                </p>
+                                <p class="mata-p clearfix">
                                     <span>
                                         @for (double i = 0.5; i < 5; i++)
                                         {
-                                            if (i <= bar.AverageRating)
+                                            if (i <= cocktail.AverageRating)
                                             {
                                                 <span style="color: #ED1C3B;"><i class="fa fa-star"></i></span>
                                             }
@@ -62,34 +34,30 @@
                                             }
                                         }
                                         <span class="review">
-                                            (<span>@bar.RatingsCount</span>)
+                                            (<span>@cocktail.RatingsCount</span>)
                                         </span>
                                     </span>
-                                </div>
+                                    <span class="pull-right icon"><i class="fa fa-long-arrow-right"></i></span>
+                                </p>
                             </div>
 
-                            <div class="col-sm-5 col-md-4">
-                                <a href="#" class="btn btn-primary">Details</a>
-                            </div>
-
-                        </div>
+                        </button>
 
                     </div>
 
                 </div>
-
-            </div>
+            }
 
         </div>
-    }
 
+    </div>
     <div hidden="hidden">
         <input id="current-page" asp-for="Page" value="@Model.Page" />
         <input id="current-criteria" asp-for="SelectedCriteria" value="@Model.SelectedCriteria" />
         <input id="current-keyword" asp-for="Keyword" value="@Model.Keyword" />
         <input id="current-order" asp-for="SelectedOrderBy" value="@Model.SelectedOrderBy" />
     </div>
-    @if (Model.Bars.Count != 0)
+    @if (Model.Cocktails.Count != 0)
     {
         <div class="pager-wrapper">
 
@@ -113,7 +81,6 @@
 
         </div>
     }
-
 </div>
 
 <script>

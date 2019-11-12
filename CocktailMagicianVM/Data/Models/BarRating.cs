@@ -12,5 +12,7 @@ namespace Data.Models
         public User User { get; set; }
         public int BarId { get; set; }
         public Bar Bar { get; set; }
+        public string BarName { get; set; }
+        public string UserName { get; set; }
     }
 }

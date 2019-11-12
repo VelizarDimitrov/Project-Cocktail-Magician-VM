@@ -35,7 +35,7 @@
                 b.addEventListener("click", function (e) {
                     /*insert the value for the autocomplete text field:*/
                     inp.value = this.getElementsByTagName("input")[0].value;
-                    GetBars(inp.value);
+                    getBars(inp.value);
                     /*close the list of autocompleted values,
                     (or any other open lists of autocompleted values:*/
                     closeAllLists();
@@ -101,7 +101,7 @@
     });
 }
 var array;
-function GetCities() {
+function getCities() {
     $.ajax({
         url: '/home/getallcities',
         type: "GET",
@@ -110,7 +110,7 @@ function GetCities() {
         }
     });
 }
-function GetBars(cityName) {
+function getBars(cityName) {
     $.ajax({
         url: '/home/getallbars',
         type: "GET",
@@ -120,7 +120,7 @@ function GetBars(cityName) {
         }
     });
 }
-function GetBarsInitial() {
+function getBarsInitial() {
     $.ajax({
         url: '/home/getallbars',
         type: "GET",
@@ -130,8 +130,8 @@ function GetBarsInitial() {
         }
     });
 }
-GetCities();
-GetBarsInitial();
+getCities();
+getBarsInitial();
 
 function autocomplete(inp) {
     /*the autocomplete function takes two arguments,

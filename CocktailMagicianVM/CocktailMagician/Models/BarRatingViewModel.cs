@@ -10,8 +10,8 @@ namespace CocktailMagician.Models
     {
         public BarRatingViewModel(IBarRating barRating)
         {
-            UserName = barRating.User.UserName;
-            BarName = barRating.Bar.Name;
+            UserName = barRating.UserName;
+            BarName = barRating.BarName;
             Rating = barRating.Rating;
             UserId = barRating.UserId;
             BarId = barRating.BarId;

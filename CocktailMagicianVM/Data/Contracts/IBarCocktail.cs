@@ -11,5 +11,7 @@ namespace Data.Contracts
         Bar Bar { get; set; }
         int CocktailId { get; set; }
         Cocktail Cocktail { get; set; }
+        string CocktailName { get; set; }
+        string BarName { get; set; }
     }
 }

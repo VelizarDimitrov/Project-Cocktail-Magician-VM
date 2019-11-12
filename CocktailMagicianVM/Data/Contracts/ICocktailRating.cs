@@ -12,6 +12,7 @@ namespace Data.Contracts
         User User { get; set; }
         int CocktailId { get; set; }
         Cocktail Cocktail { get; set; }
-
+        string UserUserName { get; set; }
+        string CocktailName { get; set; }
     }
 }

@@ -5,13 +5,11 @@ using System.Text;
 
 namespace Data.Contracts
 {
-   public interface IUserBar
+    interface IBarPhoto
     {
-        int UserId { get; set; }
-        User User { get; set; }
+        int Id { get; set; }
+        byte[] BarCover { get; set; }
         int BarId { get; set; }
         Bar Bar { get; set; }
-        string BarName { get; set; }
-        string UserName { get; set; }
     }
 }

@@ -12,6 +12,7 @@ namespace Data.Contracts
         User User { get; set; }
         int BarId { get; set; }
         Bar Bar { get; set; }
-
+        string BarName { get; set; }
+        string UserName { get; set; }
     }
 }

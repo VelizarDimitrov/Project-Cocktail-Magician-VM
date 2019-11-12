@@ -20,9 +20,6 @@ namespace Data.Configuration
                 .HasOne(p => p.User)
                 .WithMany(p => p.CocktailComments)
                 .HasForeignKey(p => p.UserId);
-
-            builder
-                .HasKey(p => new { p.UserId, p.CocktailId });
         }
     }
 }

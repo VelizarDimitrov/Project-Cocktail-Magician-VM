@@ -9,41 +9,19 @@ using System.Threading.Tasks;
 
 namespace ServiceLayer
 {
-    public class CityService:ICityService
+    public class CityService : ICityService
     {
         private readonly CocktailDatabaseContext dbContext;
         private readonly ICountryService countryService;
 
-        public CityService(CocktailDatabaseContext dbContext,ICountryService countryService)
+        public CityService(CocktailDatabaseContext dbContext, ICountryService countryService)
         {
             this.dbContext = dbContext;
             this.countryService = countryService;
         }
 
-        public async Task CreateCityAsync(string cityName, string countryName)
-        {
-            if (await dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).CountAsync() == 0)
-            {
-                await countryService.CreateCountryAsync(countryName);
-            }
-            var country = await dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).FirstAsync();
-
-            var city1 = new City()
-            {
-                Name = cityName,
-                Country = country
-            };
-            await dbContext.Cities.AddAsync(city1);
-            await dbContext.SaveChangesAsync();
-        }
-
-        public async Task<IList<string>> GetAllCityNames()
-        {
-            var cities = await dbContext.Cities.Select(p=>p.Name).ToListAsync();
-            return cities;
-        }
-
         // Non-Async version of methods for Pre-Load
+
 
         public void CreateCity(string cityName, string countryName)
         {
@@ -62,6 +40,29 @@ namespace ServiceLayer
             dbContext.SaveChanges();
         }
 
+        //End of Pre-Load
+
+        public async Task CreateCityAsync(string cityName, string countryName)
+        {
+            if (await dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).CountAsync() == 0)
+            {
+                await countryService.CreateCountryAsync(countryName);
+            }
+            var country = await dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).FirstAsync();
+
+            var city1 = new City()
+            {
+                Name = cityName,
+                Country = country
+            };
+            await dbContext.Cities.AddAsync(city1);
+            await dbContext.SaveChangesAsync();
+        }
+        public async Task<IList<string>> GetAllCityNamesAsync()
+        {
+            var cities = await dbContext.Cities.Select(p => p.Name).ToListAsync();
+            return cities;
+        }
         public async Task<bool> CheckifCityNameIsCorrect(string cityName)
         {
             bool cityExists = (await dbContext.Cities.Where(p => p.Name == cityName).CountAsync()).Equals(1);

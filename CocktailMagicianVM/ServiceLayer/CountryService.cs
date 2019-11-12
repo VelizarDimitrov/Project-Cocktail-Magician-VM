@@ -16,6 +16,26 @@ namespace ServiceLayer
         {
             this.dbContext = dbContext;
         }
+
+        // Non-Async version of methods for Pre-Load
+        public void CreateCountry(string countryName)
+        {
+            if (dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).Count() == 0)
+            {
+                var country1 = new Country()
+                {
+                    Name = countryName
+                };
+                dbContext.Countries.Add(country1);
+                dbContext.SaveChanges();
+            }
+            else
+            {
+                throw new ArgumentException("Country with that name already exists!");
+            }
+        }
+        //End of Pre-Load
+
         public async Task CreateCountryAsync(string countryName)
         {
             if (await dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).CountAsync() == 0)
@@ -33,23 +53,5 @@ namespace ServiceLayer
             }
         }
 
-        // Non-Async version of methods for Pre-Load
-
-        public void CreateCountry(string countryName)
-        {
-            if (dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).Count() == 0)
-            {
-                var country1 = new Country()
-                {
-                    Name = countryName
-                };
-                dbContext.Countries.Add(country1);
-                dbContext.SaveChanges();
-            }
-            else
-            {
-                throw new ArgumentException("Country with that name already exists!");
-            }
-        }
     }
 }

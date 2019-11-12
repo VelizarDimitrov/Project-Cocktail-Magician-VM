@@ -37,7 +37,7 @@ namespace CocktailMagician.Controllers
 
         public async Task<IActionResult> GetAllCities()
         {
-            var cities = (await cityService.GetAllCityNames()).ToArray();
+            var cities = (await cityService.GetAllCityNamesAsync()).ToArray();
             return Json(cities);
         }
         public async Task<IActionResult> GetAllBars(string cityName)
@@ -45,12 +45,12 @@ namespace CocktailMagician.Controllers
             string[] bars;
             if (await cityService.CheckifCityNameIsCorrect(cityName))
             {
-               bars = (await barService.GetBarsFromCity(cityName)).ToArray();
+               bars = (await barService.GetBarsFromCityAsync(cityName)).ToArray();
                 
             }
             else
             {
-               bars = (await barService.GetAllBarNames()).ToArray();
+               bars = (await barService.GetAllBarNamesAsync()).ToArray();
 
             }
             return Json(bars);

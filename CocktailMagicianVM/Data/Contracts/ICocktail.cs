@@ -10,10 +10,12 @@ namespace Data.Contracts
         int Id { get; set; }
         string Name { get; set; }
         string Description { get; set; }
-        byte[] Photo { get; set; }
+        CocktailPhoto Photo { get; set; }
         ICollection<CocktailRating> Ratings { get; set; }
         ICollection<CocktailComment> Comments { get; set; }
         ICollection<BarCocktail> Bars { get; set; }
         ICollection<CocktailIngredient> Ingredients { get; set; }
+        ICollection<UserCocktail> FavoritedBy { get; set; }
+        double AverageRating { get; set; }
     }
 }

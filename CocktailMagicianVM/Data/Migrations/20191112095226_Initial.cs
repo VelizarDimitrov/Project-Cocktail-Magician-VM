@@ -16,7 +16,7 @@ namespace Data.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    Photo = table.Column<byte[]>(nullable: true)
+                    AverageRating = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -48,6 +48,26 @@ namespace Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Ingredients", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CocktailPhotos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CocktailCover = table.Column<byte[]>(nullable: true),
+                    CocktailId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CocktailPhotos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CocktailPhotos_Cocktails_CocktailId",
+                        column: x => x.CocktailId,
+                        principalTable: "Cocktails",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -103,9 +123,9 @@ namespace Data.Migrations
                     Name = table.Column<string>(nullable: true),
                     Address = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    BarCover = table.Column<byte[]>(nullable: true),
                     CityId = table.Column<int>(nullable: true),
-                    CountryId = table.Column<int>(nullable: true)
+                    CountryId = table.Column<int>(nullable: true),
+                    AverageRating = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -138,7 +158,8 @@ namespace Data.Migrations
                     AccountStatus = table.Column<string>(nullable: true),
                     AccountType = table.Column<string>(nullable: true),
                     CountryId = table.Column<int>(nullable: true),
-                    CityId = table.Column<int>(nullable: true)
+                    CityId = table.Column<int>(nullable: true),
+                    LastLogIn = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -182,16 +203,38 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BarComment",
+                name: "BarPhotos",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(nullable: false),
-                    BarId = table.Column<int>(nullable: false),
-                    Comment = table.Column<string>(nullable: true)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    BarCover = table.Column<byte[]>(nullable: true),
+                    BarId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BarComment", x => new { x.BarId, x.UserId });
+                    table.PrimaryKey("PK_BarPhotos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BarPhotos_Bars_BarId",
+                        column: x => x.BarId,
+                        principalTable: "Bars",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BarComment",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Comment = table.Column<string>(nullable: true),
+                    UserId = table.Column<int>(nullable: false),
+                    BarId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BarComment", x => x.Id);
                     table.ForeignKey(
                         name: "FK_BarComment_Bars_BarId",
                         column: x => x.BarId,
@@ -235,13 +278,15 @@ namespace Data.Migrations
                 name: "CocktailComment",
                 columns: table => new
                 {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Comment = table.Column<string>(nullable: true),
                     UserId = table.Column<int>(nullable: false),
-                    CocktailId = table.Column<int>(nullable: false),
-                    Comment = table.Column<string>(nullable: true)
+                    CocktailId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CocktailComment", x => new { x.UserId, x.CocktailId });
+                    table.PrimaryKey("PK_CocktailComment", x => x.Id);
                     table.ForeignKey(
                         name: "FK_CocktailComment_Cocktails_CocktailId",
                         column: x => x.CocktailId,
@@ -358,9 +403,20 @@ namespace Data.Migrations
                 column: "CocktailId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BarComment_BarId",
+                table: "BarComment",
+                column: "BarId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_BarComment_UserId",
                 table: "BarComment",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BarPhotos_BarId",
+                table: "BarPhotos",
+                column: "BarId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_BarRating_UserId",
@@ -388,9 +444,20 @@ namespace Data.Migrations
                 column: "CocktailId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CocktailComment_UserId",
+                table: "CocktailComment",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CocktailIngredient_CocktailId",
                 table: "CocktailIngredient",
                 column: "CocktailId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CocktailPhotos_CocktailId",
+                table: "CocktailPhotos",
+                column: "CocktailId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_CocktailRating_CocktailId",
@@ -432,6 +499,9 @@ namespace Data.Migrations
                 name: "BarComment");
 
             migrationBuilder.DropTable(
+                name: "BarPhotos");
+
+            migrationBuilder.DropTable(
                 name: "BarRating");
 
             migrationBuilder.DropTable(
@@ -439,6 +509,9 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "CocktailIngredient");
+
+            migrationBuilder.DropTable(
+                name: "CocktailPhotos");
 
             migrationBuilder.DropTable(
                 name: "CocktailRating");

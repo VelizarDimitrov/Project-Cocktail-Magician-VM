@@ -5,15 +5,11 @@ using System.Text;
 
 namespace Data.Contracts
 {
-   public interface ICocktailComment
+    public interface ICocktailPhoto
     {
         int Id { get; set; }
-        string Comment { get; set; }
-        int UserId { get; set; }
-        User User { get; set; }
+        byte[] CocktailCover { get; set; }
         int CocktailId { get; set; }
         Cocktail Cocktail { get; set; }
-        string CocktailName { get; set; }
-        string UserName { get; set; }
     }
 }

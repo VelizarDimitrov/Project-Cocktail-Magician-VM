@@ -27,7 +27,7 @@ namespace Data.Migrations
 
                     b.Property<string>("Address");
 
-                    b.Property<byte[]>("BarCover");
+                    b.Property<double>("AverageRating");
 
                     b.Property<int?>("CityId");
 
@@ -61,17 +61,41 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Models.BarComment", b =>
                 {
-                    b.Property<int>("BarId");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("UserId");
+                    b.Property<int>("BarId");
 
                     b.Property<string>("Comment");
 
-                    b.HasKey("BarId", "UserId");
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BarId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("BarComment");
+                });
+
+            modelBuilder.Entity("Data.Models.BarPhoto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<byte[]>("BarCover");
+
+                    b.Property<int>("BarId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BarId")
+                        .IsUnique();
+
+                    b.ToTable("BarPhotos");
                 });
 
             modelBuilder.Entity("Data.Models.BarRating", b =>
@@ -112,11 +136,11 @@ namespace Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<double>("AverageRating");
+
                     b.Property<string>("Description");
 
                     b.Property<string>("Name");
-
-                    b.Property<byte[]>("Photo");
 
                     b.HasKey("Id");
 
@@ -125,15 +149,21 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Models.CocktailComment", b =>
                 {
-                    b.Property<int>("UserId");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CocktailId");
 
                     b.Property<string>("Comment");
 
-                    b.HasKey("UserId", "CocktailId");
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("CocktailId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("CocktailComment");
                 });
@@ -149,6 +179,24 @@ namespace Data.Migrations
                     b.HasIndex("CocktailId");
 
                     b.ToTable("CocktailIngredient");
+                });
+
+            modelBuilder.Entity("Data.Models.CocktailPhoto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<byte[]>("CocktailCover");
+
+                    b.Property<int>("CocktailId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CocktailId")
+                        .IsUnique();
+
+                    b.ToTable("CocktailPhotos");
                 });
 
             modelBuilder.Entity("Data.Models.CocktailRating", b =>
@@ -233,6 +281,8 @@ namespace Data.Migrations
 
                     b.Property<string>("FirstName");
 
+                    b.Property<DateTime?>("LastLogIn");
+
                     b.Property<string>("LastName");
 
                     b.Property<string>("Password")
@@ -315,6 +365,14 @@ namespace Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("Data.Models.BarPhoto", b =>
+                {
+                    b.HasOne("Data.Models.Bar", "Bar")
+                        .WithOne("Photo")
+                        .HasForeignKey("Data.Models.BarPhoto", "BarId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("Data.Models.BarRating", b =>
                 {
                     b.HasOne("Data.Models.Bar", "Bar")
@@ -358,6 +416,14 @@ namespace Data.Migrations
                     b.HasOne("Data.Models.Ingredient", "Ingredient")
                         .WithMany("Cocktails")
                         .HasForeignKey("IngredientId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Data.Models.CocktailPhoto", b =>
+                {
+                    b.HasOne("Data.Models.Cocktail", "Cocktail")
+                        .WithOne("Photo")
+                        .HasForeignKey("Data.Models.CocktailPhoto", "CocktailId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

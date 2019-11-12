@@ -11,7 +11,7 @@ namespace Data.Contracts
         string Name { get; set; }
         string Address { get; set; }
         string Description { get; set; }
-        byte[] BarCover { get; set; }
+        BarPhoto Photo { get; set; }
         int? CityId { get; set; }
         City City { get; set; }
         int? CountryId { get; set; }
@@ -20,5 +20,6 @@ namespace Data.Contracts
         ICollection<BarComment> Comments { get; set; }
         ICollection<BarCocktail> Cocktails { get; set; }
         ICollection<UserBar> FavoritedBy { get; set; }
+        double AverageRating { get; set; }
     }
 }

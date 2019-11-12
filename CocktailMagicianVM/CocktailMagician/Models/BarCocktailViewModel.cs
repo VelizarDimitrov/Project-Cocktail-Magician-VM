@@ -11,9 +11,9 @@ namespace CocktailMagician.Models
         public BarCocktailViewModel(IBarCocktail barCocktail)
         {
             BarId = barCocktail.BarId;
-            BarName = barCocktail.Bar.Name;
+            BarName = barCocktail.BarName;
             CocktailId = barCocktail.CocktailId;
-            CocktailName = barCocktail.Cocktail.Name;
+            CocktailName = barCocktail.CocktailName;
         }
         public int BarId { get; set; }
         public string BarName { get; set; }

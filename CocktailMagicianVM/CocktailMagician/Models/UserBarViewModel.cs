@@ -11,9 +11,9 @@ namespace CocktailMagician.Models
         public UserBarViewModel(IUserBar userBar)
         {
             UserId = userBar.UserId;
-            UserName = userBar.User.UserName;
+            UserName = userBar.UserName;
             BarId = userBar.BarId;
-            BarName = userBar.Bar.Name;
+            BarName = userBar.BarName;
         }
         public int UserId { get; set; }
         public string UserName { get; set; }

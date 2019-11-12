@@ -11,5 +11,7 @@ namespace Data.Models
      public  Ingredient Ingredient { get; set; }
      public  int CocktailId { get; set; }
      public  Cocktail Cocktail { get; set; }
+     public string CocktailName { get; set; }
+     public string IngredientName { get; set; }
     }
 }

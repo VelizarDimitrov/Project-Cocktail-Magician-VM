@@ -1,11 +1,11 @@
-﻿@model BarCatalogViewModel
+﻿@model CocktailCatalogViewModel
 <div class="breadcrumb-wrapper">
 
     <div class="container">
 
         <ol class="breadcrumb-list booking-step">
             <li><a href="#">Home</a></li>
-            <li><span>All bars</span></li>
+            <li><span>All Cocktails</span></li>
         </ol>
 
     </div>
@@ -19,7 +19,7 @@
 
 
             <div class="second-search-result-inner">
-                <span class="labeling">Search for bars</span>
+                <span class="labeling">Search for Cocktails</span>
                 <div class="row">
 
                     <div class="col-xss-12 col-xs-6 col-sm-6 col-md-5">
@@ -75,8 +75,8 @@
                                         <label class="" for="sort_checkbox-2">Rating</label>
                                     </div>
                                     <div class="checkbox-block job-type-checkbox full-time-checkbox">
-                                        <input id="sort_checkbox-3" onchange="changeSortMethod(this.id)" name="job_type_checkbox" type="checkbox" class="checkbox" value="City" />
-                                        <label class="" for="sort_checkbox-3">City</label>
+                                        <input id="sort_checkbox-3" onchange="changeSortMethod(this.id)" name="job_type_checkbox" type="checkbox" class="checkbox" value="Bar" />
+                                        <label class="" for="sort_checkbox-3">Bar</label>
                                     </div>
                                 </div>
                                 <div class="col-sm-2">
@@ -119,7 +119,12 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <div class="col-md-1"></div>
+                                <div class="col-md-3">
+                                    Select Primary Ingredient:
+                                    <select asp-items="@Model.MainIngredients" class="selectpicker form-control" data-show-subtext="true" id="main-ingredient"></select>
+                                </div>
+                                <div class="col-md-1"></div>
                             </div>
 
                         </div>
@@ -129,75 +134,13 @@
                 </div>
 
             </div>
-            <div id="search-results">
-            </div>
+
 
             <div class="restaurant-wrapper">
 
                 <div class="row">
-                    <div class="col-sm-4 col-md-3 mt-25">
-
-                        <div class="restaurant-list-wrapper">
-
-                            <aside class="sidebar with-filter">
-
-                                <div class="sidebar-inner">
-
-                                    <div class="sidebar-module">
-                                        <h4 class="sidebar-title">New Bars</h4>
-
-                                        <div class="top-company-2-wrapper">
-
-                                            <div class="GridLex-gap-10">
-
-                                                <div class="GridLex-grid-noGutter-equalHeight">
-                                                    @for (int i = Model.NewestBars.Count - 1; i >= 0; i--)
-                                                    {
-                                                        <div class="GridLex-col-12_sm-12_xs-6_xss-12">
-
-                                                            <div class="top-company-2">
-                                                                <button asp-action="BarDetails" asp-controller="Bar" value="@Model.NewestBars[i].Id">
-
-                                                                    <div class="image" style="padding:0px">
-                                                                        <img src="@Url.Action("GetBarPhoto", "Catalog" , new { id=Model.NewestBars[i].Id })" alt="image" />
-                                                                    </div>
-
-                                                                    <div class="content">
-                                                                        <h5 class="heading text-primary font700">@Model.NewestBars[i].Name</h5>
-
-                                                                        @if (Model.NewestBars[i].Description.Length >= 53)
-                                                                        {
-                                                                            <p class="texting font600">@Model.NewestBars[i].ShortDescription.Substring(0, 53) ...</p>
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <p class="texting font600">@Model.NewestBars[i].ShortDescription ...</p>
-                                                                        }
-                                                                        <p class="mata-p clearfix"> <span class="pull-right icon"><i class="fa fa-long-arrow-right"></i></span></p>
-                                                                    </div>
-
-                                                                </button>
-
-                                                            </div>
-
-                                                        </div>
-                                                    }
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                            </aside>
-
-                        </div>
-
+                    <div id="search-results" style="min-height:500px">
                     </div>
-
                 </div>
 
             </div>
@@ -205,15 +148,16 @@
         </div>
 
     </div>
+
 </div>
 
 @section Scripts {
-    <script src="~/js/BarSearch.js"></script>
+    <script src="~/js/CocktailSearch.js"></script>
     <script>
         const transparency = function () {
             $('body').attr('class', 'not-transparent-header');
         }
         window.onload = transparency;
-        searchEventHandler();
+
     </script>
 }
