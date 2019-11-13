@@ -10,7 +10,7 @@
                 <div class="GridLex-col-3_sm-4_xs-6_xss-12" style="max-width:min-content;">
 
                     <div class="top-company-2">
-                        <button>
+                        <button  asp-action="CocktailDetails" asp-controller="Cocktail" value="@cocktail.Id">
 
                             <div class="center-cropped"
                                  style="background-image:url(@Url.Action("GetCocktailPhoto", "Catalog" , new { id=cocktail.Id }));">

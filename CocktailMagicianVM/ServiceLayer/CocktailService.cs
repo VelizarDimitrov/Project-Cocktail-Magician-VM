@@ -31,7 +31,7 @@ namespace ServiceLayer
 
             foreach (var item in listOfDrinks)
             {
-                item.PhotoPath = @"../../../../Data/SolutionPreload/CocktailPhotos/"+String.Join('-',item.Name.Split(" ")).ToLower()+".jpg";
+                item.PhotoPath = @"../../../../Data/SolutionPreload/CocktailPhotos/" + String.Join('-', item.Name.Split(" ")).ToLower() + ".jpg";
             }
 
             if (dbContext.Cocktails.Count() == 0)
@@ -55,7 +55,7 @@ namespace ServiceLayer
             dbContext.Cocktails.Add(cocktail);
             var cocktailPhoto = new CocktailPhoto()
             {
-                CocktailCover= photo,
+                CocktailCover = photo,
                 Cocktail = cocktail
             };
             dbContext.CocktailPhotos.Add(cocktailPhoto);
@@ -145,7 +145,7 @@ namespace ServiceLayer
 
         public async Task AddIngredientToCocktailAsync(string cocktailName, string ingredientName)
         {
-            var cocktail = await dbContext.Cocktails.FirstAsync(p=>p.Name==cocktailName);
+            var cocktail = await dbContext.Cocktails.FirstAsync(p => p.Name == cocktailName);
             var ingredient = await dbContext.Ingredients.FirstAsync(p => p.Name == ingredientName);
             var link = new CocktailIngredient()
             {
@@ -158,7 +158,7 @@ namespace ServiceLayer
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task CreateIngredientAsync(string name, byte primary )
+        public async Task CreateIngredientAsync(string name, byte primary)
         {
             var ingredient = new Ingredient()
             {
@@ -208,12 +208,12 @@ namespace ServiceLayer
                     else
                         cocktails = cocktails.OrderByDescending(p => p.Name).ToList();
                     break;
-                //case "Bar":
-                //    if (sortOrder == "Ascending")
-                //        cocktails = cocktails.OrderBy(p => p.Bars.Name).ToList();
-                //    else
-                //        cocktails = cocktails.OrderByDescending(p => p.Bars.Name).ToList();
-                //    break;
+                case "Ingredient":
+                    if (sortOrder == "Ascending")
+                        cocktails = cocktails.OrderBy(p => p.Ingredients.First().IngredientName).ToList();
+                    else
+                        cocktails = cocktails.OrderByDescending(p => p.Ingredients.First()).ToList();
+                    break;
                 case "Rating":
                     if (sortOrder == "Ascending")
                         cocktails = cocktails.OrderBy(p => p.AverageRating).ToList();
@@ -245,7 +245,7 @@ namespace ServiceLayer
                 .Include(p => p.Ratings)
                 .Include(p => p.Comments)
                 .Include(p => p.FavoritedBy)
-               .Where(p => p.Bars.Where(x=>x.BarName.Contains(keyword.ToLower())).Any())
+               .Where(p => p.Bars.Where(x => x.BarName.Contains(keyword.ToLower())).Any())
                .Where(p => p.Ingredients.Where(x => x.IngredientName.Contains(mainIngredient)).Any())
                .Where(p => p.AverageRating >= a)
                .Where(p => p.AverageRating <= b)
@@ -258,12 +258,12 @@ namespace ServiceLayer
                     else
                         cocktails = cocktails.OrderByDescending(p => p.Name).ToList();
                     break;
-                //case "Bar":
-                //    if (sortOrder == "Ascending")
-                //        cocktails = cocktails.OrderBy(p => p.Bars.Name).ToList();
-                //    else
-                //        cocktails = cocktails.OrderByDescending(p => p.Bars.Name).ToList();
-                //    break;
+                case "Ingredient":
+                    if (sortOrder == "Ascending")
+                        cocktails = cocktails.OrderBy(p => p.Ingredients.First().IngredientName).ToList();
+                    else
+                        cocktails = cocktails.OrderByDescending(p => p.Ingredients.First()).ToList();
+                    break;
                 case "Rating":
                     if (sortOrder == "Ascending")
                         cocktails = cocktails.OrderBy(p => p.AverageRating).ToList();
@@ -308,12 +308,12 @@ namespace ServiceLayer
                     else
                         cocktails = cocktails.OrderByDescending(p => p.Name).ToList();
                     break;
-                //case "Bar":
-                //    if (sortOrder == "Ascending")
-                //        cocktails = cocktails.OrderBy(p => p.Bars.Name).ToList();
-                //    else
-                //        cocktails = cocktails.OrderByDescending(p => p.Bars.Name).ToList();
-                //    break;
+                case "Ingredient":
+                    if (sortOrder == "Ascending")
+                        cocktails = cocktails.OrderBy(p => p.Ingredients.First().IngredientName).ToList();
+                    else
+                        cocktails = cocktails.OrderByDescending(p => p.Ingredients.First()).ToList();
+                    break;
                 case "Rating":
                     if (sortOrder == "Ascending")
                         cocktails = cocktails.OrderBy(p => p.AverageRating).ToList();
