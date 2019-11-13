@@ -82,3 +82,25 @@ const changeSortOrder = function () {
     }
     changeSorting();
 }
+
+const searchWithoutExtraFilters = function () {
+    var sortSpan = $('#sort_order_span');
+    let sort = sortSpan.text();
+    let rating = "0;5";
+    let keyword = $('#keyword').val();
+    let criteria = $('#criteria').val();
+    let order = $('#order').val();
+    let page = 1;
+    $('#search-results').load('/catalog/barsearchresults', { keyword: keyword, criteria: criteria, order: order, page: page, rating: rating, sortOrder: sort });
+}
+
+const searchWithExtraFilters = function () {
+    var sortSpan = $('#sort_order_span');
+    let sort = sortSpan.text();
+    let rating = $('#price_range').val();
+    let keyword = $('#current-keyword').val();
+    let criteria = $('#current-criteria').val();
+    let order = $('#current-order').val();
+    let page = 1;
+    $('#search-results').load('/catalog/barsearchresults', { keyword: keyword, criteria: criteria, order: order, page: page, rating: rating, sortOrder: sort });
+}
