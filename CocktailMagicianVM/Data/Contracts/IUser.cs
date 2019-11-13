@@ -12,7 +12,6 @@ namespace Data.Contracts
         string FirstName { get; set; }
         string LastName { get; set; }
         string Password { get; set; }
-        byte[] UserPhoto { get; set; }
         string AccountStatus { get; set; }
         string AccountType { get; set; }
         ICollection<BarRating> BarRatings { get; set; }

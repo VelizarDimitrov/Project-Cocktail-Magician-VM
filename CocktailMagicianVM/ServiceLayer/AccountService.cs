@@ -58,6 +58,11 @@ namespace ServiceLayer
                 City = city
             };
             await dbContext.Users.AddAsync(user);
+            var userPhoto = new UserPhoto()
+            {
+                User = user
+            };
+            await dbContext.UserPhotos.AddAsync(userPhoto);
             await dbContext.SaveChangesAsync();
 
         }
@@ -111,6 +116,11 @@ namespace ServiceLayer
                 City = city
             };
             dbContext.Users.Add(user);
+            var userPhoto = new UserPhoto()
+            {
+                User = user
+            };
+            dbContext.UserPhotos.Add(userPhoto);
             dbContext.SaveChanges();
 
         }

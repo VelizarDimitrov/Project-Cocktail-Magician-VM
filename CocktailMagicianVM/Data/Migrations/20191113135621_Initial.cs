@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Data.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -156,7 +156,6 @@ namespace Data.Migrations
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: false),
-                    UserPhoto = table.Column<byte[]>(nullable: true),
                     AccountStatus = table.Column<string>(nullable: true),
                     AccountType = table.Column<string>(nullable: true),
                     CountryId = table.Column<int>(nullable: true),
@@ -413,6 +412,26 @@ namespace Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "UserPhotos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UserCover = table.Column<byte[]>(nullable: true),
+                    UserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserPhotos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserPhotos_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_BarCocktail_CocktailId",
                 table: "BarCocktail",
@@ -496,6 +515,12 @@ namespace Data.Migrations
                 column: "CocktailId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserPhotos_UserId",
+                table: "UserPhotos",
+                column: "UserId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_CityId",
                 table: "Users",
                 column: "CityId");
@@ -540,6 +565,9 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserCocktail");
+
+            migrationBuilder.DropTable(
+                name: "UserPhotos");
 
             migrationBuilder.DropTable(
                 name: "Ingredients");

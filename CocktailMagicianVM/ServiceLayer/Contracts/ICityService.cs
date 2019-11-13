@@ -11,5 +11,6 @@ namespace ServiceLayer.Contracts
         void CreateCity(string cityName, string countryName);
         Task<IList<string>> GetAllCityNamesAsync();
         Task<bool> CheckifCityNameIsCorrect(string cityName);
+        Task<IList<string>> GetCitiesFromCountryAsync(string countryName);
     }
 }

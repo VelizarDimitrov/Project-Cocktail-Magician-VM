@@ -3,6 +3,7 @@ using Data.Models;
 using Microsoft.EntityFrameworkCore;
 using ServiceLayer.Contracts;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,6 +17,7 @@ namespace ServiceLayer
         {
             this.dbContext = dbContext;
         }
+
 
         // Non-Async version of methods for Pre-Load
         public void CreateCountry(string countryName)
@@ -52,6 +54,15 @@ namespace ServiceLayer
                 throw new ArgumentException("Country with that name already exists!");
             }
         }
-
+       public async Task<IList<string>> GetAllCountryNamesAsync()
+        {
+            var countries = await dbContext.Countries.Select(p => p.Name).ToListAsync();
+            return countries;
+        }
+        public async Task<bool> CheckIfCountryNameIsCorrect(string countryName)
+        {
+            bool countryExists = (await dbContext.Countries.Where(p => p.Name == countryName).CountAsync()).Equals(1);
+            return countryExists;
+        }
     }
 }

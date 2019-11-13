@@ -315,8 +315,6 @@ namespace Data.Migrations
                     b.Property<string>("UserName")
                         .IsRequired();
 
-                    b.Property<byte[]>("UserPhoto");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CityId");
@@ -358,6 +356,24 @@ namespace Data.Migrations
                     b.HasIndex("CocktailId");
 
                     b.ToTable("UserCocktail");
+                });
+
+            modelBuilder.Entity("Data.Models.UserPhoto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<byte[]>("UserCover");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("UserPhotos");
                 });
 
             modelBuilder.Entity("Data.Models.Bar", b =>
@@ -514,6 +530,14 @@ namespace Data.Migrations
                     b.HasOne("Data.Models.User", "User")
                         .WithMany("FavoriteCocktails")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Data.Models.UserPhoto", b =>
+                {
+                    b.HasOne("Data.Models.User", "User")
+                        .WithOne("UserPhoto")
+                        .HasForeignKey("Data.Models.UserPhoto", "UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

@@ -25,14 +25,14 @@ namespace Data.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         [Required]
-        public string Password { get; set; }
-        public byte[] UserPhoto { get; set; }
+        public string Password { get; set; }      
         public string AccountStatus { get; set; }
         public string AccountType { get; set; }
         public int? CountryId { get; set; }
         public Country Country { get; set; }
         public int? CityId { get; set; }
         public City City { get; set; }
+        public UserPhoto UserPhoto { get; set; }
         public ICollection<BarRating> BarRatings { get; set; }
         public ICollection<BarComment> BarComments { get; set; }
         public ICollection<CocktailRating> CocktailRatings { get; set; }

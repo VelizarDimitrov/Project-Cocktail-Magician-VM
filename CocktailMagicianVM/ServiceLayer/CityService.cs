@@ -68,5 +68,11 @@ namespace ServiceLayer
             bool cityExists = (await dbContext.Cities.Where(p => p.Name == cityName).CountAsync()).Equals(1);
             return cityExists;
         }
+
+        public async Task<IList<string>> GetCitiesFromCountryAsync(string countryName)
+        {
+            var cities = await dbContext.Cities.Where(p => p.Country.Name == countryName).Select(p=>p.Name).ToListAsync();
+            return cities;
+        }
     }
 }

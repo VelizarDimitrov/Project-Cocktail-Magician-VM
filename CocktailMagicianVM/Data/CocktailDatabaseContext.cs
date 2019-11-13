@@ -44,6 +44,7 @@ namespace Data
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<UserPhoto> UserPhotos { get; set; }
         public DbSet<UserBar> UserBar { get; set; }
         public DbSet<UserCocktail> UserCocktail { get; set; }
 
