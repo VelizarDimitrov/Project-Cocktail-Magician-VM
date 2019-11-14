@@ -337,5 +337,22 @@ namespace ServiceLayer
             var picture = await dbContext.CocktailPhotos.FirstAsync(p => p.CocktailId == id);
             return picture.CocktailCover;
         }
+
+        public async Task<IList<string>> GetAllIngredientNamesAsync()
+        {
+            var ingredients = await dbContext.Ingredients.Select(p => p.Name).ToListAsync();
+            return ingredients;
+        }
+
+        public Task AddCocktailAsync(string name, string[] primaryIngredients, string[] ingredients, string description, byte[] cocktailPhoto)
+        {
+            foreach (var primary in primaryIngredients)
+            {
+                if (dbContext.Ingredients.Where(p=>p.Name==primary).Any())
+                {
+
+                }
+            }
+        }
     }
 }
