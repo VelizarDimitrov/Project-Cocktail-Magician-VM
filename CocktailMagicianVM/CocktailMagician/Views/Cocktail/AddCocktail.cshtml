@@ -1,0 +1,123 @@
+﻿<div class="main-wrapper">
+
+    <!-- start hero-header -->
+    <div class="breadcrumb-wrapper">
+
+        <div class="container">
+
+            <ol class="breadcrumb-list">
+                <li><a href="index.html">Home</a></li>
+                <li><span>Add Bar</span></li>
+            </ol>
+
+        </div>
+
+    </div>
+    <!-- end hero-header -->
+
+    <div class="login-container-wrapper">
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-md-10 col-md-offset-1">
+
+                    <div class="row">
+
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <form asp-action="AddCocktail" asp-controller="Cocktail" method="post" enctype="multipart/form-data">
+
+                                <div class="login-box-wrapper">
+
+                                    <div class="modal-header">
+                                        <h4 class="modal-title text-center">Create Bar</h4>
+                                    </div>
+
+                                    <div class="modal-body">
+
+                                        <div class="row gap-20">
+
+
+                                            <div class="col-sm-12 col-md-12">
+
+                                                <div class="form-group">
+                                                    <label>Cocktail Name</label>
+                                                    <input class="form-control" placeholder="Enter name of the cocktail" type="text">
+                                                </div>
+
+                                            </div>
+                                       
+
+                                            <div class="row">
+
+                                                <div class="col-3">
+                                            <ul id="main-ingredients">
+                                                <li>
+                                                    <div class="form-group">
+                                                        <label>Primary Ingredient</label>
+                                                        <input class="form-control" placeholder="Primary ingredient" type="text">
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                                </div>
+
+
+                                                <div class=" col-3">
+                                            <ul id="casual-ingredients">
+                                                <li>
+                                                    <div class="form-group">
+                                                        <label>Ingredient</label>
+                                                        <input class="form-control" placeholder="Ingredient" type="text">
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-12">
+                                                <div class="form-group">
+                                                    <p>Upload cocktail photo:</p>
+                                                    <input type="file" name="file">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Description</label>
+                                                <textarea class="form-control" placeholder="Enter bar description" type="text" rows="8"></textarea>
+                                            </div>
+
+                                        </div>
+                                        </div>
+                                    <div>
+
+                                    </div>
+
+                                    <div class="modal-footer text-center">
+                                        <button type="submit" class="btn btn-primary">Add Bar</button>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+@section Scripts {
+    <script type="text/javascript" src="~/js/AddBarAutoComplete.js"></script>
+    <script>
+            const transparency = function () {
+                $('body').attr('class', 'not-transparent-header');
+            }
+            window.onload = transparency;
+    </script>
+}
+
+
+
