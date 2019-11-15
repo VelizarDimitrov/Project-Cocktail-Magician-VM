@@ -344,15 +344,15 @@ namespace ServiceLayer
             return ingredients;
         }
 
-        public Task AddCocktailAsync(string name, string[] primaryIngredients, string[] ingredients, string description, byte[] cocktailPhoto)
-        {
-            foreach (var primary in primaryIngredients)
-            {
-                if (dbContext.Ingredients.Where(p=>p.Name==primary).Any())
-                {
+        //public Task AddCocktailAsync(string name, string[] primaryIngredients, string[] ingredients, string description, byte[] cocktailPhoto)
+        //{
+        //    foreach (var primary in primaryIngredients)
+        //    {
+        //        if (dbContext.Ingredients.Where(p=>p.Name==primary).Any())
+        //        {
 
-                }
-            }
-        }
+        //        }
+        //    }
+        //}
     }
 }

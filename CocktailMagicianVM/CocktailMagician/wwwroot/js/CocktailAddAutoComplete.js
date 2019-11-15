@@ -139,31 +139,29 @@ function removeIngredientField() {
 }
 function addCocktail() {
     var formData = new FormData();
-    formData.append('image', $('input[type=file]')[0].files[0]);
-    let name = $("cocktail-name").val();
+    var image = document.getElementById('rand').files[0];
+    formData.append('image', image);
+    let name = $("#cocktail-name").val();
     let primaryIngredients = [];
     for (var i = 1; i <= primaryCount; i++) {
-        primaryIngredients[i] = $(`primary-${i}`).val();
+        primaryIngredients[i-1] = $(`#primary-${i}`).val();
     }
     let ingredients = new Array;
     for (var i = 1; i <= ingredientCount; i++) {
-        ingredients[i] = $(`ingredient-${i}`).val();
+        ingredients[i-1] = $(`#ingredient-${i}`).val();
     }
-    let description = $("cocktail-description").val();
+    let description = $("#cocktail-description").val();
     formData.append("name", name);
     formData.append("primaryIngredients",primaryIngredients);
     formData.append("ingredients", ingredients);
     formData.append("description", description);
+    console.log(formData);
     $.ajax({
-        url: '/Cocktail/createCocktail',
-        type: "GET",
-        data:formData
-        //success: function () {
-        //    $.ajax({
-        //        url: '/catalog/cocktailSearch',
-        //        type: "GET"
-        //    });
-        }
+        url: '/cocktail/createcocktail',
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false
     });
 }
 

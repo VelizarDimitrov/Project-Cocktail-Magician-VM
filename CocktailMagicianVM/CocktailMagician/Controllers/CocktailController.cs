@@ -29,27 +29,10 @@ namespace CocktailMagician.Controllers
             return Json(ingredients);
         }
         [HttpPost]
-        public async Task<IActionResult> CreateCocktail()
+        public async Task<IActionResult> CreateCocktail(string name, string primaryIngredients, string ingredients, string description)
         {
-            var files = Request.Form.Files;
-           
-            byte[] cocktailPhoto;
-            using (var stream = new MemoryStream())
-            {
-                await formData.CopyToAsync(stream);
-                cocktailPhoto = stream.ToArray();
-
-            }
-            try
-            {
-                await cocktailService.AddCocktailAsync(name,primaryIngredients,ingredients,description,cocktailPhoto);
-
-            }
-            catch
-            {
-                return View("AddCocktail");
-            }
-            return RedirectToAction("CocktailSearch", "Catalog");
+            var file = Request.Form.Files;
+            return Ok();
         }
     }
 }
