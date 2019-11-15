@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Data.Contracts;
+using Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +12,7 @@ namespace ServiceLayer.Contracts
         Task CreateCountryAsync(string countryName);
         void CreateCountry(string countryName);
         Task<IList<string>> GetAllCountryNamesAsync();
-        Task<bool> CheckIfCountryNameIsCorrect(string countryName);
+        Task<bool> CheckIfCountryExists(string countryName);
+        Task<Country> GetCountryByName(string countryName);
     }
 }

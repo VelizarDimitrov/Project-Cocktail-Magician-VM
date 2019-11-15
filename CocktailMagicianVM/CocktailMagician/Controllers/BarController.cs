@@ -35,7 +35,7 @@ namespace CocktailMagician.Controllers
         public async Task<IActionResult> GetAllCities(string cityName)
         {
             string[] cities;
-            if (await countryService.CheckIfCountryNameIsCorrect(cityName))
+            if (await countryService.CheckIfCountryExists(cityName))
             {
                 cities = (await cityService.GetCitiesFromCountryAsync(cityName)).ToArray();
 
@@ -55,7 +55,6 @@ namespace CocktailMagician.Controllers
             {
                 await file.CopyToAsync(stream);
                 barPhoto = stream.ToArray();
-
             }
             try
             {

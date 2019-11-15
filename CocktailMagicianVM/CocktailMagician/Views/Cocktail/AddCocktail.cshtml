@@ -14,7 +14,7 @@
 
     </div>
     <!-- end hero-header -->
-
+    @Html.Hidden("RedirectTo", Url.Action("CocktailSearch", "Catalog"));
     <div class="login-container-wrapper">
 
         <div class="container">
@@ -38,7 +38,6 @@
 
                                         <div class="row gap-20">
 
-
                                             <div class="col-sm-12 col-md-12">
 
                                                 <div class="form-group">
@@ -51,22 +50,22 @@
 
                                                 <label>Primary Ingredient</label>
                                                 <div class="form-group">
-                                                    <div class="col-lg-12" style="padding:unset;"id="main-ingredients">
+                                                    <div class="col-lg-12" style="padding:unset;" id="main-ingredients">
 
                                                         <input class="form-control" placeholder="Primary ingredient" type="text" id="primary-1">
                                                     </div>
-                                                        <div class="update-product">
-                                                            <a title="Add ingredient" onclick="addPrimaryIngredientField()">
-                                                                <i class="fa fa-plus-circle">
+                                                    <div class="update-product">
+                                                        <a title="Add ingredient" onclick="addPrimaryIngredientField()">
+                                                            <i class="fa fa-plus-circle">
 
-                                                                </i>
-                                                            </a>
-                                                            <a title="Remove ingredient" onclick="removePrimaryIngredientField()">
-                                                                <i class="fa fa-minus-circle">
+                                                            </i>
+                                                        </a>
+                                                        <a title="Remove ingredient" onclick="removePrimaryIngredientField()">
+                                                            <i class="fa fa-minus-circle">
 
-                                                                </i>
-                                                            </a>
-                                                        </div>
+                                                            </i>
+                                                        </a>
+                                                    </div>
                                                 </div>
 
                                             </div>

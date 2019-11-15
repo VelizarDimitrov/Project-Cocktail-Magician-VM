@@ -49,6 +49,7 @@ namespace ServiceLayer
         public void AddBar(string name, string address, string description, string countryName, string cityName, byte[] barCover)
         {
             if (dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).Count() == 0)
+            //if (this.countryService.CheckIfCountryNameIsCorrect(countryName))
             {
                 countryService.CreateCountry(countryName);
             }
@@ -83,18 +84,14 @@ namespace ServiceLayer
 
         public async Task AddBarAsync(string name, string address, string description, string countryName, string cityName, byte[] barCover)
         {
-            if (await dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).CountAsync() == 0)
-            {
+            if (!await countryService.CheckIfCountryExists(countryName))
                 await countryService.CreateCountryAsync(countryName);
-            }
 
-            if (await dbContext.Cities.Where(p => p.Name.ToLower() == cityName.ToLower()).CountAsync() == 0)
-            {
+            if (!await cityService.CheckIfCityExistsAsync(cityName))
                 await cityService.CreateCityAsync(cityName, countryName);
-            }
 
-            var country = await dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).FirstAsync();
-            var city = await dbContext.Cities.Where(p => p.Name.ToLower() == cityName.ToLower()).FirstAsync();
+            var country = await countryService.GetCountryByName(countryName);
+            var city = await cityService.GetCityByNameAsync(cityName);
             var bar = new Bar()
             {
                 Name = name,
@@ -114,206 +111,93 @@ namespace ServiceLayer
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<int> BarsCountAsync()
-        {
-            var bars = await dbContext.Bars.CountAsync();
-            return bars;
-        }
+        public async Task<int> BarsCountAsync() =>
+            await dbContext.Bars.CountAsync();
 
-        
-        public async Task<IList<string>> GetAllBarNamesAsync()
-        {
-            var bars = await dbContext.Bars.Select(p => p.Name).ToListAsync();
-            return bars;
-        }
-        public async Task<IList<string>> GetBarsFromCityAsync(string cityName)
-        {
-            var bars = await dbContext.Bars.Where(p => p.City.Name == cityName).Select(p => p.Name).ToListAsync();
-            return bars;
-        }
-        public async Task<byte[]> FindBarPhotoAsync(int id)
-        {
-            var photo = await dbContext.BarPhotos.FirstAsync(p => p.BarId == id);
-            return photo.BarCover;
-        }
+        public async Task<IList<string>> GetAllBarNamesAsync() =>
+            await dbContext.Bars.Select(p => p.Name).ToListAsync();
 
-        public async Task<Bar> FindBarByIdAsync(int id)
-        {
-            var bar = await dbContext.Bars.Where(p => p.Id == id)
-                .Include(p => p.City)
-                .Include(p => p.Country)
-                .Include(p => p.Ratings)
-                .Include(p => p.Comments)
-                .Include(p => p.Cocktails)
-                .Include(p => p.FavoritedBy)
-                .FirstAsync();
-            return bar;
+        public async Task<IList<string>> GetBarsFromCityAsync(string cityName) =>
+            await dbContext.Bars.Where(p => p.City.Name == cityName).Select(p => p.Name).ToListAsync();
 
 
+        public async Task<byte[]> FindBarPhotoAsync(int id) =>
+            (await dbContext.BarPhotos.FirstAsync(p => p.BarId == id)).BarCover;
 
-        }
+        public async Task<Bar> FindBarByIdAsync(int id) =>
+            await dbContext.Bars.Where(p => p.Id == id).Include(p => p.City).Include(p => p.Country).Include(p => p.Ratings)
+                .Include(p => p.Comments).Include(p => p.Cocktails).Include(p => p.FavoritedBy).FirstAsync();
 
-        public async Task<Tuple<IList<Bar>, bool>> FindBarByNameAsync(string keyword, int page, string selectedOrderBy, string rating, string sortOrder)
+
+        public async Task<Tuple<IList<Bar>, bool>> FindBarsForCatalogAsync(string keyword, string keywordCriteria, int page, string selectedOrderBy, string rating, string sortOrder)
         {
+            const int pageSize = 10;
             bool lastPage = true;
-            List<Bar> bars;
             var ratings = rating.Split(';');
-            var a = int.Parse(ratings[0]);
-            var b = int.Parse(ratings[1]);
-            bars = await dbContext.Bars
+            var minRating = int.Parse(ratings[0]);
+            var maxRating = int.Parse(ratings[1]);
+            var bars = dbContext.Bars
                 .Include(p => p.City)
                 .Include(p => p.Country)
                 .Include(p => p.Ratings)
                 .Include(p => p.Comments)
                 .Include(p => p.Cocktails)
                 .Include(p => p.FavoritedBy)
-               .Where(p => p.Name.ToLower().Contains(keyword.ToLower()))
-               .Where(p => p.AverageRating >= a)
-               .Where(p => p.AverageRating <= b)
-               .ToListAsync();
+                .AsQueryable();
+
+            switch (keywordCriteria)
+            {
+                case "Name":
+                    bars = bars.Where(p => p.Name.ToLower() == keyword.ToLower());
+                    break;
+                case "Address":
+                    bars = bars.Where(p => p.Address.ToLower() == keyword.ToLower());
+                    break;
+                case "City":
+                    bars = bars.Where(p => p.City.Name.ToLower() == keyword.ToLower());
+                    break;
+            }
+
+            bars = bars
+                .Where(p => p.AverageRating >= minRating)
+                .Where(p => p.AverageRating <= maxRating);
+
             switch (selectedOrderBy)
             {
                 case "Name":
                     if (sortOrder == "Ascending")
-                        bars = bars.OrderBy(p => p.Name).ToList();
+                        bars = bars.OrderBy(p => p.Name);
                     else
-                        bars = bars.OrderByDescending(p => p.Name).ToList();
+                        bars = bars.OrderByDescending(p => p.Name);
                     break;
                 case "City":
                     if (sortOrder == "Ascending")
-                        bars = bars.OrderBy(p => p.City.Name).ToList();
+                        bars = bars.OrderBy(p => p.City.Name);
                     else
-                        bars = bars.OrderByDescending(p => p.City.Name).ToList();
+                        bars = bars.OrderByDescending(p => p.City.Name);
                     break;
                 case "Rating":
                     if (sortOrder == "Ascending")
-                        bars = bars.OrderBy(p => p.AverageRating).ToList();
+                        bars = bars.OrderBy(p => p.AverageRating);
                     else
-                        bars = bars.OrderByDescending(p => p.AverageRating).ToList();
+                        bars = bars.OrderByDescending(p => p.AverageRating);
                     break;
                 default:
                     break;
             }
-            bars = bars.Skip((page - 1) * 10).ToList();
-            if (bars.Count > 10)
+
+            bars = bars.Skip((page - 1) * pageSize);
+            var foundBars = await bars.ToListAsync();
+            if (foundBars.Count > pageSize)
             {
                 lastPage = false;
             }
-            bars = bars.Take(10).ToList();
-            return new Tuple<IList<Bar>, bool>(bars, lastPage);
+            foundBars = foundBars.Take(pageSize).ToList();
+            return new Tuple<IList<Bar>, bool>(foundBars, lastPage);
         }
 
-        public async Task<Tuple<IList<Bar>, bool>> FindBarByAddressAsync(string keyword, int page, string selectedOrderBy, string rating, string sortOrder)
-        {
-            bool lastPage = true;
-            List<Bar> bars;
-            var ratings = rating.Split(';');
-            var a = int.Parse(ratings[0]);
-            var b = int.Parse(ratings[1]);
-            bars = await dbContext.Bars
-                .Include(p => p.City)
-                .Include(p => p.Country)
-                .Include(p => p.Ratings)
-                .Include(p => p.Comments)
-                .Include(p => p.Cocktails)
-                .Include(p => p.FavoritedBy)
-               .Where(p => p.Address.ToLower().Contains(keyword.ToLower()))
-               .Where(p => p.AverageRating >= a)
-               .Where(p => p.AverageRating <= b)
-               .ToListAsync();
-            switch (selectedOrderBy)
-            {
-                case "Name":
-                    if (sortOrder == "Ascending")
-                        bars = bars.OrderBy(p => p.Name).ToList();
-                    else
-                        bars = bars.OrderByDescending(p => p.Name).ToList();
-                    break;
-                case "City":
-                    if (sortOrder == "Ascending")
-                        bars = bars.OrderBy(p => p.City.Name).ToList();
-                    else
-                        bars = bars.OrderByDescending(p => p.City.Name).ToList();
-                    break;
-                case "Rating":
-                    if (sortOrder == "Ascending")
-                        bars = bars.OrderBy(p => p.AverageRating).ToList();
-                    else
-                        bars = bars.OrderByDescending(p => p.AverageRating).ToList();
-                    break;
-                default:
-                    break;
-            }
-            bars = bars.Skip((page - 1) * 10).ToList();
-            if (bars.Count > 10)
-            {
-                lastPage = false;
-            }
-            bars = bars.Take(10).ToList();
-            return new Tuple<IList<Bar>, bool>(bars, lastPage);
-        }
-
-        public async Task<Tuple<IList<Bar>, bool>> FindBarByCityAsync(string keyword, int page, string selectedOrderBy, string rating, string sortOrder)
-        {
-            bool lastPage = true;
-            List<Bar> bars;
-            var ratings = rating.Split(';');
-            var a = int.Parse(ratings[0]);
-            var b = int.Parse(ratings[1]);
-            bars = await dbContext.Bars
-                .Include(p => p.City)
-                .Include(p => p.Country)
-                .Include(p => p.Ratings)
-                .Include(p => p.Comments)
-                .Include(p => p.Cocktails)
-                .Include(p => p.FavoritedBy)
-               .Where(p => p.City.Name.ToLower().Contains(keyword.ToLower()))
-               .Where(p => p.AverageRating >= a)
-               .Where(p => p.AverageRating <= b)
-               .ToListAsync();
-            switch (selectedOrderBy)
-            {
-                case "Name":
-                    if (sortOrder == "Ascending")
-                        bars = bars.OrderBy(p => p.Name).ToList();
-                    else
-                        bars = bars.OrderByDescending(p => p.Name).ToList();
-                    break;
-                case "City":
-                    if (sortOrder == "Ascending")
-                        bars = bars.OrderBy(p => p.City.Name).ToList();
-                    else
-                        bars = bars.OrderByDescending(p => p.City.Name).ToList();
-                    break;
-                case "Rating":
-                    if (sortOrder == "Ascending")
-                        bars = bars.OrderBy(p => p.AverageRating).ToList();
-                    else
-                        bars = bars.OrderByDescending(p => p.AverageRating).ToList();
-                    break;
-                default:
-                    break;
-            }
-            bars = bars.Skip((page - 1) * 10).ToList();
-            if (bars.Count > 10)
-            {
-                lastPage = false;
-            }
-            bars = bars.Take(10).ToList();
-            return new Tuple<IList<Bar>, bool>(bars, lastPage);
-        }
-
-        public async Task<IList<Bar>> GetNewestBarsAsync()
-        {
-            var bars = await dbContext.Bars
-                .Include(p => p.City)
-                .Include(p => p.Country)
-                .Include(p => p.Ratings)
-                .Include(p => p.Comments)
-                .Include(p => p.Cocktails)
-                .Include(p => p.FavoritedBy).ToListAsync();
-            bars = bars.TakeLast(6).ToList();
-            return bars;
-        }
+        public async Task<IList<Bar>> GetNewestBarsAsync() =>
+            await dbContext.Bars.Include(p => p.City).Include(p => p.Country).Include(p => p.Ratings)
+                .Include(p => p.Comments).Include(p => p.Cocktails).Include(p => p.FavoritedBy).TakeLast(6).ToListAsync();
     }
 }

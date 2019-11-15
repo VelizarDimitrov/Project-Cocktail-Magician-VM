@@ -43,7 +43,7 @@ namespace CocktailMagician.Controllers
         public async Task<IActionResult> GetAllBars(string cityName)
         {
             string[] bars;
-            if (await cityService.CheckifCityNameIsCorrect(cityName))
+            if (await cityService.CheckIfCityExistsAsync(cityName))
             {
                bars = (await barService.GetBarsFromCityAsync(cityName)).ToArray();
                 

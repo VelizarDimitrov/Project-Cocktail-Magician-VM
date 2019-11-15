@@ -1,4 +1,5 @@
 ﻿using Data;
+using Data.Contracts;
 using Data.Models;
 using Microsoft.EntityFrameworkCore;
 using ServiceLayer.Contracts;
@@ -44,35 +45,34 @@ namespace ServiceLayer
 
         public async Task CreateCityAsync(string cityName, string countryName)
         {
-            if (await dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).CountAsync() == 0)
-            {
-                await countryService.CreateCountryAsync(countryName);
-            }
-            var country = await dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).FirstAsync();
 
-            var city1 = new City()
+            if (!(await countryService.CheckIfCountryExists(countryName)))
+                await countryService.CreateCountryAsync(countryName);
+
+            var country = await countryService.GetCountryByName(countryName);
+
+            var newCity = new City()
             {
                 Name = cityName,
                 Country = country
             };
-            await dbContext.Cities.AddAsync(city1);
+            await dbContext.Cities.AddAsync(newCity);
             await dbContext.SaveChangesAsync();
         }
-        public async Task<IList<string>> GetAllCityNamesAsync()
-        {
-            var cities = await dbContext.Cities.Select(p => p.Name).ToListAsync();
-            return cities;
-        }
-        public async Task<bool> CheckifCityNameIsCorrect(string cityName)
-        {
-            bool cityExists = (await dbContext.Cities.Where(p => p.Name == cityName).CountAsync()).Equals(1);
-            return cityExists;
-        }
 
-        public async Task<IList<string>> GetCitiesFromCountryAsync(string countryName)
-        {
-            var cities = await dbContext.Cities.Where(p => p.Country.Name == countryName).Select(p=>p.Name).ToListAsync();
-            return cities;
-        }
+        public async Task<IList<string>> GetAllCityNamesAsync() =>
+            await dbContext.Cities.Select(p => p.Name).ToListAsync();
+
+        public async Task<bool> CheckIfCityExistsAsync(string cityName) =>
+            await dbContext.Cities
+                            .Where(p => p.Name.ToLower() == (cityName == null ? "" : cityName.ToLower())).AnyAsync();
+
+        public async Task<IList<string>> GetCitiesFromCountryAsync(string countryName) =>
+            await dbContext.Cities
+                           .Where(p => p.Country.Name.ToLower() == countryName.ToLower())
+                           .Select(p => p.Name).ToListAsync();
+
+        public async Task<City> GetCityByNameAsync(string cityName) =>
+            await dbContext.Cities.FirstOrDefaultAsync(p => p.Name.ToLower() == cityName.ToLower());
     }
 }

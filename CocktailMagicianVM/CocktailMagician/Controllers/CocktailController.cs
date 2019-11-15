@@ -31,7 +31,16 @@ namespace CocktailMagician.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCocktail(string name, string primaryIngredients, string ingredients, string description)
         {
-            var file = Request.Form.Files;
+            byte[] cocktailPhoto;
+            var file = Request.Form.Files[0];
+            using (var stream = new MemoryStream())
+            {
+                await file.CopyToAsync(stream);
+                cocktailPhoto = stream.ToArray();
+            }
+            var primaryIngredientsArr = primaryIngredients.Split(',');
+            var ingredientsArr = ingredients.Split(',');
+            await cocktailService.CreateCocktailAsync(name, description, primaryIngredientsArr, ingredientsArr, cocktailPhoto);
             return Ok();
         }
     }

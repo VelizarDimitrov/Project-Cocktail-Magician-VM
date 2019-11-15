@@ -161,7 +161,11 @@ function addCocktail() {
         type: "POST",
         data: formData,
         processData: false,
-        contentType: false
+        contentType: false,
+        success: function (result) {
+            var url = $("#RedirectTo").val();
+            window.location.href = url;
+        }
     });
 }
 

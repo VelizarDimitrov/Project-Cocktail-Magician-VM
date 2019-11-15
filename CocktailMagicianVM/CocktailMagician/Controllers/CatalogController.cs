@@ -15,6 +15,7 @@ namespace CocktailMagician.Controllers
         private readonly IBarService barService;
         private readonly ICocktailService cService;
 
+        // Move actions to Bar and Coctail controllers
         public CatalogController(IAccountService aService,IBarService barService, ICocktailService cService)
         {
             this.aService = aService;
@@ -37,7 +38,7 @@ namespace CocktailMagician.Controllers
         }
         public async Task<IActionResult> BarSearchResults(string keyword, string criteria, string order, string page, string rating, string sortOrder)
         {
-            Tuple<IList<Bar>, bool> tuple;
+            Tuple<IList<Bar>, bool> searchResults;
             var model = new BarSearchViewModel()
             {
                 Keyword = keyword == null ? "" : keyword,
@@ -46,30 +47,19 @@ namespace CocktailMagician.Controllers
                 Searched = true,
                 Page = int.Parse(page)
             };
-            switch (model.SelectedCriteria)
-            {
-                case "Name":
-                    tuple = await barService.FindBarByNameAsync(model.Keyword, model.Page, model.SelectedOrderBy, rating, sortOrder);
-                    break;
-                case "Address":
-                    tuple = await barService.FindBarByAddressAsync(model.Keyword, model.Page, model.SelectedOrderBy, rating, sortOrder);
-                    break;
-                case "City":
-                    tuple = await barService.FindBarByCityAsync(model.Keyword, model.Page, model.SelectedOrderBy, rating, sortOrder);
-                    break;
-                default:
-                    throw new ArgumentException();
-            }
-            foreach (var bar in tuple.Item1)
+
+            searchResults = await barService.FindBarsForCatalogAsync(model.Keyword, model.SelectedCriteria, model.Page, model.SelectedOrderBy, rating, sortOrder);
+
+            foreach (var bar in searchResults.Item1)
             {
                 model.Bars.Add(new BarViewModel(bar));
             }
-            model.LastPage = tuple.Item2;
+            model.LastPage = searchResults.Item2;
             return PartialView("_BarSearchView", model);
         }
         public async Task<IActionResult> CocktailSearchResults(string keyword, string criteria, string order, string page, string rating, string sortOrder, string mainIngredient)
         {
-            Tuple<IList<Cocktail>, bool> tuple;
+            Tuple<IList<Cocktail>, bool> cocktails;
             var model = new CocktailSearchViewModel()
             {
                 Keyword = keyword == null ? "" : keyword,
@@ -79,25 +69,14 @@ namespace CocktailMagician.Controllers
                 Page = int.Parse(page)
             };
             var ing = mainIngredient == null ? "" : mainIngredient;
-            switch (model.SelectedCriteria)
-            {
-                case "Name":
-                    tuple = await cService.FindCocktailByNameAsync(model.Keyword, model.Page, model.SelectedOrderBy, rating, sortOrder, ing);
-                    break;
-                case "Bar":
-                    tuple = await cService.FindCocktailByBarAsync(model.Keyword, model.Page, model.SelectedOrderBy, rating, sortOrder, ing);
-                    break;
-                case "Ingredient":
-                    tuple = await cService.FindCocktailByIngredientAsync(model.Keyword, model.Page, model.SelectedOrderBy, rating, sortOrder, ing);
-                    break;
-                default:
-                    throw new ArgumentException();
-            }
-            foreach (var cocktail in tuple.Item1)
+
+            cocktails = await cService.FindCocktailsForCatalogAsync(model.Keyword, model.SelectedCriteria, model.Page, model.SelectedOrderBy, rating, sortOrder, ing);
+
+            foreach (var cocktail in cocktails.Item1)
             {
                 model.Cocktails.Add(new CocktailViewModel(cocktail));
             }
-            model.LastPage = tuple.Item2;
+            model.LastPage = cocktails.Item2;
             return PartialView("_CocktailSearchView", model);
         }
         [HttpGet]

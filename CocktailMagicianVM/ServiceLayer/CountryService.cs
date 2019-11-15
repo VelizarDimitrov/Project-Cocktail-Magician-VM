@@ -1,4 +1,5 @@
 ﻿using Data;
+using Data.Contracts;
 using Data.Models;
 using Microsoft.EntityFrameworkCore;
 using ServiceLayer.Contracts;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ServiceLayer
 {
-    public class CountryService:ICountryService
+    public class CountryService : ICountryService
     {
         private readonly CocktailDatabaseContext dbContext;
 
@@ -22,7 +23,8 @@ namespace ServiceLayer
         // Non-Async version of methods for Pre-Load
         public void CreateCountry(string countryName)
         {
-            if (dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).Count() == 0)
+            if (!dbContext.Countries.Any(p => p.Name.ToLower() == countryName.ToLower()))
+            //if (dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).Count() == 0)
             {
                 var country1 = new Country()
                 {
@@ -32,15 +34,13 @@ namespace ServiceLayer
                 dbContext.SaveChanges();
             }
             else
-            {
                 throw new ArgumentException("Country with that name already exists!");
-            }
         }
         //End of Pre-Load
 
         public async Task CreateCountryAsync(string countryName)
         {
-            if (await dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).CountAsync() == 0)
+            if (!(await CheckIfCountryExists(countryName)))
             {
                 var country1 = new Country()
                 {
@@ -50,19 +50,15 @@ namespace ServiceLayer
                 await dbContext.SaveChangesAsync();
             }
             else
-            {
                 throw new ArgumentException("Country with that name already exists!");
-            }
         }
-       public async Task<IList<string>> GetAllCountryNamesAsync()
-        {
-            var countries = await dbContext.Countries.Select(p => p.Name).ToListAsync();
-            return countries;
-        }
-        public async Task<bool> CheckIfCountryNameIsCorrect(string countryName)
-        {
-            bool countryExists = (await dbContext.Countries.Where(p => p.Name == countryName).CountAsync()).Equals(1);
-            return countryExists;
-        }
+        public async Task<IList<string>> GetAllCountryNamesAsync() =>
+             await dbContext.Countries.Select(p => p.Name).ToListAsync();
+
+        public async Task<bool> CheckIfCountryExists(string countryName) =>
+            await dbContext.Countries.AnyAsync(p => p.Name == countryName);
+
+        public async Task<Country> GetCountryByName(string countryName) =>
+            await dbContext.Countries.FirstOrDefaultAsync(p => p.Name.ToLower() == countryName.ToLower());
     }
 }
