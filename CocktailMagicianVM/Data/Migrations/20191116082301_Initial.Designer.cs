@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(CocktailDatabaseContext))]
-    [Migration("20191113135621_Initial")]
+    [Migration("20191116082301_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -76,6 +76,8 @@ namespace Data.Migrations
                     b.Property<string>("BarName");
 
                     b.Property<string>("Comment");
+
+                    b.Property<DateTime>("CreatedOn");
 
                     b.Property<int>("UserId");
 
@@ -172,6 +174,8 @@ namespace Data.Migrations
                     b.Property<string>("CocktailName");
 
                     b.Property<string>("Comment");
+
+                    b.Property<DateTime>("CreatedOn");
 
                     b.Property<int>("UserId");
 

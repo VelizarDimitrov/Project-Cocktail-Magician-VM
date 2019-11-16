@@ -67,5 +67,13 @@ namespace CocktailMagician.Controllers
             }
             return RedirectToAction("BarSearch", "Catalog");
         }
+        [HttpPost]
+        public async Task<IActionResult> BarDetails(string barId)
+        {     
+            var bar = await barService.FindBarByIdAsync(int.Parse(barId));
+            var vm= new BarViewModel(bar);
+            return View("BarDetails", vm);
+
+        }
     }
 }

@@ -15,5 +15,6 @@ namespace Data.Contracts
         Bar Bar { get; set; }
         string BarName { get; set; }
         string UserUserName { get; set; }
+        DateTime CreatedOn { get; set; }
     }
 }

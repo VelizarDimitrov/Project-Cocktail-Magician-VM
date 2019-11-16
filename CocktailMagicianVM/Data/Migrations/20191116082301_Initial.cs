@@ -235,7 +235,8 @@ namespace Data.Migrations
                     UserId = table.Column<int>(nullable: false),
                     BarId = table.Column<int>(nullable: false),
                     BarName = table.Column<string>(nullable: true),
-                    UserUserName = table.Column<string>(nullable: true)
+                    UserUserName = table.Column<string>(nullable: true),
+                    CreatedOn = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -291,7 +292,8 @@ namespace Data.Migrations
                     UserId = table.Column<int>(nullable: false),
                     CocktailId = table.Column<int>(nullable: false),
                     CocktailName = table.Column<string>(nullable: true),
-                    UserName = table.Column<string>(nullable: true)
+                    UserName = table.Column<string>(nullable: true),
+                    CreatedOn = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {

@@ -15,5 +15,6 @@ namespace Data.Models
         public Bar Bar { get; set; }
         public string BarName { get; set; }
         public string UserUserName { get; set; }
+        public DateTime CreatedOn { get; set; }
     }
 }

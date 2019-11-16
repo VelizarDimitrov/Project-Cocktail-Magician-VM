@@ -177,7 +177,7 @@ namespace ServiceLayer
 
         public async Task<Tuple<IList<Cocktail>, bool>> FindCocktailsForCatalogAsync(string keyword, string keywordCriteria, int page, string selectedOrderBy, string rating, string sortOrder, string mainIngredient)
         {
-            const int pageSize= 10;
+            const int pageSize= 12;
             bool lastPage = true;
             var ratings = rating.Split(';');
             var minRating = int.Parse(ratings[0]);

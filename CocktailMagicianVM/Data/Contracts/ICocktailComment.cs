@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Data.Contracts
 {
-   public interface ICocktailComment
+    public interface ICocktailComment
     {
         int Id { get; set; }
         string Comment { get; set; }
@@ -15,5 +15,6 @@ namespace Data.Contracts
         Cocktail Cocktail { get; set; }
         string CocktailName { get; set; }
         string UserName { get; set; }
+        DateTime CreatedOn { get; set; }
     }
 }

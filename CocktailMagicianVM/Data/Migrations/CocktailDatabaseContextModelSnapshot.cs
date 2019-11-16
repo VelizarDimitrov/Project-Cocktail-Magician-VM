@@ -75,6 +75,8 @@ namespace Data.Migrations
 
                     b.Property<string>("Comment");
 
+                    b.Property<DateTime>("CreatedOn");
+
                     b.Property<int>("UserId");
 
                     b.Property<string>("UserUserName");
@@ -170,6 +172,8 @@ namespace Data.Migrations
                     b.Property<string>("CocktailName");
 
                     b.Property<string>("Comment");
+
+                    b.Property<DateTime>("CreatedOn");
 
                     b.Property<int>("UserId");
 

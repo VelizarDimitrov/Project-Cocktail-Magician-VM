@@ -148,13 +148,13 @@ namespace ServiceLayer
             switch (keywordCriteria)
             {
                 case "Name":
-                    bars = bars.Where(p => p.Name.ToLower() == keyword.ToLower());
+                    bars = bars.Where(p => p.Name.ToLower().Contains(keyword.ToLower()));
                     break;
                 case "Address":
-                    bars = bars.Where(p => p.Address.ToLower() == keyword.ToLower());
+                    bars = bars.Where(p => p.Address.ToLower().Contains(keyword.ToLower()));
                     break;
                 case "City":
-                    bars = bars.Where(p => p.City.Name.ToLower() == keyword.ToLower());
+                    bars = bars.Where(p => p.City.Name.ToLower().Contains(keyword.ToLower()));
                     break;
             }
 
@@ -196,8 +196,14 @@ namespace ServiceLayer
             return new Tuple<IList<Bar>, bool>(foundBars, lastPage);
         }
 
-        public async Task<IList<Bar>> GetNewestBarsAsync() =>
-            await dbContext.Bars.Include(p => p.City).Include(p => p.Country).Include(p => p.Ratings)
-                .Include(p => p.Comments).Include(p => p.Cocktails).Include(p => p.FavoritedBy).TakeLast(6).ToListAsync();
+        public async Task<IList<Bar>> GetNewestBarsAsync()
+        {
+
+            var bars = await dbContext.Bars.Include(p => p.City).Include(p => p.Country).Include(p => p.Ratings)
+                 .Include(p => p.Comments).Include(p => p.Cocktails).Include(p => p.FavoritedBy).ToListAsync();
+             bars = bars.TakeLast(6).ToList();
+            return bars;
+        }
+
     }
 }

@@ -1,0 +1,286 @@
+﻿@model BarViewModel
+<div class="main-wrapper">
+
+    <!-- start hero-header -->
+    <div class="breadcrumb-wrapper">
+
+        <div class="container">
+
+            <ol class="breadcrumb-list booking-step">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="blog.html">Bar Catalog</a></li>
+                <li><span>Bar Details</span></li>
+            </ol>
+
+        </div>
+
+    </div>
+    <!-- end hero-header -->
+
+    <div class="section sm">
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-sm-8 col-md-9">
+                    <div class=" row">
+                    </div>
+                    <div class="row">
+                        <div class="blog-wrapper">
+
+                            <div class="blog-item blog-single">
+
+                                <h2>@Model.Name</h2>
+                                <ul class="list-unstyled list-inline rating-star pull-left">
+                                    <li>
+                                        <span style="color:#CCCCCC;" id="star-1" onmouseover="hoverStarOn(1)" onmouseout="hoverStarOff(1)" onclick="starClick(1,@Model.Id)">
+                                            <i class="fa fa-star"></i>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span style="color:#CCCCCC;" id="star-2" onmouseover="hoverStarOn(2)" onmouseout="hoverStarOff(2)" onclick="starClick(2,@Model.Id)">
+
+                                            <i class="fa fa-star"></i>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span style="color:#CCCCCC;" id="star-3" onmouseover="hoverStarOn(3)" onmouseout="hoverStarOff(3)" onclick="starClick(3,@Model.Id)">
+                                            <i class="fa fa-star"></i>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span style="color:#CCCCCC;" id="star-4" onmouseover="hoverStarOn(4)" onmouseout="hoverStarOff(4)" onclick="starClick(4,@Model.Id)">
+                                            <i class="fa fa-star"></i>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span style="color:#CCCCCC;" id="star-5" onmouseover="hoverStarOn(5)" onmouseout="hoverStarOff(5)" onclick="starClick(5,@Model.Id)">
+                                            <i class="fa fa-star"></i>
+                                        </span>
+                                    </li>
+                                </ul>
+                                <h4>Rating: @Model.AverageRating</h4>
+                                <div class="blog-media">
+                                    <div class="center-cropped"
+                                         style="background-image:url(@Url.Action("GetBarPhoto", "Catalog" , new { id=Model.Id }));">
+                                    </div>
+                                </div>
+                                <div class="blog-content">
+                                    <ul class="blog-meta clearfix">
+                                        <li style="color:black">@Model.Address</li>
+                                        <li style="color:black">@Model.Comments.BarComments.Count() comments</li>
+                                    </ul>
+                                    <div class="blog-entry">
+                                        <div class="blockquote">@Model.Description</div>
+                                    </div>
+                                </div>
+
+                                <div class="clear mb-50"></div>
+
+                                <h4 class="uppercase">About author</h4>
+                                <div class="blog-author">
+                                    <div class="author-label">
+                                        <img src="images/man/01.jpg" alt="author image" class="img-circle" />
+                                    </div>
+                                    <div class="author-details">
+                                        <div class="clear-xs"></div>
+                                        <h5 class="heading"><a href="#">John Joe</a></h5>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec justo fringilla, laoreet mauris vitae, fringilla elit. Curabitur semper tristique nisi, at ultricies leo ornare rutrum. Proin lacinia vulputate urna, non pharetra ligula finibus nec. Vestibulum id mattis risus. Praesent commodo sem eleifend scelerisque ornare. </p>
+                                    </div>
+                                </div>
+
+                                <div class="clear mb-50"></div>
+
+                                <h3 class="uppercase">9 Comments</h3>
+
+                                <div id="comment-wrapper">
+
+                                    <ul class="comment-item">
+                                        <li>
+                                            <div class="comment-avatar">
+                                                <img src="images/man/03.jpg" alt="author image" />
+                                            </div>
+                                            <div class="comment-header">
+                                                <h6 class="heading mt-0">Ibrahim ibn al-Walid</h6>
+                                                <span class="comment-time">23 minutes</span>
+                                            </div>
+                                            <div class="comment-content">
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec justo fringilla, laoreet mauris vitae, fringilla elit. Curabitur semper tristique nisi, at ultricies leo ornare rutrum. Proin lacinia vulputate urna, non pharetra ligula finibus nec. Vestibulum id mattis risus. Praesent commodo sem eleifend scelerisque ornare. </p>
+                                            </div>
+                                            <ul class="comment-item">
+                                                <li>
+                                                    <div class="comment-avatar">
+                                                        <img src="images/man/01.jpg" alt="author image" />
+                                                    </div>
+                                                    <div class="comment-header">
+                                                        <h6 class="heading mt-0">Ibrahim ibn al-Walid</h6>
+                                                        <span class="comment-time">18 minutes</span>
+                                                    </div>
+                                                    <div class="comment-content">
+                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec justo fringilla, laoreet mauris vitae, fringilla elit. Curabitur semper tristique nisi, at ultricies leo ornare rutrum. Proin lacinia vulputate urna, non pharetra ligula finibus nec. Vestibulum id mattis risus. Praesent commodo sem eleifend scelerisque ornare.</p>
+                                                    </div>
+                                                    <ul class="comment-item">
+                                                        @*this is your comment*@
+                                                        <li>
+                                                            <div class="comment-avatar">
+                                                                <img src="images/man/02.jpg" alt="author image" />
+                                                            </div>
+                                                            <div class="comment-header">
+                                                                <h6 class="heading mt-0">Admin</h6>
+                                                                <span class="comment-time">16 minutes</span>
+                                                            </div>
+                                                            <div class="comment-content">
+                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec justo fringilla, laoreet mauris vitae, fringilla elit. Curabitur semper tristique nisi, at ultricies leo ornare rutrum. Proin lacinia vulputate urna, non pharetra ligula finibus nec. Vestibulum id mattis risus. Praesent commodo sem eleifend scelerisque ornare.</p>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="comment-avatar">
+                                                                <img src="images/man/04.jpg" alt="author image" />
+                                                            </div>
+                                                            <div class="comment-header">
+                                                                <h6 class="heading mt-0">Uthman ibn Affan</h6>
+                                                                <span class="comment-time">5 minutes</span>
+                                                            </div>
+                                                            <div class="comment-content">
+                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec justo fringilla, laoreet mauris vitae, fringilla elit. Curabitur semper tristique nisi, at ultricies leo ornare rutrum. Proin lacinia vulputate urna, non pharetra ligula finibus nec. Vestibulum id mattis risus. Praesent commodo sem eleifend scelerisque ornare.</p>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+
+                                    <div class="clear"></div>
+
+                                    <div class="text-center">
+                                        <a href="#" class="btn btn-primary">Load More</a>
+                                    </div>
+
+                                </div><!-- End Comment -->
+
+                                <div class="clear mb-30"></div>
+
+                                <h3 class="uppercase">Leave a Comment</h3>
+
+                                <form method="post" id="contactForm" action="#" class="comment-form">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-6 col-md-6">
+                                            <div class="form-group">
+                                                <label for="comment-name">Your Name <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="comment-name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clear"></div>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-15">
+                                            <div class="form-group">
+                                                <label for="comment-message">Message <span class="text-danger">*</span></label>
+                                                <textarea name="message" id="comment-message" class="form-control" rows="8"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <button type="submit" class="btn btn-primary">Comment</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <div class="clear"></div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4 col-md-3 mt-50-xs">
+
+                    <aside class="sidebar">
+
+                        <div class="sidebar-inner no-border for-blog">
+
+                            <div class="sidebar-module">
+                                <h4 class="sidebar-title">Latest cocktails here</h4>
+                                <div class="sidebar-module-inner">
+
+                                    <ul class="sidebar-post">
+                                        <li class="clearfix">
+                                            <a href="blog-single.html">
+                                                <div class="image">
+                                                    <img src="images/blog/01-sm.png" alt="Popular Post" />
+                                                </div>
+                                                <div class="content">
+                                                    <h6>Tasty Takeaway Deals For Your Chinese New Year Feast!</h6>
+                                                    <p class="recent-post-sm-meta"><i class="fa fa-clock-o mr-5"></i>June 01, 2016</p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </div>
+
+                            <div class="clear"></div>
+
+                        </div>
+
+                    </aside>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+@section Scripts {
+    @*<script src="~/js/BarSearch.js"></script>*@
+    <script>
+        const transparency = function () {
+            $('body').attr('class', 'not-transparent-header');
+        }
+        window.onload = transparency;
+        //#ED1C3B
+        //#CCCCCC
+
+        let userRating = 0;
+        var hoverStarOn = function (number) {
+            for (var i = 1; i <= number; i++) {
+                $(`#star-${i}`).attr("style", "color:#ED1C3B;");
+            }
+        }
+        var hoverStarOff = function (number) {
+            for (var i = 1; i <= number; i++) {
+                if (i > number) {
+                    $(`#star-${i}`).attr("style", "color:#CCCCCC;");
+                }
+            }
+        }
+        var starClick = function (number, id) {
+            userRating = number;
+            $.ajax({
+                url: '/account/ratebar',
+                type: "POST",
+                data: { userRating: userRating, id: id }
+            });
+        }
+
+
+
+
+    </script>
+}
+<style>
+    .center-cropped {
+        width: 100%;
+        height: 360px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>

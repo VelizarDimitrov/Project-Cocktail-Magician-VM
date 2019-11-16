@@ -18,12 +18,14 @@ namespace ServiceLayer
         private readonly IHashing hasher;
         private readonly ICountryService countryService;
         private readonly ICityService cityService;
+        private readonly IBarService barService;
         private readonly CocktailDatabaseContext dbContext;
-        public AccountService(CocktailDatabaseContext dbContext, IHashing hasher, ICountryService countryService, ICityService cityService)
+        public AccountService(CocktailDatabaseContext dbContext, IHashing hasher, ICountryService countryService, ICityService cityService, IBarService barService)
         {
             this.hasher = hasher;
             this.countryService = countryService;
             this.cityService = cityService;
+            this.barService = barService;
             this.dbContext = dbContext;
         }
 
@@ -136,5 +138,23 @@ namespace ServiceLayer
 
             return user;
         }
+
+        public async Task RateBarAsync(int userId, int userRating, int barId)
+        {
+            var user = await FindUserByIdAsync(userId);
+            var bar = await barService.FindBarByIdAsync(barId);
+            var barRating = new BarRating()
+            {
+                User = user,
+                Bar = bar,
+                Rating = userRating
+
+            };
+            await dbContext.BarRating.AddAsync(barRating);
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<User> FindUserByIdAsync(int userId) =>
+            await dbContext.Users.Where(p => p.Id == userId).FirstAsync();
     }
 }

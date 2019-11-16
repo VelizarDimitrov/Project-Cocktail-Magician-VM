@@ -15,5 +15,6 @@ namespace Data.Models
         public Cocktail Cocktail { get; set; }
         public string CocktailName { get; set; }
         public string UserName { get; set; }
+        public DateTime CreatedOn { get; set; }
     }
 }
