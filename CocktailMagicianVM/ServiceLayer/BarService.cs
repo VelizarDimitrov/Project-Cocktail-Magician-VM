@@ -204,6 +204,21 @@ namespace ServiceLayer
              bars = bars.TakeLast(6).ToList();
             return bars;
         }
+        public async Task UpdateAverageRatingAsync(int barId)
+        {
+            
+            var bar = await FindBarByIdAsync(barId);
+            bar.AverageRating=Math.Round(bar.Ratings.Average(p=>p.Rating),1);
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<IList<BarComment>> GetBarCommentsAsync(int barId, int loadNumber)
+        {
+            var bar = await FindBarByIdAsync(barId);
+            var comments = bar.Comments.Take(loadNumber).ToList();
+            return comments;
+
+        }
 
     }
 }

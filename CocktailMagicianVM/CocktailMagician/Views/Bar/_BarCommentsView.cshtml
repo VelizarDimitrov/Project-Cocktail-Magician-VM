@@ -1,0 +1,18 @@
+﻿@model BarCommentListViewModel
+<ul class="comment-item">
+    @foreach (var comment in Model.BarComments)
+    {
+        <li>
+            <div class="comment-avatar">
+                <img src="images/man/03.jpg" alt="author image" />
+            </div>
+            <div class="comment-header">
+                <h6 class="heading mt-0">@comment.UserName</h6>
+                <span class="comment-time">@comment.CreatedOn</span>
+            </div>
+            <div class="comment-content">
+                <p>@comment.Comment</p>
+            </div>
+        </li>
+    }
+</ul>

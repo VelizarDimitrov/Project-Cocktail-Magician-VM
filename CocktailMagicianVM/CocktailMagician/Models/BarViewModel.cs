@@ -31,6 +31,10 @@ namespace CocktailMagician.Models
             Cocktails = new BarCocktailListViewModel(bar.Cocktails);
             FavoritedBy = new UserBarListViewModel(bar.FavoritedBy);
         }
+        public BarViewModel()
+        {
+
+        }
         public int Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
@@ -40,6 +44,7 @@ namespace CocktailMagician.Models
         public int RatingsCount { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
+        public string CreateComment { get; set; }
         public BarRatingListViewModel Ratings { get; set; }
         public BarCommentListViewModel Comments { get; set; }
         public BarCocktailListViewModel Cocktails { get; set; }

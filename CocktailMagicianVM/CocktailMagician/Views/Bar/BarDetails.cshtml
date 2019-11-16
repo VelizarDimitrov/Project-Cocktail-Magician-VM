@@ -32,6 +32,7 @@
                             <div class="blog-item blog-single">
 
                                 <h2>@Model.Name</h2>
+
                                 <ul class="list-unstyled list-inline rating-star pull-left">
                                     <li>
                                         <span style="color:#CCCCCC;" id="star-1" onmouseover="hoverStarOn(1)" onmouseout="hoverStarOff(1)" onclick="starClick(1,@Model.Id)">
@@ -60,6 +61,7 @@
                                         </span>
                                     </li>
                                 </ul>
+
                                 <h4>Rating: @Model.AverageRating</h4>
                                 <div class="blog-media">
                                     <div class="center-cropped"
@@ -92,70 +94,18 @@
 
                                 <div class="clear mb-50"></div>
 
-                                <h3 class="uppercase">9 Comments</h3>
+                                <h3 class="uppercase">@Model.Comments.BarComments.Count() Comments</h3>
 
                                 <div id="comment-wrapper">
+                                <div id="comments-partial">
 
-                                    <ul class="comment-item">
-                                        <li>
-                                            <div class="comment-avatar">
-                                                <img src="images/man/03.jpg" alt="author image" />
-                                            </div>
-                                            <div class="comment-header">
-                                                <h6 class="heading mt-0">Ibrahim ibn al-Walid</h6>
-                                                <span class="comment-time">23 minutes</span>
-                                            </div>
-                                            <div class="comment-content">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec justo fringilla, laoreet mauris vitae, fringilla elit. Curabitur semper tristique nisi, at ultricies leo ornare rutrum. Proin lacinia vulputate urna, non pharetra ligula finibus nec. Vestibulum id mattis risus. Praesent commodo sem eleifend scelerisque ornare. </p>
-                                            </div>
-                                            <ul class="comment-item">
-                                                <li>
-                                                    <div class="comment-avatar">
-                                                        <img src="images/man/01.jpg" alt="author image" />
-                                                    </div>
-                                                    <div class="comment-header">
-                                                        <h6 class="heading mt-0">Ibrahim ibn al-Walid</h6>
-                                                        <span class="comment-time">18 minutes</span>
-                                                    </div>
-                                                    <div class="comment-content">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec justo fringilla, laoreet mauris vitae, fringilla elit. Curabitur semper tristique nisi, at ultricies leo ornare rutrum. Proin lacinia vulputate urna, non pharetra ligula finibus nec. Vestibulum id mattis risus. Praesent commodo sem eleifend scelerisque ornare.</p>
-                                                    </div>
-                                                    <ul class="comment-item">
-                                                        @*this is your comment*@
-                                                        <li>
-                                                            <div class="comment-avatar">
-                                                                <img src="images/man/02.jpg" alt="author image" />
-                                                            </div>
-                                                            <div class="comment-header">
-                                                                <h6 class="heading mt-0">Admin</h6>
-                                                                <span class="comment-time">16 minutes</span>
-                                                            </div>
-                                                            <div class="comment-content">
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec justo fringilla, laoreet mauris vitae, fringilla elit. Curabitur semper tristique nisi, at ultricies leo ornare rutrum. Proin lacinia vulputate urna, non pharetra ligula finibus nec. Vestibulum id mattis risus. Praesent commodo sem eleifend scelerisque ornare.</p>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="comment-avatar">
-                                                                <img src="images/man/04.jpg" alt="author image" />
-                                                            </div>
-                                                            <div class="comment-header">
-                                                                <h6 class="heading mt-0">Uthman ibn Affan</h6>
-                                                                <span class="comment-time">5 minutes</span>
-                                                            </div>
-                                                            <div class="comment-content">
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec justo fringilla, laoreet mauris vitae, fringilla elit. Curabitur semper tristique nisi, at ultricies leo ornare rutrum. Proin lacinia vulputate urna, non pharetra ligula finibus nec. Vestibulum id mattis risus. Praesent commodo sem eleifend scelerisque ornare.</p>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
+                                </div>
+                                   
 
                                     <div class="clear"></div>
 
                                     <div class="text-center">
-                                        <a href="#" class="btn btn-primary">Load More</a>
+                                        <a class="btn btn-primary" onclick="loadComments(@Model.Id)" >Load More</a>
                                     </div>
 
                                 </div><!-- End Comment -->
@@ -165,26 +115,22 @@
                                 <h3 class="uppercase">Leave a Comment</h3>
 
                                 <form method="post" id="contactForm" action="#" class="comment-form">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-sm-6 col-md-6">
-                                            <div class="form-group">
-                                                <label for="comment-name">Your Name <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="comment-name">
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="clear"></div>
                                     <div class="row">
                                         <div class="col-md-12 mb-15">
                                             <div class="form-group">
                                                 <label for="comment-message">Message <span class="text-danger">*</span></label>
-                                                <textarea name="message" id="comment-message" class="form-control" rows="8"></textarea>
+                                                <textarea maxlength="500" id="comment-message" asp-for="@Model.CreateComment" class="form-control" rows="8"></textarea>
+                       
+                                            </div>
+                                            <div hidden="hidden">
+                                                <input  asp-for="@Model.Id" value="@Model.Id"/>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <button type="submit" class="btn btn-primary">Comment</button>
+                                            <button type="submit" asp-action="AddBarComment" asp-controller="Bar" class="btn btn-primary">Comment</button>
                                         </div>
                                     </div>
                                 </form>
@@ -208,17 +154,20 @@
                                 <div class="sidebar-module-inner">
 
                                     <ul class="sidebar-post">
-                                        <li class="clearfix">
-                                            <a href="blog-single.html">
-                                                <div class="image">
-                                                    <img src="images/blog/01-sm.png" alt="Popular Post" />
-                                                </div>
-                                                <div class="content">
-                                                    <h6>Tasty Takeaway Deals For Your Chinese New Year Feast!</h6>
-                                                    <p class="recent-post-sm-meta"><i class="fa fa-clock-o mr-5"></i>June 01, 2016</p>
-                                                </div>
-                                            </a>
-                                        </li>
+                                        @foreach (var cocktail in Model.Cocktails.BarCocktails)
+                                        {
+                                            <li class="clearfix">
+                                                <a href="blog-single.html">
+                                                    <div class="image">
+                                                        <img src="(@Url.Action("GetCocktailPhoto", "Catalog" , new { id=cocktail.CocktailId })"/>
+                                                    </div>
+                                                    <div class="content">
+                                                        <h6>@cocktail.CocktailName</h6>                                                       
+                                                    </div>
+                                                </a>
+                                            </li>
+
+                                        }
                                     </ul>
 
                                 </div>
@@ -237,6 +186,17 @@
         </div>
 
     </div>
+    <div hidden=hidden>
+        <input id="bar-id" value="@Model.Id" />
+        @if (Model.Ratings.BarRatings.Any(p => p.UserId == int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value)))
+        {
+            <input id="initial-rating" value="@Model.Ratings.BarRatings.First(p=>p.UserId==int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value)).Rating" />
+        }
+        else
+        {
+            <input id="initial-rating" value="0" />
+        }
+    </div>
 </div>
 @section Scripts {
     @*<script src="~/js/BarSearch.js"></script>*@
@@ -247,8 +207,8 @@
         window.onload = transparency;
         //#ED1C3B
         //#CCCCCC
-
-        let userRating = 0;
+        let commentCount = 6;
+        let userRating;
         var hoverStarOn = function (number) {
             for (var i = 1; i <= number; i++) {
                 $(`#star-${i}`).attr("style", "color:#ED1C3B;");
@@ -256,7 +216,7 @@
         }
         var hoverStarOff = function (number) {
             for (var i = 1; i <= number; i++) {
-                if (i > number) {
+                if (i > userRating) {
                     $(`#star-${i}`).attr("style", "color:#CCCCCC;");
                 }
             }
@@ -270,9 +230,19 @@
             });
         }
 
-
-
-
+        let loadRating = function (rating) {
+            userRating = rating;
+            for (var i = 1; i <= rating; i++) {
+                $(`#star-${i}`).attr("style", "color:#ED1C3B;");
+            }
+        }
+        let loadComments=function(barId){
+           
+            $("#comments-partial").load('/bar/loadbarcomments', { barId: barId, commentCount: commentCount });
+            commentCount = commentCount + 6;
+        }
+        loadRating($("#initial-rating").val());
+        loadComments($("#bar-id").val());
     </script>
 }
 <style>

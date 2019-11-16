@@ -14,6 +14,7 @@ namespace ServiceLayer.Contracts
         Task<User> FindUserByUserName(string username);
         Task RateBarAsync(int userId, int userRating, int barId);
         Task<User> FindUserByIdAsync(int userId);
+        Task AddBarCommentAsync(int id, string createComment, int userId);
         //Task<IList<User>> FindAllUsersAsync();
     }
 }

@@ -19,5 +19,7 @@ namespace ServiceLayer.Contracts
         Task<Tuple<IList<Bar>, bool>> FindBarsForCatalogAsync(string keyword, string keywordCriteria, int page, string selectedOrderBy, string rating, string sortOrder);
 
         Task<IList<Bar>> GetNewestBarsAsync();
+        Task UpdateAverageRatingAsync(int barId);
+        Task<IList<BarComment>> GetBarCommentsAsync(int barId, int loadNumber);
     }
 }

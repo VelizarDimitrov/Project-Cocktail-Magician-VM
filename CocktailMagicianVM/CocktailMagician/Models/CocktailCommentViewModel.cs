@@ -15,11 +15,13 @@ namespace CocktailMagician.Models
             Comment = cocktailComment.Comment;
             UserId = cocktailComment.UserId;
             CocktailId = cocktailComment.CocktailId;
+            CreatedOn = cocktailComment.CreatedOn;
         }
         public string UserName { get; set; }
         public string CocktailName { get; set; }
         public string Comment { get; set; }
         public int UserId { get; set; }
         public int CocktailId { get; set; }
+        public DateTime CreatedOn { get; set; }
     }
 }

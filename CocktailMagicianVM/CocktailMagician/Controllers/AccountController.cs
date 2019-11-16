@@ -20,8 +20,8 @@ namespace CocktailMagician.Controllers
         public async Task<IActionResult> RateBar(string userRating, string id)
         {
            var userId = int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
-            aService.RateBarAsync(userId, int.Parse(userRating), int.Parse(id));
-            return View();
+           await aService.RateBarAsync(userId, int.Parse(userRating), int.Parse(id));
+            return Ok();
         }
     }
 }

@@ -141,20 +141,57 @@ namespace ServiceLayer
 
         public async Task RateBarAsync(int userId, int userRating, int barId)
         {
-            var user = await FindUserByIdAsync(userId);
-            var bar = await barService.FindBarByIdAsync(barId);
-            var barRating = new BarRating()
+            if (await dbContext.BarRating.AnyAsync(p => (p.UserId == userId && p.BarId == barId)))
             {
-                User = user,
-                Bar = bar,
-                Rating = userRating
+                var givenRating = await dbContext.BarRating.FirstAsync(p => (p.UserId == userId && p.BarId == barId));
+                givenRating.Rating = userRating;
+                await dbContext.SaveChangesAsync();
+                await barService.UpdateAverageRatingAsync(barId);
+            }
+            else
+            {
+                var user = await FindUserByIdAsync(userId);
+                var bar = await barService.FindBarByIdAsync(barId);
+                var barRating = new BarRating()
+                {
+                    User = user,
+                    Bar = bar,
+                    Rating = userRating
 
-            };
-            await dbContext.BarRating.AddAsync(barRating);
-            await dbContext.SaveChangesAsync();
+                };
+                await dbContext.BarRating.AddAsync(barRating);
+                await dbContext.SaveChangesAsync();
+                await barService.UpdateAverageRatingAsync(barId);
+            }
         }
 
         public async Task<User> FindUserByIdAsync(int userId) =>
             await dbContext.Users.Where(p => p.Id == userId).FirstAsync();
+
+        public async Task AddBarCommentAsync(int id, string createComment, int userId)
+        {
+            if (await dbContext.BarComment.AnyAsync(p => (p.UserId == userId && p.BarId == id)))
+            {
+                var givenComment = await dbContext.BarComment.FirstAsync(p => (p.UserId == userId && p.BarId == id));
+                givenComment.Comment = createComment;
+                await dbContext.SaveChangesAsync();
+
+            }
+            else
+            {
+                var user = await FindUserByIdAsync(userId);
+                var bar = await barService.FindBarByIdAsync(id);
+                var barComment = new BarComment()
+                {
+                    User = user,
+                    Bar = bar,
+                    Comment = createComment,
+                    CreatedOn = DateTime.Now
+
+                };
+                await dbContext.BarComment.AddAsync(barComment);
+                await dbContext.SaveChangesAsync();
+            }
+        }
     }
 }
