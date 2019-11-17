@@ -40,7 +40,7 @@ namespace ServiceLayer
 
         public async Task CreateCountryAsync(string countryName)
         {
-            if (!(await CheckIfCountryExists(countryName)))
+            if (!(await CheckIfCountryExistsAsync(countryName)))
             {
                 var country1 = new Country()
                 {
@@ -55,10 +55,10 @@ namespace ServiceLayer
         public async Task<IList<string>> GetAllCountryNamesAsync() =>
              await dbContext.Countries.Select(p => p.Name).ToListAsync();
 
-        public async Task<bool> CheckIfCountryExists(string countryName) =>
+        public async Task<bool> CheckIfCountryExistsAsync(string countryName) =>
             await dbContext.Countries.AnyAsync(p => p.Name == countryName);
 
-        public async Task<Country> GetCountryByName(string countryName) =>
+        public async Task<Country> GetCountryByNameAsync(string countryName) =>
             await dbContext.Countries.FirstOrDefaultAsync(p => p.Name.ToLower() == countryName.ToLower());
     }
 }

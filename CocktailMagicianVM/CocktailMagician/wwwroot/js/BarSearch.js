@@ -1,5 +1,5 @@
 ﻿
-function nextPage() {
+function changePage(number) {
     let rating;
     var sortSpan = $('#sort_order_span');
     let sort = sortSpan.text();
@@ -12,8 +12,9 @@ function nextPage() {
     let keyword = $('#current-keyword').val();
     let criteria = $('#current-criteria').val();
     let order = $('#current-order').val();
-    let page = parseInt($('#current-page').val()) + 1;
-    $('#search-results').load('/catalog/barsearchresults', { keyword: keyword, criteria: criteria, order: order, page: page, rating: rating, sortOrder: sort });
+    let page = parseInt($('#current-page').val()) + number;
+    let pageSize = 10;
+    $('#search-results').load('/bar/barsearchresults', { keyword: keyword, criteria: criteria, order: order, page: page, rating: rating, sortOrder: sort, pageSize: pageSize});
 }
 function searchEventHandler() {
     let rating;
@@ -29,25 +30,8 @@ function searchEventHandler() {
     let criteria = $('#criteria').val();
     let order = $('#order').val();
     let page = 1;
-    $('#search-results').load('/catalog/barsearchresults', { keyword: keyword, criteria: criteria, order: order, page: page, rating: rating, sortOrder: sort });
-}
-
-function prevPage() {
-    let rating;
-    var sortSpan = $('#sort_order_span');
-    let sort = sortSpan.text();
-    if (document.getElementById('refine-result').className === "collapse") {
-        rating = "0;5";
-    }
-    else {
-        rating = $('#price_range').val();
-    }
-    let keyword = $('#current-keyword').val();
-    let criteria = $('#current-criteria').val();
-    let order = $('#current-order').val();
-    let page = parseInt($('#current-page').val()) - 1;
-    $('#search-results').load('/catalog/barsearchresults', { keyword: keyword, criteria: criteria, order: order, page: page, rating: rating, sortOrder: sort });
-
+    let pageSize = 10;
+    $('#search-results').load('/bar/barsearchresults', { keyword: keyword, criteria: criteria, order: order, page: page, rating: rating, sortOrder: sort, pageSize: pageSize });
 }
 
 const changeSortMethod = function (id) {
@@ -83,18 +67,29 @@ const changeSortOrder = function () {
     changeSorting();
 }
 
-const searchWithoutExtraFilters = function () {
+var moreFilters = 0;
+
+const ExtraFilters = function () {
     var sortSpan = $('#sort_order_span');
     let sort = sortSpan.text();
-    let rating = "0;5";
+    let rating;
+    if (moreFilters === 1) {
+        rating = "0;5";
+        moreFilters = 0;
+    }
+    else {
+        rating = $('#price_range').val();
+        moreFilters = 1;
+    }
     let keyword = $('#keyword').val();
     let criteria = $('#criteria').val();
     let order = $('#order').val();
     let page = 1;
-    $('#search-results').load('/catalog/barsearchresults', { keyword: keyword, criteria: criteria, order: order, page: page, rating: rating, sortOrder: sort });
+    let pageSize = 10;
+    $('#search-results').load('/bar/barsearchresults', { keyword: keyword, criteria: criteria, order: order, page: page, rating: rating, sortOrder: sort, pageSize: pageSize });
 }
 
-const searchWithExtraFilters = function () {
+function changeRatingFilter() {
     var sortSpan = $('#sort_order_span');
     let sort = sortSpan.text();
     let rating = $('#price_range').val();
@@ -102,5 +97,24 @@ const searchWithExtraFilters = function () {
     let criteria = $('#current-criteria').val();
     let order = $('#current-order').val();
     let page = 1;
-    $('#search-results').load('/catalog/barsearchresults', { keyword: keyword, criteria: criteria, order: order, page: page, rating: rating, sortOrder: sort });
+    let pageSize = 10;
+    $('#search-results').load('/bar/barsearchresults', { keyword: keyword, criteria: criteria, order: order, page: page, rating: rating, sortOrder: sort, pageSize: pageSize });
+}
+
+function changeSorting() {
+    var sortSpan = $('#sort_order_span');
+    let sort = sortSpan.text();
+    let rating;
+    if (document.getElementById('refine-result').className === "collapse") {
+        rating = "0;5";
+    }
+    else {
+        rating = $('#price_range').val();
+    }
+    let keyword = $('#current-keyword').val();
+    let criteria = $('#current-criteria').val();
+    let order = $('#order').val();
+    let page = 1;
+    let pageSize = 10;
+    $('#search-results').load('/bar/barsearchresults', { keyword: keyword, criteria: criteria, order: order, page: page, rating: rating, sortOrder: sort, pageSize: pageSize });
 }

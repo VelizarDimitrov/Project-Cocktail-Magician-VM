@@ -112,7 +112,7 @@ function getCities() {
 }
 function getBars(cityName) {
     $.ajax({
-        url: '/home/getallbars',
+        url: '/bar/getallbars',
         type: "GET",
         data: { cityName: cityName },
         success: function (result) {
@@ -122,7 +122,7 @@ function getBars(cityName) {
 }
 function getBarsInitial() {
     $.ajax({
-        url: '/home/getallbars',
+        url: '/bar/getallbars',
         type: "GET",
         success: function (result) {
             array = result;

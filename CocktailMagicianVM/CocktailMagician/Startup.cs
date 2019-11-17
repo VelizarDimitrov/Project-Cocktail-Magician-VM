@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -36,6 +37,8 @@ namespace CocktailMagician
             services.AddScoped<ICityService, CityService>();
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IIngredientService, IngredientService>();
+
             services
                .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                .AddCookie();

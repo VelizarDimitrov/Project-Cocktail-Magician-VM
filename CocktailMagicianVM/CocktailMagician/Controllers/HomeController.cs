@@ -40,20 +40,5 @@ namespace CocktailMagician.Controllers
             var cities = (await cityService.GetAllCityNamesAsync()).ToArray();
             return Json(cities);
         }
-        public async Task<IActionResult> GetAllBars(string cityName)
-        {
-            string[] bars;
-            if (await cityService.CheckIfCityExistsAsync(cityName))
-            {
-               bars = (await barService.GetBarsFromCityAsync(cityName)).ToArray();
-                
-            }
-            else
-            {
-               bars = (await barService.GetAllBarNamesAsync()).ToArray();
-
-            }
-            return Json(bars);
-        }
     }
 }

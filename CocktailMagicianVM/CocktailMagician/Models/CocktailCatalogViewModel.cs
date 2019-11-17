@@ -19,6 +19,7 @@ namespace CocktailMagician.Models
                 new SelectListItem("Ingredient", "Ingredient")
             };
             this.MainIngredients = new List<SelectListItem>();
+            this.MainIngredients.Add(new SelectListItem("", ""));
             foreach (var ingredient in mainIngredients)
             {
                 this.MainIngredients.Add(new SelectListItem(ingredient.Name,ingredient.Name));

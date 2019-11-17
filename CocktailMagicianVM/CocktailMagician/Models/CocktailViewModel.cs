@@ -9,6 +9,11 @@ namespace CocktailMagician.Models
 {
     public class CocktailViewModel
     {
+        public CocktailViewModel()
+        {
+
+        }
+
         public CocktailViewModel(ICocktail cocktail)
         {
             StringBuilder stringBuilder = new StringBuilder();
@@ -43,5 +48,6 @@ namespace CocktailMagician.Models
         public BarCocktailListViewModel Bars { get; set; }
         public UserCocktailListViewModel FavoritedBy { get; set; }
         public CocktailIngredientListViewModel Ingredients { get; set; }
+        public string CreateComment { get; set; }
     }
 }

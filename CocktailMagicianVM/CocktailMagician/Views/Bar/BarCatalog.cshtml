@@ -4,7 +4,7 @@
     <div class="container">
 
         <ol class="breadcrumb-list booking-step">
-            <li><a href="#">Home</a></li>
+            <li><a asp-action="Index" asp-controller="Home">Home</a></li>
             <li><span>All bars</span></li>
         </ol>
 
@@ -94,12 +94,12 @@
                         <div class="col-sm-12 col-md-5">
 
                             <div class="text-right hidden-sm hidden-xs">
-                                <button class="btn btn-toggle btn-refine collapsed" onclick="searchWithExtraFilters()" data-toggle="collapse" data-target="#refine-result">More filters</button>
+                                <button class="btn btn-toggle btn-refine collapsed" onclick="ExtraFilters()" data-toggle="collapse" data-target="#refine-result">More filters</button>
                             </div>
                             <div class="clear"></div>
 
                             <div class="text-right visible-sm visible-xs">
-                                <button class="btn btn-toggle btn-refine collapsed" onclick="searchWithoutExtraFilters()" data-toggle="collapse" data-target="#refine-result">More filters</button>
+                                <button class="btn btn-toggle btn-refine collapsed" onclick="ExtraFilters()" data-toggle="collapse" data-target="#refine-result">More filters</button>
                             </div>
 
                         </div>
@@ -161,28 +161,29 @@
                                                         <div class="GridLex-col-12_sm-12_xs-6_xss-12">
 
                                                             <div class="top-company-2">
-                                                                <button asp-action="BarDetails" asp-controller="Bar" value="@Model.NewestBars[i].Id">
+                                                                <form method="post">
+                                                                    <button asp-action="BarDetails" asp-controller="Bar" value="@Model.NewestBars[i].Id" name="barId">
 
-                                                                    <div class="image" style="padding:0px">
-                                                                        <img src="@Url.Action("GetBarPhoto", "Catalog" , new { id=Model.NewestBars[i].Id })" alt="image" />
-                                                                    </div>
+                                                                        <div class="image" style="padding:0px">
+                                                                            <img src="@Url.Action("GetBarPhoto", "Bar" , new { id=Model.NewestBars[i].Id })" alt="image" />
+                                                                        </div>
 
-                                                                    <div class="content">
-                                                                        <h5 class="heading text-primary font700">@Model.NewestBars[i].Name</h5>
+                                                                        <div class="content">
+                                                                            <h5 class="heading text-primary font700">@Model.NewestBars[i].Name</h5>
 
-                                                                        @if (Model.NewestBars[i].Description.Length >= 53)
-                                                                        {
-                                                                            <p class="texting font600">@Model.NewestBars[i].ShortDescription.Substring(0, 53) ...</p>
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <p class="texting font600">@Model.NewestBars[i].ShortDescription ...</p>
-                                                                        }
-                                                                        <p class="mata-p clearfix"> <span class="pull-right icon"><i class="fa fa-long-arrow-right"></i></span></p>
-                                                                    </div>
+                                                                            @if (Model.NewestBars[i].Description.Length >= 53)
+                                                                            {
+                                                                                <p class="texting font600">@Model.NewestBars[i].ShortDescription.Substring(0, 53) ...</p>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <p class="texting font600">@Model.NewestBars[i].ShortDescription ...</p>
+                                                                            }
+                                                                            <p class="mata-p clearfix"> <span class="pull-right icon"><i class="fa fa-long-arrow-right"></i></span></p>
+                                                                        </div>
 
-                                                                </button>
-
+                                                                    </button>
+                                                                </form>
                                                             </div>
 
                                                         </div>
@@ -211,6 +212,7 @@
 
     </div>
 </div>
+
 
 @section Scripts {
     <script src="~/js/BarSearch.js"></script>

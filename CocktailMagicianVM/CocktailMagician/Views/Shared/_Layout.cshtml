@@ -74,10 +74,10 @@
                             </li>
 
                             <li>
-                                <a href="restaurant.html">Catalog</a>
+                                <a style="cursor:pointer">Catalog</a>
                                 <ul>
-                                    <li><a asp-action="BarSearch" asp-controller="Catalog">Bar Search</a></li>
-                                    <li><a asp-action="CocktailSearch" asp-controller="Catalog">Cocktail Search</a></li>
+                                    <li><a asp-action="BarSearch" asp-controller="Bar">Bar Search</a></li>
+                                    <li><a asp-action="CocktailSearch" asp-controller="Cocktail">Cocktail Search</a></li>
                                 </ul>
                             </li>
                             @if (User.Identity.IsAuthenticated)

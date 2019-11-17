@@ -1,4 +1,5 @@
-﻿<!-- start Main Wrapper -->
+﻿@model IndexViewModel
+<!-- start Main Wrapper -->
 <div class="main-wrapper">
 
     <!-- start hero-header -->
@@ -7,17 +8,17 @@
 
             <div class="main-search-form-wrapper">
 
-                <form autocomplete="off">
+                <form autocomplete="off" asp-action="GoToBar" asp-controller="Bar">
 
                     <div class="form-holder">
                         <div class="row gap-0">
-
+                            
                             <div class="col-xss-6 col-xs-6 col-sm-6">
                                 <input id="CityInput" class="form-control" onchange="GetBars(this.value)" placeholder="Find a City" />
                             </div>
 
                             <div class="col-xss-6 col-xs-6 col-sm-6">
-                                <input id="BarInput" class="form-control" placeholder="Find a Bar" />
+                                <input id="BarInput" asp-for="BarName" class="form-control" placeholder="Find a Bar" />
                             </div>
 
                         </div>
@@ -25,7 +26,7 @@
                     </div>
 
                     <div class="btn-holder">
-                        <button class="btn"><i class="ion-android-search"></i></button>
+                        <button type="submit" class="btn"><i class="ion-android-search"></i></button>
                     </div>
 
                 </form>
@@ -102,66 +103,6 @@
                                     <img src="images/brands/01.png" alt="image" />
                                 </div>
                                 <h5>Vantage</h5>
-                                <a href="#">place order</a>
-                            </div>
-
-                        </div>
-
-                        <div class="col-xs-6 col-sm-4 col-md-6">
-
-                            <div class="top-company">
-                                <div class="image">
-                                    <img src="images/brands/05.png" alt="image" />
-                                </div>
-                                <h5>Greenchilli</h5>
-                                <a href="#">place order</a>
-                            </div>
-
-                        </div>
-
-                        <div class="col-xs-6 col-sm-4 col-md-6">
-
-                            <div class="top-company">
-                                <div class="image">
-                                    <img src="images/brands/18.png" alt="image" />
-                                </div>
-                                <h5>Bengal Spice</h5>
-                                <a href="#">place order</a>
-                            </div>
-
-                        </div>
-
-                        <div class="col-xs-6 col-sm-4 col-md-6">
-
-                            <div class="top-company">
-                                <div class="image">
-                                    <img src="images/brands/12.png" alt="image" />
-                                </div>
-                                <h5>Magna Tandoori</h5>
-                                <a href="#">place order</a>
-                            </div>
-
-                        </div>
-
-                        <div class="col-xs-6 col-sm-4 col-md-6">
-
-                            <div class="top-company">
-                                <div class="image">
-                                    <img src="images/brands/10.png" alt="image" />
-                                </div>
-                                <h5>New Bengla</h5>
-                                <a href="#">place order</a>
-                            </div>
-
-                        </div>
-
-                        <div class="col-xs-6 col-sm-4 col-md-6">
-
-                            <div class="top-company">
-                                <div class="image">
-                                    <img src="images/brands/08.png" alt="image" />
-                                </div>
-                                <h5>Spice Delight</h5>
                                 <a href="#">place order</a>
                             </div>
 

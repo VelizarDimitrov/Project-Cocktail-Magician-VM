@@ -19,13 +19,15 @@ namespace ServiceLayer
         private readonly ICountryService countryService;
         private readonly ICityService cityService;
         private readonly IBarService barService;
+        private readonly ICocktailService cService;
         private readonly CocktailDatabaseContext dbContext;
-        public AccountService(CocktailDatabaseContext dbContext, IHashing hasher, ICountryService countryService, ICityService cityService, IBarService barService)
+        public AccountService(CocktailDatabaseContext dbContext, IHashing hasher, ICountryService countryService, ICityService cityService, IBarService barService, ICocktailService cService)
         {
             this.hasher = hasher;
             this.countryService = countryService;
             this.cityService = cityService;
             this.barService = barService;
+            this.cService = cService;
             this.dbContext = dbContext;
         }
 
@@ -156,7 +158,9 @@ namespace ServiceLayer
                 {
                     User = user,
                     Bar = bar,
-                    Rating = userRating
+                    Rating = userRating,
+                    BarName = bar.Name,
+                    UserName = user.UserName
 
                 };
                 await dbContext.BarRating.AddAsync(barRating);
@@ -174,6 +178,7 @@ namespace ServiceLayer
             {
                 var givenComment = await dbContext.BarComment.FirstAsync(p => (p.UserId == userId && p.BarId == id));
                 givenComment.Comment = createComment;
+                givenComment.CreatedOn = DateTime.Now;
                 await dbContext.SaveChangesAsync();
 
             }
@@ -185,6 +190,8 @@ namespace ServiceLayer
                 {
                     User = user,
                     Bar = bar,
+                    UserUserName = user.UserName,
+                    BarName = bar.Name,
                     Comment = createComment,
                     CreatedOn = DateTime.Now
 
@@ -193,5 +200,66 @@ namespace ServiceLayer
                 await dbContext.SaveChangesAsync();
             }
         }
+
+        public async Task AddCocktailCommentAsync(int id, string createComment, int userId)
+        {
+            if (await dbContext.CocktailComment.AnyAsync(p => (p.UserId == userId && p.CocktailId == id)))
+            {
+                var existingComment = await dbContext.CocktailComment.FirstAsync(p => (p.UserId == userId && p.CocktailId == id));
+                existingComment.Comment = createComment;
+                existingComment.CreatedOn = DateTime.Now;
+                await dbContext.SaveChangesAsync();
+
+            }
+            else
+            {
+                var user = await FindUserByIdAsync(userId);
+                var cocktail = await cService.FindCocktailByIdAsync(id);
+                var cocktailComment = new CocktailComment()
+                {
+                    User = user,
+                    Cocktail = cocktail,
+                    UserName = user.UserName,
+                    CocktailName = cocktail.Name,
+                    Comment = createComment,
+                    CreatedOn = DateTime.Now
+
+                };
+                await dbContext.CocktailComment.AddAsync(cocktailComment);
+                await dbContext.SaveChangesAsync();
+            }
+        }
+
+        public async Task RateCocktailAsync(int userId, int rating, int cocktailId)
+        {
+            if (await dbContext.CocktailRating.AnyAsync(p => (p.UserId == userId && p.CocktailId == cocktailId)))
+            {
+                var givenRating = await dbContext.CocktailRating.FirstAsync(p => (p.UserId == userId && p.CocktailId == cocktailId));
+                givenRating.Rating = rating;
+                await dbContext.SaveChangesAsync();
+                await cService.UpdateAverageRatingAsync(cocktailId);
+            }
+            else
+            {
+                var user = await FindUserByIdAsync(userId);
+                var cocktail = await cService.FindCocktailByIdAsync(cocktailId);
+                var cocktailRating = new CocktailRating()
+                {
+                    User = user,
+                    Cocktail = cocktail,
+                    Rating = rating,
+                    CocktailName = cocktail.Name,
+                    UserUserName = user.UserName
+
+                };
+                await dbContext.CocktailRating.AddAsync(cocktailRating);
+                await dbContext.SaveChangesAsync();
+                await cService.UpdateAverageRatingAsync(cocktailId);
+            }
+        }
+
+        public async Task<byte[]> FindUserAvatar(int userId) =>
+            (await dbContext.UserPhotos.FirstAsync(p => p.UserId == userId)).UserCover;
+
     }
 }

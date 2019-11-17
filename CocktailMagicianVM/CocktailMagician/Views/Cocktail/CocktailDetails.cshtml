@@ -1,4 +1,5 @@
-﻿@model BarViewModel
+﻿@model CocktailViewModel
+
 <div class="main-wrapper">
 
     <!-- start hero-header -->
@@ -8,8 +9,8 @@
 
             <ol class="breadcrumb-list booking-step">
                 <li><a asp-action="Index" asp-controller="Home">Home</a></li>
-                <li><a asp-action="BarSearch" asp-controller="Bar">Bar Catalog</a></li>
-                <li><span>Bar Details</span></li>
+                <li><a asp-action="CocktailSearch" asp-controller="Cocktail">Cocktail Catalog</a></li>
+                <li><span>Cocktail Details</span></li>
             </ol>
 
         </div>
@@ -63,32 +64,40 @@
                                         </li>
                                     </ul>
                                 }
+
                                 <h4>Rating: @Model.AverageRating/5</h4>
                                 <div class="blog-media">
                                     <div class="center-cropped"
-                                         style="background-image:url(@Url.Action("GetBarPhoto", "Bar" , new { id=Model.Id }));">
+                                         style="background-image:url(@Url.Action("GetCocktailPhoto", "Cocktail" , new { id=Model.Id }));">
                                     </div>
                                 </div>
                                 <div class="blog-content">
                                     <ul class="blog-meta clearfix">
-                                        <li style="color:black">@Model.Address</li>
-                                        <li style="color:black">@Model.Comments.BarComments.Count() comments</li>
+                                        <li style="color:black">@Model.Comments.CocktailComments.Count() comments</li>
                                     </ul>
                                     <div class="blog-entry">
                                         <div class="blockquote">@Model.Description</div>
+                                        <div class="clear mb-30"></div>
+                                        <h4 class="uppercase">Ingredients</h4>
+                                        <ul class="mb-15">
+                                            @foreach (var ingredient in Model.Ingredients.CocktailIngredients)
+                                            {
+                                                <li>@ingredient.IngredientName</li>
+                                            }
+                                        </ul>
                                     </div>
                                 </div>
 
-                                <div class="clear mb-50"></div>
+                                <div class="clear mb-40"></div>
 
-                                <h4 class="uppercase">Cocktails Available</h4>
+                                <h4 class="uppercase">Available in</h4>
                                 <div id="search-results">
 
                                 </div>
 
                                 <div class="clear mb-50"></div>
 
-                                <h3 class="uppercase">@Model.Comments.BarComments.Count() Comments</h3>
+                                <h3 class="uppercase">@Model.Comments.CocktailComments.Count() Comments</h3>
 
                                 <div id="comment-wrapper">
                                     <div id="comments-partial">
@@ -105,10 +114,10 @@
                                 </div><!-- End Comment -->
 
                                 <div class="clear mb-30"></div>
-
-                                <h3 class="uppercase">Leave a Comment</h3>
                                 @if (User.Identity.IsAuthenticated)
                                 {
+                                    <h3 class="uppercase">Leave a Comment</h3>
+
                                     <form method="post" id="contactForm" action="#" class="comment-form">
                                         <div class="clear"></div>
                                         <div class="row">
@@ -125,7 +134,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <button type="submit" asp-action="AddBarComment" asp-controller="Bar" class="btn btn-primary">Comment</button>
+                                                <button type="submit" asp-action="AddCocktailComment" asp-controller="Cocktail" class="btn btn-primary">Comment</button>
                                             </div>
                                         </div>
                                     </form>
@@ -145,23 +154,23 @@
                         <div class="sidebar-inner no-border for-blog">
 
                             <div class="sidebar-module">
-                                <h4 class="sidebar-title">Latest cocktails here</h4>
+                                <h4 class="sidebar-title">Recently added to:</h4>
                                 <div class="sidebar-module-inner">
 
-                                    @if (!Model.Cocktails.BarCocktails.Any())
+                                    @if (!Model.Bars.BarCocktails.Any())
                                     {
-                                        <p>There aren't any cocktails available yet</p>
+                                        <p>This cocktail isn't available at any bar currently</p>
                                     }
                                     <ul class="sidebar-post">
-                                        @foreach (var cocktail in Model.Cocktails.BarCocktails.Take(6))
+                                        @foreach (var bar in Model.Bars.BarCocktails)
                                         {
                                             <li class="clearfix">
                                                 <a href="blog-single.html">
                                                     <div class="img-center-cropped"
-                                                         style="background-image:url(@Url.Action("GetCocktailPhoto", "Cocktail" , new { id=cocktail.CocktailId })">
+                                                         style="background-image:url(@Url.Action("GetBarPhoto", "Bar" , new { id=bar.BarId })">
                                                     </div>
                                                     <div class="content">
-                                                        <h6>@cocktail.CocktailName</h6>
+                                                        <h6>@bar.BarName</h6>
                                                     </div>
                                                 </a>
                                             </li>
@@ -185,11 +194,11 @@
 
     </div>
     <div hidden=hidden>
-        <input id="bar-id" value="@Model.Id" />
-        <input id="bar-name" value="@Model.Name" />
-        @if (User.Identity.IsAuthenticated && Model.Ratings.BarRatings.Any(p => p.UserId == int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value)))
+        <input id="cocktail-id" value="@Model.Id" />
+        <input id="cocktail-name" value="@Model.Name" />
+        @if (User.Identity.IsAuthenticated && Model.Ratings.CocktailRatings.Any(p => p.UserId == int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value)))
         {
-            <input id="initial-rating" value="@Model.Ratings.BarRatings.First(p=>p.UserId==int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value)).Rating" />
+            <input id="initial-rating" value="@Model.Ratings.CocktailRatings.First(p=>p.UserId==int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value)).Rating" />
         }
         else
         {
@@ -199,7 +208,7 @@
 </div>
 
 @section Scripts {
-    <script src="~/js/BarDetails.js"></script>
+    <script src="~/js/CocktailDetails.js"></script>
 }
 
 <style>

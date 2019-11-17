@@ -16,10 +16,11 @@ namespace ServiceLayer.Contracts
         Task<IList<string>> GetBarsFromCityAsync(string cityName);
         Task<byte[]> FindBarPhotoAsync(int id);
         Task<Bar> FindBarByIdAsync(int id);
-        Task<Tuple<IList<Bar>, bool>> FindBarsForCatalogAsync(string keyword, string keywordCriteria, int page, string selectedOrderBy, string rating, string sortOrder);
+        Task<Tuple<IList<Bar>, bool>> FindBarsForCatalogAsync(string keyword, string keywordCriteria, int page, string selectedOrderBy, string rating, string sortOrder, int pageSize);
 
         Task<IList<Bar>> GetNewestBarsAsync();
         Task UpdateAverageRatingAsync(int barId);
         Task<IList<BarComment>> GetBarCommentsAsync(int barId, int loadNumber);
+        Task<Bar> FindBarByNameAsync(string barName);
     }
 }

@@ -12,7 +12,7 @@ namespace ServiceLayer.Contracts
         Task CreateCountryAsync(string countryName);
         void CreateCountry(string countryName);
         Task<IList<string>> GetAllCountryNamesAsync();
-        Task<bool> CheckIfCountryExists(string countryName);
-        Task<Country> GetCountryByName(string countryName);
+        Task<bool> CheckIfCountryExistsAsync(string countryName);
+        Task<Country> GetCountryByNameAsync(string countryName);
     }
 }

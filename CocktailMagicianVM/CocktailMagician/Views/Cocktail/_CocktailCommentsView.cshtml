@@ -1,10 +1,10 @@
-﻿@model BarCommentListViewModel
-@if (!Model.BarComments.Any())
+﻿@model CocktailCommentListViewModel
+@if (!Model.CocktailComments.Any())
 {
     <p>There aren't any comments written yet</p>
 }
 <ul class="comment-item">
-    @foreach (var comment in Model.BarComments)
+    @foreach (var comment in Model.CocktailComments)
     {
         <li>
             <div class="comment-avatar">

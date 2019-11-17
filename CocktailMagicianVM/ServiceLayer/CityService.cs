@@ -46,10 +46,10 @@ namespace ServiceLayer
         public async Task CreateCityAsync(string cityName, string countryName)
         {
 
-            if (!(await countryService.CheckIfCountryExists(countryName)))
+            if (!(await countryService.CheckIfCountryExistsAsync(countryName)))
                 await countryService.CreateCountryAsync(countryName);
 
-            var country = await countryService.GetCountryByName(countryName);
+            var country = await countryService.GetCountryByNameAsync(countryName);
 
             var newCity = new City()
             {

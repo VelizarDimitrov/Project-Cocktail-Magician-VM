@@ -23,5 +23,24 @@ namespace CocktailMagician.Controllers
            await aService.RateBarAsync(userId, int.Parse(userRating), int.Parse(id));
             return Ok();
         }
+
+        public async Task<IActionResult> RateCocktail(string userRating, string id)
+        {
+            var userId = int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+            await aService.RateCocktailAsync(userId, int.Parse(userRating), int.Parse(id));
+            return Ok();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetProfilePic(int id)
+        {
+            var picture = await aService.FindUserAvatar(id);
+            if (picture == null)
+            {
+                picture = System.IO.File.ReadAllBytes(@"../CocktailMagician/wwwroot/images/default-avatar.jpg");
+            }
+            return File(picture, "image/png");
+        }
+
     }
 }

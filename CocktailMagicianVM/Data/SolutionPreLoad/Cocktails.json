@@ -47,7 +47,7 @@
   {
     "Name": "Duke Lemington",
     "Description": "It’s easy to hate on the vodka Martini. The progression of ordering one follows a general descent from optimism (James Bond drinks these, why not?) to despair (this is basically just cold vodka). But there are a few simple adjustments to take the vodka Martini from gross to Duke Ellington-level smooth, sultry, and savvy.",
-    "Ingredients": [ "lemon vodka", "dry vermouth", "citrus bitters", "rosemary simple syrup" ]
+    "Ingredients": [ "vodka", "dry vermouth", "citrus bitters", "rosemary simple syrup" ]
   },
   {
     "Name": "Vodka Sparkler",
@@ -97,12 +97,12 @@
   {
     "Name": "Down in Flames",
     "Description": "From Normandie, a new restaurant in Portland, Ore., comes this boozy, moody cocktail. Developed by Judson Winquist, Normandie’s co-owner and an industry veteran, it drinks like a smoky Old Fashioned, with a split base of high-proof rye and mezcal.",
-    "Ingredients": [ "mezcal", "rye whiskey", "Punt e Mes", "triple sec", "crème de cacao", "mole bitters", "Orange peel" ]
+    "Ingredients": [ "mezcal", "rye whiskey", "Punt e Mes", "triple sec", "creme de cacao", "mole bitters", "Orange peel" ]
   },
   {
     "Name": "Grasshopper",
     "Description": "The Grasshopper, a sweet, minty after-dinner drink is one of the rare, respected non-Absinthe-based green cocktails.",
-    "Ingredients": [ "crème de menthe", "crème de cacao", "Half and half" ]
+    "Ingredients": [ "creme de menthe", "creme de cacao", "Half and half" ]
   },
   {
     "Name": "Last Word",

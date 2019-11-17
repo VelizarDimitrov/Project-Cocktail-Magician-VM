@@ -1,5 +1,9 @@
 ﻿@model BarSearchViewModel
 <div class="col-sm-8 col-md-9 mt-25">
+    @if (!Model.Bars.Any())
+    {
+        <p>No bars found</p>
+    }
     @foreach (var bar in Model.Bars)
     {
 
@@ -8,12 +12,12 @@
             <div class="restaurant-item-list">
 
                 <div class="image">
-                    <img src="@Url.Action("GetBarPhoto", "Catalog", new { id = bar.Id })" alt="image" />
+                    <img src="@Url.Action("GetBarPhoto", "Bar", new { id = bar.Id })" alt="image" />
                 </div>
 
                 <div class="content">
 
-                    <div class="restaurant-item-list-info">
+                    <div class="restaurant-item-list-info" style="min-height:160px">
 
                         <div class="row">
 
@@ -70,7 +74,7 @@
 
                             <div class="col-sm-5 col-md-4">
                                 <form method="post">
-                                <button class="btn btn-primary"asp-action="BarDetails" asp-controller="Bar"value="@bar.Id"name="barId" >Details</button>
+                                    <button class="btn btn-primary" asp-action="BarDetails" asp-controller="Bar" value="@bar.Id" name="barId">Details</button>
                                 </form>
                             </div>
 
@@ -98,7 +102,7 @@
             <ul class="pager-list">
                 @if (Model.Page != 1)
                 {
-                    <li class="paging-nav"><a onclick="prevPage()"><i class="fa fa-angle-left"></i></a></li>
+                    <li class="paging-nav"><a onclick="changePage(-1)"><i class="fa fa-angle-left"></i></a></li>
                 }
                 <li class="number">
                     <span class="mr-5"><span class="font600">page</span></span>
@@ -108,7 +112,7 @@
                 </li>
                 @if (!Model.LastPage)
                 {
-                    <li class="paging-nav"><a onclick="nextPage()"><i class="fa fa-angle-right"></i></a></li>
+                    <li class="paging-nav"><a onclick="changePage(1)"><i class="fa fa-angle-right"></i></a></li>
                 }
 
             </ul>
@@ -117,32 +121,3 @@
     }
 
 </div>
-
-<script>
-    function changeRatingFilter() {
-        var sortSpan = $('#sort_order_span');
-        let sort = sortSpan.text();
-        let rating = $('#price_range').val();
-        let keyword = $('#current-keyword').val();
-        let criteria = $('#current-criteria').val();
-        let order = $('#current-order').val();
-        let page = 1;
-        $('#search-results').load('/catalog/barsearchresults', { keyword: keyword, criteria: criteria, order: order, page: page, rating: rating, sortOrder: sort });
-    }
-    function changeSorting() {
-        var sortSpan = $('#sort_order_span');
-        let sort = sortSpan.text();
-        let rating;
-        if (document.getElementById('refine-result').className === "collapse") {
-            rating = "0;5";
-        }
-        else {
-            rating = $('#price_range').val();
-        }
-        let keyword = $('#current-keyword').val();
-        let criteria = $('#current-criteria').val();
-        let order = $('#order').val();
-        let page = 1;
-        $('#search-results').load('/catalog/barsearchresults', { keyword: keyword, criteria: criteria, order: order, page: page, rating: rating, sortOrder: sort });
-    }
-</script>

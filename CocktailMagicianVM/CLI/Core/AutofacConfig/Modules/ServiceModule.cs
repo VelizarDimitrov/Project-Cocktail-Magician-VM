@@ -16,7 +16,7 @@ namespace CLI.Core.AutofacConfig.Modules
             builder.RegisterType<BarService>().As<IBarService>().SingleInstance();
             builder.RegisterType<CocktailDatabaseContext>().AsSelf().SingleInstance();
             builder.RegisterType<Hashing>().As<IHashing>().SingleInstance();
-
+            builder.RegisterType<IngredientService>().As<IIngredientService>().SingleInstance();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Data;
+using Data.Contracts;
 using Data.Models;
 using Data.SolutionPreLoad.JsonParsers;
 using Microsoft.EntityFrameworkCore;
@@ -15,10 +16,12 @@ namespace ServiceLayer
     public class CocktailService : ICocktailService
     {
         private readonly CocktailDatabaseContext dbContext;
+        private readonly IIngredientService iService;
 
-        public CocktailService(CocktailDatabaseContext dbContext)
+        public CocktailService(CocktailDatabaseContext dbContext, IIngredientService iService)
         {
             this.dbContext = dbContext;
+            this.iService = iService;
         }
 
 
@@ -64,12 +67,12 @@ namespace ServiceLayer
             var ingCounter = 0;
             foreach (var item in ingredients)
             {
-                if (dbContext.Ingredients.Where(p => p.Name == item.ToLower()).Count() == 0)
+                if (dbContext.Ingredients.Where(p => p.Name == item.ToLower()).Any())
                 {
                     if (ingCounter == 0)
-                        CreateIngredient(item, 1);
+                        iService.CreateIngredient(item, 1);
                     else
-                        CreateIngredient(item, 0);
+                        iService.CreateIngredient(item, 0);
                 }
                 ingCounter++;
                 AddIngredientToCocktail(cocktail.Name, item.ToLower());
@@ -79,7 +82,7 @@ namespace ServiceLayer
         public void AddIngredientToCocktail(string cocktailName, string ingredientName)
         {
             var cocktail = dbContext.Cocktails.First(p => p.Name == cocktailName);
-            var ingredient = dbContext.Ingredients.First(p => p.Name == ingredientName);
+            var ingredient = iService.GetIngredient(ingredientName);
             var link = new CocktailIngredient()
             {
                 Cocktail = cocktail,
@@ -90,21 +93,6 @@ namespace ServiceLayer
             dbContext.CocktailIngredient.Add(link);
             dbContext.SaveChanges();
         }
-
-        public void CreateIngredient(string name, byte primary)
-        {
-            var ingredient = new Ingredient()
-            {
-                Name = name.ToLower(),
-                Primary = primary
-            };
-
-            dbContext.Ingredients.Add(ingredient);
-            dbContext.SaveChanges();
-        }
-
-        public Ingredient GetIngredient(string name) => 
-            dbContext.Ingredients.Where(p => p.Name == name.ToLower()).First();
 
         //End of Pre-Load
 
@@ -129,14 +117,14 @@ namespace ServiceLayer
             {
                 // CheckIfIngredientExistsAsync at inggredienntServices
                 if (!await dbContext.Ingredients.Where(p => (p.Name.ToLower() == item.ToLower() && p.Primary == 1)).AnyAsync())
-                    await CreateIngredientAsync(item, 1);
+                    await iService.CreateIngredientAsync(item, 1);
                 await AddIngredientToCocktailAsync(cocktail.Name, item.ToLower(), 1);
             }
             foreach (var item in ingredients)
             {
                 // CheckIfIngredientExistsAsync at inggredienntServices
                 if (!await dbContext.Ingredients.Where(p => (p.Name.ToLower() == item.ToLower() && p.Primary == 0)).AnyAsync())
-                    await CreateIngredientAsync(item, 0);
+                    await iService.CreateIngredientAsync(item, 0);
                 await AddIngredientToCocktailAsync(cocktail.Name, item.ToLower(), 0);
             }
         }
@@ -156,28 +144,10 @@ namespace ServiceLayer
             await dbContext.SaveChangesAsync();
         }
 
-        // move to ingredientService and move CRUD for ingredient there
-        public async Task CreateIngredientAsync(string name, byte primary)
+       
+
+        public async Task<Tuple<IList<Cocktail>, bool>> FindCocktailsForCatalogAsync(string keyword, string keywordCriteria, int page, string selectedOrderBy, string rating, string sortOrder, string mainIngredient, int pageSize)
         {
-            var ingredient = new Ingredient()
-            {
-                Name = name.ToLower(),
-                Primary = primary
-            };
-
-            await dbContext.Ingredients.AddAsync(ingredient);
-            await dbContext.SaveChangesAsync();
-        }
-
-        public async Task<Ingredient> GetIngredientAsync(string name) => 
-            await dbContext.Ingredients.Where(p => p.Name == name.ToLower()).FirstAsync();
-
-        public async Task<IList<Ingredient>> GetAllMainIngredients() => 
-            await dbContext.Ingredients.Where(p => p.Primary == 1).ToListAsync();
-
-        public async Task<Tuple<IList<Cocktail>, bool>> FindCocktailsForCatalogAsync(string keyword, string keywordCriteria, int page, string selectedOrderBy, string rating, string sortOrder, string mainIngredient)
-        {
-            const int pageSize= 12;
             bool lastPage = true;
             var ratings = rating.Split(';');
             var minRating = int.Parse(ratings[0]);
@@ -247,8 +217,22 @@ namespace ServiceLayer
         public async Task<byte[]> FindCocktailPhotoAsync(int id)=>
             (await dbContext.CocktailPhotos.FirstAsync(p => p.CocktailId == id)).CocktailCover;
 
-        public async Task<IList<string>> GetAllIngredientNamesAsync() =>
-            await dbContext.Ingredients.Select(p => p.Name).ToListAsync();
+        public async Task<Cocktail> FindCocktailByIdAsync(int id) =>
+            await dbContext.Cocktails.Include(p => p.Ingredients).Include(p => p.Bars).Include(p => p.Ratings)
+                .Include(p => p.Comments).Include(p => p.FavoritedBy).FirstAsync(p => p.Id == id);
 
+        public async Task<IList<CocktailComment>> GetCocktailCommentsAsync(int id, int loadNumber)
+        {
+            var comments = await dbContext.CocktailComment.Where(p => p.CocktailId == id).ToListAsync();
+            comments.Reverse();
+            return comments.Take(loadNumber).ToList();
+        }
+
+        public async Task UpdateAverageRatingAsync(int cocktailId)
+        {
+            var cocktail = await FindCocktailByIdAsync(cocktailId);
+            cocktail.AverageRating = Math.Round(cocktail.Ratings.Average(p => p.Rating), 1);
+            await dbContext.SaveChangesAsync();
+        }
     }
 }
