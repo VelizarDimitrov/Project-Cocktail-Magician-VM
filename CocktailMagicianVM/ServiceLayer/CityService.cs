@@ -30,7 +30,7 @@ namespace ServiceLayer
             {
                 countryService.CreateCountry(countryName);
             }
-            var country = dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).First();
+            var country = dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).FirstOrDefault();
 
             var city1 = new City()
             {

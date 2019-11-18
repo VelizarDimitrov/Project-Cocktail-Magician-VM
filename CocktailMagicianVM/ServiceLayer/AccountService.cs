@@ -49,7 +49,7 @@ namespace ServiceLayer
             }
 
             var country = await dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).FirstAsync();
-            var city = await dbContext.Cities.Where(p => p.Name.ToLower() == cityName.ToLower()).FirstAsync();
+            var city = await dbContext.Cities.Where(p => p.Name.ToLower() == cityName.ToLower()).FirstOrDefaultAsync();
             var user = new User()
             {
                 UserName = userName,
@@ -106,8 +106,8 @@ namespace ServiceLayer
                 cityService.CreateCity(cityName, countryName);
             }
 
-            var country = dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).First();
-            var city = dbContext.Cities.Where(p => p.Name.ToLower() == cityName.ToLower()).First();
+            var country = dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).FirstOrDefault();
+            var city = dbContext.Cities.Where(p => p.Name.ToLower() == cityName.ToLower()).FirstOrDefault();
             var user = new User()
             {
                 UserName = userName,
@@ -145,7 +145,7 @@ namespace ServiceLayer
         {
             if (await dbContext.BarRating.AnyAsync(p => (p.UserId == userId && p.BarId == barId)))
             {
-                var givenRating = await dbContext.BarRating.FirstAsync(p => (p.UserId == userId && p.BarId == barId));
+                var givenRating = await dbContext.BarRating.FirstOrDefaultAsync(p => (p.UserId == userId && p.BarId == barId));
                 givenRating.Rating = userRating;
                 await dbContext.SaveChangesAsync();
                 await barService.UpdateAverageRatingAsync(barId);
@@ -170,13 +170,24 @@ namespace ServiceLayer
         }
 
         public async Task<User> FindUserByIdAsync(int userId) =>
-            await dbContext.Users.Where(p => p.Id == userId).FirstAsync();
+            await dbContext.Users.Where(p => p.Id == userId)
+            .Include(p=>p.City)
+            .Include(p=>p.Country)
+            .Include(p=>p.UserPhoto)
+            .Include(p=>p.Notifications)
+            .Include(p=>p.FavoriteCocktails)
+            .Include(p=>p.FavoriteBars)
+            .Include(p=>p.CocktailRatings)
+            .Include(p => p.CocktailComments)
+            .Include(p => p.BarRatings)
+            .Include(p => p.BarComments)
+            .FirstOrDefaultAsync();
 
         public async Task AddBarCommentAsync(int id, string createComment, int userId)
         {
             if (await dbContext.BarComment.AnyAsync(p => (p.UserId == userId && p.BarId == id)))
             {
-                var givenComment = await dbContext.BarComment.FirstAsync(p => (p.UserId == userId && p.BarId == id));
+                var givenComment = await dbContext.BarComment.FirstOrDefaultAsync(p => (p.UserId == userId && p.BarId == id));
                 givenComment.Comment = createComment;
                 givenComment.CreatedOn = DateTime.Now;
                 await dbContext.SaveChangesAsync();
@@ -205,7 +216,7 @@ namespace ServiceLayer
         {
             if (await dbContext.CocktailComment.AnyAsync(p => (p.UserId == userId && p.CocktailId == id)))
             {
-                var existingComment = await dbContext.CocktailComment.FirstAsync(p => (p.UserId == userId && p.CocktailId == id));
+                var existingComment = await dbContext.CocktailComment.FirstOrDefaultAsync(p => (p.UserId == userId && p.CocktailId == id));
                 existingComment.Comment = createComment;
                 existingComment.CreatedOn = DateTime.Now;
                 await dbContext.SaveChangesAsync();
@@ -234,7 +245,7 @@ namespace ServiceLayer
         {
             if (await dbContext.CocktailRating.AnyAsync(p => (p.UserId == userId && p.CocktailId == cocktailId)))
             {
-                var givenRating = await dbContext.CocktailRating.FirstAsync(p => (p.UserId == userId && p.CocktailId == cocktailId));
+                var givenRating = await dbContext.CocktailRating.FirstOrDefaultAsync(p => (p.UserId == userId && p.CocktailId == cocktailId));
                 givenRating.Rating = rating;
                 await dbContext.SaveChangesAsync();
                 await cService.UpdateAverageRatingAsync(cocktailId);
@@ -259,7 +270,7 @@ namespace ServiceLayer
         }
 
         public async Task<byte[]> FindUserAvatar(int userId) =>
-            (await dbContext.UserPhotos.FirstAsync(p => p.UserId == userId)).UserCover;
+            (await dbContext.UserPhotos.FirstOrDefaultAsync(p => p.UserId == userId)).UserCover;
 
     }
 }

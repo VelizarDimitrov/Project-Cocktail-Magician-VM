@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CocktailMagician.Models;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.Contracts;
 
@@ -40,6 +41,14 @@ namespace CocktailMagician.Controllers
                 picture = System.IO.File.ReadAllBytes(@"../CocktailMagician/wwwroot/images/default-avatar.jpg");
             }
             return File(picture, "image/png");
+        }
+
+        public async Task<IActionResult> UserProfile()
+        {
+            var userId = int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+            var user = await aService.FindUserByIdAsync(userId);
+            var vm = new UserViewModel(user);
+            return View("Profile", vm);
         }
 
     }

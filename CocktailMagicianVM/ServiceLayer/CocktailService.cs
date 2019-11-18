@@ -67,7 +67,7 @@ namespace ServiceLayer
             var ingCounter = 0;
             foreach (var item in ingredients)
             {
-                if (dbContext.Ingredients.Where(p => p.Name == item.ToLower()).Any())
+                if (!dbContext.Ingredients.Where(p => p.Name.ToLower() == item.ToLower()).Any())
                 {
                     if (ingCounter == 0)
                         iService.CreateIngredient(item, 1);
@@ -81,7 +81,7 @@ namespace ServiceLayer
 
         public void AddIngredientToCocktail(string cocktailName, string ingredientName)
         {
-            var cocktail = dbContext.Cocktails.First(p => p.Name == cocktailName);
+            var cocktail = dbContext.Cocktails.FirstOrDefault(p => p.Name.ToLower() == cocktailName.ToLower());
             var ingredient = iService.GetIngredient(ingredientName);
             var link = new CocktailIngredient()
             {
@@ -131,8 +131,8 @@ namespace ServiceLayer
 
         public async Task AddIngredientToCocktailAsync(string cocktailName, string ingredientName, byte ingredientPrimary)
         {
-            var cocktail = await dbContext.Cocktails.FirstAsync(p => p.Name == cocktailName);
-            var ingredient = await dbContext.Ingredients.FirstAsync(p => p.Name == ingredientName);
+            var cocktail = await dbContext.Cocktails.FirstOrDefaultAsync(p => p.Name == cocktailName);
+            var ingredient = await dbContext.Ingredients.FirstOrDefaultAsync(p => p.Name == ingredientName);
             var link = new CocktailIngredient()
             {
                 Cocktail = cocktail,
@@ -215,11 +215,11 @@ namespace ServiceLayer
         }
 
         public async Task<byte[]> FindCocktailPhotoAsync(int id)=>
-            (await dbContext.CocktailPhotos.FirstAsync(p => p.CocktailId == id)).CocktailCover;
+            (await dbContext.CocktailPhotos.FirstOrDefaultAsync(p => p.CocktailId == id)).CocktailCover;
 
         public async Task<Cocktail> FindCocktailByIdAsync(int id) =>
             await dbContext.Cocktails.Include(p => p.Ingredients).Include(p => p.Bars).Include(p => p.Ratings)
-                .Include(p => p.Comments).Include(p => p.FavoritedBy).FirstAsync(p => p.Id == id);
+                .Include(p => p.Comments).Include(p => p.FavoritedBy).FirstOrDefaultAsync(p => p.Id == id);
 
         public async Task<IList<CocktailComment>> GetCocktailCommentsAsync(int id, int loadNumber)
         {

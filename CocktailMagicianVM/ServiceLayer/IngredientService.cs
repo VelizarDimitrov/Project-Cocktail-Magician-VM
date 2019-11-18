@@ -33,7 +33,7 @@ namespace ServiceLayer
         }
 
         public Ingredient GetIngredient(string name) =>
-            dbContext.Ingredients.Where(p => p.Name.ToLower() == name.ToLower()).First();
+            dbContext.Ingredients.Where(p => p.Name.ToLower() == name.ToLower()).FirstOrDefault();
 
         // End of Pre-Load
 
@@ -50,7 +50,7 @@ namespace ServiceLayer
         }
 
         public async Task<Ingredient> GetIngredientByNameAsync(string name) =>
-            await dbContext.Ingredients.Where(p => p.Name == name.ToLower()).FirstAsync();
+            await dbContext.Ingredients.Where(p => p.Name == name.ToLower()).FirstOrDefaultAsync();
 
         public async Task<IList<Ingredient>> GetAllMainIngredientsAsync() =>
             await dbContext.Ingredients.Where(p => p.Primary == 1).ToListAsync();
@@ -59,6 +59,6 @@ namespace ServiceLayer
             await dbContext.Ingredients.Select(p => p.Name).ToListAsync();
 
         public async Task<Ingredient> GetIngredientByNameTypeAsync(string name, int primary) =>
-            await dbContext.Ingredients.FirstAsync(p => (p.Name.ToLower() == name.ToLower() && p.Primary == primary));
+            await dbContext.Ingredients.FirstOrDefaultAsync(p => (p.Name.ToLower() == name.ToLower() && p.Primary == primary));
     }
 }

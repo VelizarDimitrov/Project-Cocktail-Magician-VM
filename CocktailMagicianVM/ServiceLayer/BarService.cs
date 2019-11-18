@@ -122,11 +122,11 @@ namespace ServiceLayer
 
 
         public async Task<byte[]> FindBarPhotoAsync(int id) =>
-            (await dbContext.BarPhotos.FirstAsync(p => p.BarId == id)).BarCover;
+            (await dbContext.BarPhotos.FirstOrDefaultAsync(p => p.BarId == id)).BarCover;
 
         public async Task<Bar> FindBarByIdAsync(int id) =>
             await dbContext.Bars.Where(p => p.Id == id).Include(p => p.City).Include(p => p.Country).Include(p => p.Ratings)
-                .Include(p => p.Comments).Include(p => p.Cocktails).Include(p => p.FavoritedBy).FirstAsync();
+                .Include(p => p.Comments).Include(p => p.Cocktails).Include(p => p.FavoritedBy).FirstOrDefaultAsync();
 
 
         public async Task<Tuple<IList<Bar>, bool>> FindBarsForCatalogAsync(string keyword, string keywordCriteria, int page, string selectedOrderBy, string rating, string sortOrder, int pageSize)
