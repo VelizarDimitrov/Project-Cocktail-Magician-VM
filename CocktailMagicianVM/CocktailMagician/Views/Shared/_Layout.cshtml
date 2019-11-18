@@ -93,6 +93,28 @@
                                 </li>
 
                             }
+                            @if (User.IsInRole("Cocktail Magician"))
+                            {
+                                <li>
+                                    <a style="cursor:pointer">Magic</a>
+                                    <ul>
+                                        <li>
+                                            <a style="cursor:pointer">Bar</a>
+                                            <ul>
+                                                <li><a asp-area="Magician" asp-action="AddBar" asp-controller="Bar">Add</a></li>
+                                                <li><a asp-area="Magician" asp-action="ManageBar" asp-controller="Bar">Manage</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a style="cursor:pointer">Cocktail</a>
+                                            <ul>
+                                                <li><a asp-area="Magician" asp-action="AddCocktail" asp-controller="Cocktail">Add</a></li>
+                                                <li><a asp-area="Magician" asp-action="ManageCocktail" asp-controller="Bar">Manage</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            }
                         </ul>
 
                     </div><!--/.nav-collapse -->

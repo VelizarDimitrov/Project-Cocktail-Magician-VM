@@ -157,7 +157,7 @@ function addCocktail() {
     formData.append("description", description);
     console.log(formData);
     $.ajax({
-        url: '/cocktail/createcocktail',
+        url: '/magician/cocktail/createcocktail',
         type: "POST",
         data: formData,
         processData: false,
