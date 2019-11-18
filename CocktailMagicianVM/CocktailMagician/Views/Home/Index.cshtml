@@ -12,7 +12,7 @@
 
                     <div class="form-holder">
                         <div class="row gap-0">
-                            
+
                             <div class="col-xss-6 col-xs-6 col-sm-6">
                                 <input id="CityInput" class="form-control" onchange="GetBars(this.value)" placeholder="Find a City" />
                             </div>
@@ -55,33 +55,39 @@
                     </div>
 
                     <div class="restaurant-common-wrapper">
-
-                        <a href="#" class="restaurant-common-wrapper-item highlight clearfix">
-                            <div class="GridLex-grid-middle">
-                                <div class="GridLex-col-6_xs-12">
-                                    <div class="restaurant-type">
-                                        <div class="image">
-                                            <img src="images/brands/01.jpg" alt="image" />
+                        <form method="post">
+                            @foreach (var cocktail in Model.Cocktails)
+                            {
+                                <div class="restaurant-common-wrapper-item highlight clearfix">
+                                    <div class="GridLex-grid-middle">
+                                        <div class="GridLex-col-6_xs-12">
+                                            <div class="restaurant-type">
+                                                <div class="image">
+                                                    <div class="cocktail-center-cropped"
+                                                         style="background-image:url(@Url.Action("GetCocktailPhoto", "Cocktail", new { id = cocktail.Id }));">
+                                                    </div>
+                                                </div>
+                                                <div class="content">
+                                                    <h4>@cocktail.Name</h4>
+                                                    <p>Rating: @cocktail.AverageRating/5</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="content">
-                                            <h4>Wow Burger</h4>
-                                            <p>Indian</p>
+                                        <div class="GridLex-col-4_xs-8_xss-12 mt-10-xss">
+                                            <div class="job-location">
+                                                @cocktail.ShortDescription
+                                            </div>
+                                        </div>
+                                        <div class="GridLex-col-2_xs-4_xss-12">
+                                            <button asp-action="CocktailDetails" asp-controller="Cocktail" value="@cocktail.Id" name="cocktailId" class="res-btn label label-danger">
+                                                Details
+                                            </button>
+                                            <span class="font12 block spacing1 font400 text-center">Min: £15</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="GridLex-col-4_xs-8_xss-12 mt-10-xss">
-                                    <div class="job-location">
-                                        <i class="fa fa-map-marker text-primary"></i> Menlo park, CA
-                                    </div>
-                                </div>
-                                <div class="GridLex-col-2_xs-4_xss-12">
-                                    <div class="res-btn label label-danger">
-                                        Place Order
-                                    </div>
-                                    <span class="font12 block spacing1 font400 text-center">Min: £15</span>
-                                </div>
-                            </div>
-                        </a>
+                            }
+                        </form>
                     </div>
 
                 </div>
@@ -95,19 +101,23 @@
                     </div>
 
                     <div class="row gap-20 top-company-wrapper mmt">
+                        <form method="post">
+                            @foreach (var bar in Model.Bars)
+                            {
+                                <div class="col-xs-6 col-sm-4 col-md-6">
 
-                        <div class="col-xs-6 col-sm-4 col-md-6">
+                                    <div class="top-company">
+                                        <div class="bar-center-cropped"
+                                             style="background-image:url(@Url.Action("GetBarPhoto", "Bar", new { id = bar.Id }));">
+                                        </div>
+                                        <h5>@bar.Name</h5>
+                                        <button class="btn btn-appstore" asp-action="BarDetails" asp-controller="Bar" value="@bar.Id" name="barId">Details</button>
+                                    </div>
 
-                            <div class="top-company">
-                                <div class="image">
-                                    <img src="images/brands/01.png" alt="image" />
                                 </div>
-                                <h5>Vantage</h5>
-                                <a href="#">place order</a>
-                            </div>
 
-                        </div>
-
+                            }
+                        </form>
                     </div>
 
                 </div>
@@ -146,3 +156,21 @@
 
     </script>
 }
+
+<style>
+    .cocktail-center-cropped {
+        width: 60px;
+        height: 60px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .bar-center-cropped {
+        width: auto;
+        height: 80px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
