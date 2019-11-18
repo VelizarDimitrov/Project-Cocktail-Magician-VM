@@ -43,13 +43,26 @@ namespace CocktailMagician.Controllers
             return File(picture, "image/png");
         }
 
-        public async Task<IActionResult> UserProfile()
+        public async Task<IActionResult> UserPage()
         {
             var userId = int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
             var user = await aService.FindUserByIdAsync(userId);
             var vm = new UserViewModel(user);
             return View("Profile", vm);
         }
-
+        public async Task<IActionResult> UserProfilePartial()
+        {
+            var userId = int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+            var user = await aService.FindUserByIdAsync(userId);
+            var vm = new UserViewModel(user);
+            return PartialView("_ProfileInfoView", vm);
+        }
+        public async Task<IActionResult> UserDashboard()
+        {
+            var userId = int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+            var user = await aService.FindUserByIdAsync(userId);
+            var vm = new NotificationListViewModel(user.Notifications);
+            return PartialView("_NotificationsView", vm);
+        }
     }
 }
