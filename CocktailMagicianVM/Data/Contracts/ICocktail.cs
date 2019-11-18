@@ -17,5 +17,6 @@ namespace Data.Contracts
         ICollection<CocktailIngredient> Ingredients { get; set; }
         ICollection<UserCocktail> FavoritedBy { get; set; }
         double AverageRating { get; set; }
+        byte Hidden { get; set; }
     }
 }

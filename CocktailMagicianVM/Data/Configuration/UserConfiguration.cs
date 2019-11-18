@@ -11,16 +11,7 @@ namespace Data.Configuration
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder
-                .HasOne(p => p.City)
-                .WithMany(p => p.Users)
-                .HasForeignKey(p => p.CityId);
 
-            builder
-                .HasOne(p => p.Country)
-                .WithMany(p => p.Users)
-                .HasForeignKey(p => p.CountryId);
-          
         }
     }
 }

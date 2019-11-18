@@ -53,7 +53,8 @@ namespace ServiceLayer
             {
                 Name = name,
                 Description = description,
-                AverageRating = 0
+                AverageRating = 0,
+                Hidden = 0
             };
             dbContext.Cocktails.Add(cocktail);
             var cocktailPhoto = new CocktailPhoto()
@@ -102,7 +103,8 @@ namespace ServiceLayer
             {
                 Name = name,
                 Description = description,
-                AverageRating = 0
+                AverageRating = 0,
+                Hidden = 0
             };
             await dbContext.Cocktails.AddAsync(cocktail);
             var cocktailPhoto = new CocktailPhoto()
@@ -144,7 +146,25 @@ namespace ServiceLayer
             await dbContext.SaveChangesAsync();
         }
 
-       
+        public async Task<Tuple<IList<Cocktail>, bool>> FindCocktailsForManagingAsync(string keyword, int page, int pageSize)
+        {
+            bool lastPage = true;
+
+            var cocktails = dbContext.Cocktails
+                .Include(p => p.Ingredients)
+                .AsQueryable();
+
+            cocktails = cocktails.Where(p => p.Name.ToLower().Contains(keyword.ToLower()));
+            cocktails = cocktails.Skip((page - 1) * pageSize);
+            var foundCocktails = await cocktails.ToListAsync();
+
+            if (foundCocktails.Count > pageSize)
+            {
+                lastPage = false;
+            }
+            foundCocktails = foundCocktails.Take(pageSize).ToList();
+            return new Tuple<IList<Cocktail>, bool>(foundCocktails, lastPage);
+        }
 
         public async Task<Tuple<IList<Cocktail>, bool>> FindCocktailsForCatalogAsync(string keyword, string keywordCriteria, int page, string selectedOrderBy, string rating, string sortOrder, string mainIngredient, int pageSize)
         {
@@ -173,7 +193,7 @@ namespace ServiceLayer
                     cocktails = cocktails.Where(p => p.Name.ToLower().Contains(keyword.ToLower()));
                     break;
             }
-            
+
             cocktails = cocktails
                .Where(p => p.Ingredients.Where(x => x.IngredientName.Contains(mainIngredient)).Any())
                .Where(p => p.AverageRating >= minRating)
@@ -214,7 +234,7 @@ namespace ServiceLayer
             return new Tuple<IList<Cocktail>, bool>(foundCocktails, lastPage);
         }
 
-        public async Task<byte[]> FindCocktailPhotoAsync(int id)=>
+        public async Task<byte[]> FindCocktailPhotoAsync(int id) =>
             (await dbContext.CocktailPhotos.FirstOrDefaultAsync(p => p.CocktailId == id)).CocktailCover;
 
         public async Task<Cocktail> FindCocktailByIdAsync(int id) =>
@@ -232,6 +252,13 @@ namespace ServiceLayer
         {
             var cocktail = await FindCocktailByIdAsync(cocktailId);
             cocktail.AverageRating = Math.Round(cocktail.Ratings.Average(p => p.Rating), 1);
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task HideCocktailAsync(int id)
+        {
+            var cocktail = await FindCocktailByIdAsync(id);
+            cocktail.Hidden = 1;
             await dbContext.SaveChangesAsync();
         }
     }

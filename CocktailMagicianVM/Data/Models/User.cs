@@ -29,9 +29,9 @@ namespace Data.Models
         public string AccountStatus { get; set; }
         public string AccountType { get; set; }
         public int? CountryId { get; set; }
-        public Country Country { get; set; }
+        public string Country { get; set; }
         public int? CityId { get; set; }
-        public City City { get; set; }
+        public string City { get; set; }
         public UserPhoto UserPhoto { get; set; }
         public ICollection<BarRating> BarRatings { get; set; }
         public ICollection<BarComment> BarComments { get; set; }
@@ -41,6 +41,7 @@ namespace Data.Models
         public ICollection<UserCocktail> FavoriteCocktails { get; set; }
         public ICollection<Notification> Notifications { get; set; }
         public DateTime? LastLogIn { get; set; }
+        public byte Frozen { get; set; }
 
     }
 }

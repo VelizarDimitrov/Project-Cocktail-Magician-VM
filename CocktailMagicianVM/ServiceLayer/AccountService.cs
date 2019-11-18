@@ -38,18 +38,7 @@ namespace ServiceLayer
         //}
         public async Task AddAccountAsync(string userName, string firstName, string lastName, string password, string accountType, string countryName, string cityName)
         {
-            if (await dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).CountAsync() == 0)
-            {
-                await countryService.CreateCountryAsync(countryName);
-            }
-
-            if (await dbContext.Cities.Where(p => p.Name.ToLower() == cityName.ToLower()).CountAsync() == 0)
-            {
-                await cityService.CreateCityAsync(cityName, countryName);
-            }
-
-            var country = await dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).FirstAsync();
-            var city = await dbContext.Cities.Where(p => p.Name.ToLower() == cityName.ToLower()).FirstOrDefaultAsync();
+            
             var user = new User()
             {
                 UserName = userName,
@@ -58,8 +47,9 @@ namespace ServiceLayer
                 Password = hasher.Hash(password),
                 AccountType = accountType,
                 AccountStatus = "Active",
-                Country = country,
-                City = city
+                Country = countryName,
+                City = cityName,
+                Frozen = 0
             };
             await dbContext.Users.AddAsync(user);
             var userPhoto = new UserPhoto()
@@ -96,18 +86,7 @@ namespace ServiceLayer
         // Non-Async version of methods for Pre-Load
         public void AddAccount(string userName, string firstName, string lastName, string password, string accountType, string countryName, string cityName)
         {
-            if (dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).Count() == 0)
-            {
-                countryService.CreateCountry(countryName);
-            }
 
-            if (dbContext.Cities.Where(p => p.Name.ToLower() == cityName.ToLower()).Count() == 0)
-            {
-                cityService.CreateCity(cityName, countryName);
-            }
-
-            var country = dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).FirstOrDefault();
-            var city = dbContext.Cities.Where(p => p.Name.ToLower() == cityName.ToLower()).FirstOrDefault();
             var user = new User()
             {
                 UserName = userName,
@@ -116,8 +95,9 @@ namespace ServiceLayer
                 Password = hasher.Hash(password),
                 AccountType = accountType,
                 AccountStatus = "Active",
-                Country = country,
-                City = city
+                Country = countryName,
+                City = cityName,
+                Frozen = 0
             };
             dbContext.Users.Add(user);
             var userPhoto = new UserPhoto()
@@ -210,6 +190,13 @@ namespace ServiceLayer
                 await dbContext.BarComment.AddAsync(barComment);
                 await dbContext.SaveChangesAsync();
             }
+        }
+
+        public async Task SetLastLoginAsync(int id)
+        {
+            var user = await FindUserByIdAsync(id);
+            user.LastLogIn = DateTime.Now;
+            await dbContext.SaveChangesAsync();
         }
 
         public async Task AddCocktailCommentAsync(int id, string createComment, int userId)

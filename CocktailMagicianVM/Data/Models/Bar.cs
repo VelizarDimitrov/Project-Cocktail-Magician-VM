@@ -29,5 +29,6 @@ namespace Data.Models
         public ICollection<BarCocktail> Cocktails { get; set; }
         public ICollection<UserBar> FavoritedBy { get; set; }
         public double AverageRating { get; set; }
+        public byte Hidden { get; set; }
     }
 }

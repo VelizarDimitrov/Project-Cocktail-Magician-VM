@@ -68,7 +68,8 @@ namespace ServiceLayer
                 Description = description,
                 Country = country,
                 City = city,
-                AverageRating = 0
+                AverageRating = 0,
+                Hidden = 0
             };
             dbContext.Bars.Add(bar);
             var barPhoto = new BarPhoto()
@@ -99,7 +100,8 @@ namespace ServiceLayer
                 Description = description,
                 Country = country,
                 City = city,
-                AverageRating = 0
+                AverageRating = 0,
+                Hidden = 0
             };
             await dbContext.Bars.AddAsync(bar);
             var barPhoto = new BarPhoto()

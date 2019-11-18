@@ -26,5 +26,6 @@ namespace Data.Models
         public ICollection<CocktailIngredient> Ingredients { get; set; }
         public ICollection<UserCocktail> FavoritedBy { get; set; }
         public double AverageRating { get; set; }
+        public byte Hidden { get; set; }
     }
 }

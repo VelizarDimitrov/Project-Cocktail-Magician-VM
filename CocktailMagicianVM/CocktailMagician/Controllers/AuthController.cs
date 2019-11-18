@@ -31,12 +31,12 @@ namespace CocktailMagician.Controllers
                 var user = await this.aService.FindUserWebAsync(vm.UserName, vm.Password);
 
                 SignInUser(user);
-
-              return BackToHome();
+                await aService.SetLastLoginAsync(user.Id);
+                return BackToHome();
             }
             catch (Exception ex)
             {
-                return BackToHome();
+                return RedirectToAction("Login");
             }
 
         }
@@ -58,7 +58,7 @@ namespace CocktailMagician.Controllers
                 return BackToHome();
             try
             {
-                await this.aService.AddAccountAsync(vm.UserName, vm.FirstName, vm.LastName, vm.Password, "Bar Crawler",vm.Country,vm.City);
+                await this.aService.AddAccountAsync(vm.UserName, vm.FirstName, vm.LastName, vm.Password, "Bar Crawler", vm.Country, vm.City);
                 var user = await aService.FindUserWebAsync(vm.UserName, vm.Password);
                 SignInUser(user);
 

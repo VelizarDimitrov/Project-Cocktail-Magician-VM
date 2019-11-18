@@ -21,5 +21,6 @@ namespace Data.Contracts
         ICollection<BarCocktail> Cocktails { get; set; }
         ICollection<UserBar> FavoritedBy { get; set; }
         double AverageRating { get; set; }
+        byte Hidden { get; set; }
     }
 }

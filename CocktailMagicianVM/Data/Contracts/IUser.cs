@@ -16,9 +16,9 @@ namespace Data.Contracts
         string AccountType { get; set; }
         DateTime? LastLogIn { get; set; }
         int? CountryId { get; set; }
-        Country Country { get; set; }
+        string Country { get; set; }
         int? CityId { get; set; }
-        City City { get; set; }
+        string City { get; set; }
         UserPhoto UserPhoto { get; set; }
         ICollection<BarRating> BarRatings { get; set; }
         ICollection<BarComment> BarComments { get; set; }
@@ -27,5 +27,6 @@ namespace Data.Contracts
         ICollection<UserBar> FavoriteBars { get; set; }
         ICollection<UserCocktail> FavoriteCocktails { get; set; }
         ICollection<Notification> Notifications { get; set; }
+        byte Frozen { get; set; }
     }
 }

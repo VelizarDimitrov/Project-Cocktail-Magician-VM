@@ -19,8 +19,8 @@ namespace CocktailMagician.Models
             Password = user.Password;
             AccountStatus = user.AccountStatus;
             AccountType = user.AccountType;
-            Country = user.Country.Name;
-            City = user.City.Name;
+            Country = user.Country;
+            City = user.City;
             BarRatings = new BarRatingListViewModel(user.BarRatings);
             BarComments = new BarCommentListViewModel(user.BarComments);
             CocktailRatings = new CocktailRatingListViewModel(user.CocktailRatings);

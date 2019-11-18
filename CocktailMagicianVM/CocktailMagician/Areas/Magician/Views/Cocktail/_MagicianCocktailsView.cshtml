@@ -1,0 +1,73 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model CocktailMagician.Models.CocktailSearchViewModel
+
+@if (!Model.Cocktails.Any())
+{
+    <p>No cocktails found with that name</p>
+}
+<form>
+    <ul class="comment-item">
+        @foreach (var cocktail in Model.Cocktails)
+        {
+
+            <li>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <h4>@cocktail.Name</h4>
+                        </div>
+                        <div class="col-lg-6">
+                            <h6>@string.Join(", ",cocktail.Ingredients.CocktailIngredients.Select(p=>p.IngredientName))</h6>
+                        </div>
+                        <div class="col-lg-2">
+                            <button asp-area="Magician" asp-action="EditCocktail" asp-controller="Cocktail" value="@cocktail.Id" name="cocktailId" class="btn btn-primary label label-danger">
+                                Edit
+                            </button>
+                            @if (cocktail.Hidden)
+                            {
+                                <button asp-area="Magician" asp-action="UnhideCocktail" asp-controller="Cocktail" value="@cocktail.Id" name="cocktailId" class="btn btn-primary label label-danger">
+                                    Unhide
+                                </button>
+                            }
+                            else
+                            {
+                                <button asp-area="Magician" asp-action="HideCocktail" asp-controller="Cocktail" value="@cocktail.Id" name="cocktailId" class="btn btn-primary label label-danger">
+                                    Hide
+                                </button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</form>
+<div hidden="hidden">
+    <input id="current-page" asp-for="Page" value="@Model.Page" />
+    <input id="current-keyword" asp-for="Keyword" value="@Model.Keyword" />
+</div>
+@if (Model.Cocktails.Count != 0)
+{
+    <div class="pager-wrapper">
+
+        <ul class="pager-list">
+            @if (Model.Page != 1)
+            {
+                <li class="paging-nav"><a onclick="changePage(-1)"><i class="fa fa-angle-left"></i></a></li>
+            }
+            <li class="number">
+                <span class="mr-5"><span class="font600">page</span></span>
+            </li>
+            <li class="number">
+                <span class="font600">@Model.Page</span>
+            </li>
+            @if (!Model.LastPage)
+            {
+                <li class="paging-nav"><a onclick="changePage(1)"><i class="fa fa-angle-right"></i></a></li>
+            }
+
+        </ul>
+
+    </div>
+}
+
