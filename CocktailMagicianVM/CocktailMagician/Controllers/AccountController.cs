@@ -57,11 +57,12 @@ namespace CocktailMagician.Controllers
             var vm = new UserViewModel(user);
             return PartialView("_ProfileInfoView", vm);
         }
-        public async Task<IActionResult> UserDashboard()
+        public async Task<IActionResult> UserDashboard(int pageSize)
         {
             var userId = int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
             var user = await aService.FindUserByIdAsync(userId);
-            var vm = new NotificationListViewModel(user.Notifications);
+            var vm = new UserViewModel(user);
+            vm.Notifications.Notifications=vm.Notifications.Notifications.Skip(number)
             return PartialView("_NotificationsView", vm);
         }
     }

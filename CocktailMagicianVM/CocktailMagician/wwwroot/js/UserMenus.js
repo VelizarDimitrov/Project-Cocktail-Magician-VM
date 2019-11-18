@@ -31,3 +31,9 @@ const removeActive = function () {
         $(this).attr("class", "");
     });
 }
+
+function changePage(number) {
+    let page = parseInt($('#current-page').val()) + number;
+    let pageSize = 6;
+    $('#user-view').load('/account/loadnotifications', { page: page, pageSize: pageSize });
+}

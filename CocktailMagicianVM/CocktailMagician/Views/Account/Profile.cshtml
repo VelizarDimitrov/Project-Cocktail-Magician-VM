@@ -31,7 +31,7 @@
                             <div class="admin-user-item">
 
                                 <div class="image">
-                                    <img alt="image" class="img-circle" style="background-image:url(@Url.Action("GetUserPhoto", "Account"));" />
+                                    <img alt="image" class="img-circle" src="@Url.Action("GetProfilePic", "Account", new{ id=Model.Id})" />
                                 </div>
 
                                 <h4>@Model.FirstName @Model.LastName</h4>
@@ -71,7 +71,7 @@
                         </div>
 
                     </div>
-                    <div id="user-view">
+                    <div class="GridLex-col-9_sm-8_xs-12" id="user-view">
                     </div>
                 </div>
 

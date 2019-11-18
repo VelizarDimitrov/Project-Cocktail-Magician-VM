@@ -53,5 +53,7 @@ namespace CocktailMagician.Models
         public UserCocktailListViewModel FavoriteCocktails { get; set; }
         public NotificationListViewModel Notifications { get; set; }
         public DateTime? LastLogIn { get; set; }
+        public int Page { get; set; }
+        public bool LastPage { get; set; }
     }
 }
