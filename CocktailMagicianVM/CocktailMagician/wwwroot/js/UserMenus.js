@@ -5,8 +5,16 @@
 
 }
 
+const userProfileEdit = function () {
+    $('#user-view').load('/account/userprofileupdate');
+    removeActive();
+}
+
 const userDashboard = function () {
-    $('#user-view').load('/account/userdashboard');
+    let page = 1;
+    let pageSize = 6;
+    $('#user-view').load('/account/userdashboard', { page: page, pageSize: pageSize });
+
     removeActive();
     $("#user-dashboard").attr("class", "active");
 }
@@ -21,7 +29,7 @@ const userCocktails = function () {
     removeActive();
     $("#user-cocktails").attr("class", "active");
 }
-const userPassword = function () {
+const changePassword = function () {
     $('#user-view').load('/account/userpasswordupdate');
     removeActive();
     $("#user-password").attr("class", "active");
@@ -35,5 +43,46 @@ const removeActive = function () {
 function changePage(number) {
     let page = parseInt($('#current-page').val()) + number;
     let pageSize = 6;
-    $('#user-view').load('/account/loadnotifications', { page: page, pageSize: pageSize });
+    $('#user-view').load('/account/userdashboard', { page: page, pageSize: pageSize });
+}
+function checkIfFree(username) {
+    $.ajax({
+        url: '/auth/checkifusernameavailable',
+        type: "GET",
+        data: { username: username },
+        success: function (result) {
+            const userSpan = $('#check-username');
+            if (result === 'unavailable' && $("#hidden-username").val() != username) {
+                userSpan.removeAttr('hidden');
+                document.getElementById("register-button").disabled = true;
+            }
+            else {
+                userSpan.attr('hidden', 'hidden');
+                document.getElementById("register-button").disabled = false;
+            }
+
+        }
+    });
+}
+const checkIfPassConfirmed = function () {
+    let password = document.getElementById("password").value;
+    let confirmed = document.getElementById('password-confirm').value;
+    const passValidSpan = $('#password-validation');
+    const passLengthSpan = $('#password-length');
+    if (password === confirmed) {
+        passValidSpan.attr('hidden', 'hidden');
+        document.getElementById("register-button").disabled = false;
+    }
+    else {
+        passValidSpan.removeAttr('hidden', 'hidden');
+        document.getElementById("register-button").disabled = true;
+    }
+    if (password.length < 6) {
+        passLengthSpan.removeAttr('hidden', 'hidden');
+        document.getElementById("register-button").disabled = true;
+    }
+    else {
+        passLengthSpan.attr('hidden', 'hidden');
+        document.getElementById("register-button").disabled = false;
+    }
 }

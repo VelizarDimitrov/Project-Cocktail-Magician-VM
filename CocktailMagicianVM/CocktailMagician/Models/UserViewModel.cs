@@ -29,7 +29,11 @@ namespace CocktailMagician.Models
             FavoriteCocktails = new UserCocktailListViewModel(user.FavoriteCocktails);
             Notifications = new NotificationListViewModel(user.Notifications);
             LastLogIn = user.LastLogIn;
-            
+            LastPage = true;
+        }
+        public UserViewModel()
+        {
+
         }
 
         public int Id { get; set; }
@@ -44,7 +48,6 @@ namespace CocktailMagician.Models
         public string Country { get; set; }
         public string City { get; set; }
         [Display(Name = "Avatar")]
-        public IFormFile UserPhoto { get; set; }
         public BarRatingListViewModel BarRatings { get; set; }
         public BarCommentListViewModel BarComments { get; set; }
         public CocktailRatingListViewModel CocktailRatings { get; set; }
