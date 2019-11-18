@@ -13,15 +13,37 @@ namespace CocktailMagician.Controllers
     {
         private readonly ICityService cityService;
         private readonly IBarService barService;
+        private readonly ICocktailService cService;
 
-        public HomeController(ICityService cityService,IBarService barService)
+        public HomeController(ICityService cityService, IBarService barService, ICocktailService cService)
         {
             this.cityService = cityService;
             this.barService = barService;
+            this.cService = cService;
         }
-    public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            List<BarViewModel> topBarsVM = new List<BarViewModel>();
+            List<CocktailViewModel> topCocktailsVM = new List<CocktailViewModel>();
+
+            var topBars = await barService.FindBarsForCatalogAsync("", "", 1, "Rating", "0;5", "Descending", 6);
+            var topCocktails = await cService.FindCocktailsForCatalogAsync("", "", 1, "Rating", "0;5", "Descending", "", 5);
+
+            foreach (var bar in topBars.Item1)
+            {
+                topBarsVM.Add(new BarViewModel(bar));
+            }
+            foreach (var cocktail in topCocktails.Item1)
+            {
+                topCocktailsVM.Add(new CocktailViewModel(cocktail));
+            }
+
+            var vm = new IndexViewModel()
+            {
+                Bars = topBarsVM,
+                Cocktails = topCocktailsVM
+            };
+            return View(vm);
         }
 
         public IActionResult Privacy()
