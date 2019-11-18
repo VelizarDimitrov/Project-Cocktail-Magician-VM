@@ -1,0 +1,48 @@
+﻿@model UserViewModel
+
+
+<div class="admin-content-wrapper">
+
+    <div class="admin-section-title">
+
+        <h2>Profile Update</h2>
+
+
+    </div>
+
+    <form asp-action="UserProfileUpdate" asp-controller="Account" method="post" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label asp-for="UserName" class="control-label"></label>
+            <input asp-for="UserName" class="form-control" style="width:200px" oninput="checkIfFree(this.value)" value="@Model.UserName" />
+            <span asp-validation-for="UserName" class="text-danger" hidden="hidden" id="check-username">User name already taken !</span>
+        </div>
+        <div class="form-group">
+            <label asp-for="FirstName" class="control-label"></label>
+            <input asp-for="FirstName" class="form-control" style="width:200px" value="@Model.FirstName" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="LastName" class="control-label"></label>
+            <input asp-for="LastName" class="form-control" style="width:200px" value="@Model.LastName" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+            <div class="form-group bootstrap-fileinput-style-01">
+                <label>Photo</label>
+                <div class="form-group">
+                    <input type="file" name="file">
+                </div>
+            </div> 
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-12 mt-10">
+
+                    <button type="submit" class="btn btn-primary" id="register-button" style="color:floralwhite;">SaveChanges</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div hidden="hidden">
+        <input value="@Model.UserName"id="hidden-username" />
+    </div>
+</div>

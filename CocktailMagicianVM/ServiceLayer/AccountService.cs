@@ -259,5 +259,17 @@ namespace ServiceLayer
         public async Task<byte[]> FindUserAvatar(int userId) =>
             (await dbContext.UserPhotos.FirstOrDefaultAsync(p => p.UserId == userId)).UserCover;
 
+        public async Task UpdateProfileAsync(int userId, string userName, string firstName, string lastName, byte[] userPhoto)
+        {
+            var user = await FindUserByIdAsync(userId);
+            user.UserName = userName;
+            user.FirstName = firstName;
+            user.LastName = lastName;
+            if (userPhoto!=null)
+            {
+            user.UserPhoto.UserCover = userPhoto;
+            }
+           await dbContext.SaveChangesAsync();
+        }
     }
 }
