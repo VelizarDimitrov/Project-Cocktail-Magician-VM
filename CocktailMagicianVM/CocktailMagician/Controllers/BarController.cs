@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using CocktailMagician.Areas.Magician.Models;
 using CocktailMagician.Models;
 using Data.Models;
 using Microsoft.AspNetCore.Http;
@@ -26,11 +27,6 @@ namespace CocktailMagician.Controllers
             this.aService = aService;
         }
 
-        public IActionResult AddBar()
-        {
-            var vm = new AddBarViewModel();
-            return View("AddBar", vm);
-        }
 
         public async Task<IActionResult> GetAllCountries()
         {
@@ -46,26 +42,6 @@ namespace CocktailMagician.Controllers
             else
                 cities = new string[0];
             return Json(cities);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddBar(AddBarViewModel barModel, IFormFile file)
-        {
-            byte[] barPhoto;
-            using (var stream = new MemoryStream())
-            {
-                await file.CopyToAsync(stream);
-                barPhoto = stream.ToArray();
-            }
-            try
-            {
-                await barService.AddBarAsync(barModel.Name, barModel.Address, barModel.Description, barModel.Country, barModel.City, barPhoto);
-            }
-            catch
-            {
-                return View("AddBar");
-            }
-            return RedirectToAction("BarSearch", "Bar");
         }
 
         [HttpPost]

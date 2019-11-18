@@ -21,12 +21,7 @@
             <div class="second-search-result-inner">
                 <span class="labeling">Search for bars</span>
                 <div class="row">
-                    @if (User.IsInRole("Cocktail Magician"))
-                    {
-                        <div class="col-xss-12 col-xs-6 col-sm-4 col-md-2">
-                            <a class="btn btn-block" asp-action="AddBar" asp-controller="Bar">Add Bar</a>
-                        </div>
-                    }
+
                     <div class="col-xss-6 col-xs-3 col-sm-3 col-md-3">
                         <div class="form-group form-lg">
                             <select id="criteria" asp-items="@Model.Criterias" class="form-control"></select>

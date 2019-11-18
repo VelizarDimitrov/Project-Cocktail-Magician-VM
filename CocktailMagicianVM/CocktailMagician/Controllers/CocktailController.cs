@@ -24,31 +24,12 @@ namespace CocktailMagician.Controllers
             this.aService = aService;
         }
 
-        public IActionResult AddCocktail()
-        {
-
-            return View("AddCocktail");
-        }
         public async Task<IActionResult> GetAllIngredients()
         {
             var ingredients = (await iService.GetAllIngredientNamesAsync()).ToArray();
             return Json(ingredients);
         }
-        [HttpPost]
-        public async Task<IActionResult> CreateCocktail(string name, string primaryIngredients, string ingredients, string description)
-        {
-            byte[] cocktailPhoto;
-            var file = Request.Form.Files[0];
-            using (var stream = new MemoryStream())
-            {
-                await file.CopyToAsync(stream);
-                cocktailPhoto = stream.ToArray();
-            }
-            var primaryIngredientsArr = primaryIngredients.Split(',');
-            var ingredientsArr = ingredients.Split(',');
-            await cocktailService.CreateCocktailAsync(name, description, primaryIngredientsArr, ingredientsArr, cocktailPhoto);
-            return Ok();
-        }
+
         [HttpGet]
         public async Task<IActionResult> CocktailSearch()
         {            var ingredients = await iService.GetAllMainIngredientsAsync();
