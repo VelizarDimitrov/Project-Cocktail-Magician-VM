@@ -1,0 +1,98 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model CocktailMagician.Models.BarSearchViewModel
+
+@if (!Model.Bars.Any())
+{
+    <p>No bars found with that name</p>
+}
+<form>
+    <ul class="comment-item">
+        @foreach (var bar in Model.Bars)
+        {
+
+            <li>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <h4>@bar.Name</h4>
+                        </div>
+                        <div class="col-lg-5">
+                            <h6>@bar.City, @bar.Country - @bar.Address</h6>
+                        </div>
+                        <div class="col-lg-3">
+                            <button asp-area="Magician" asp-action="EditBar" asp-controller="Bar" value="@bar.Id" name="barId" class="btn btn-primary label label-danger">
+                                Edit
+                            </button>
+                            <button asp-area="Magician" asp-action="EditBarCocktails" asp-controller="Bar" value="@bar.Id" name="barId" class="btn btn-primary label label-danger">
+                                Cocktails
+                            </button>
+                            @if (bar.Hidden)
+                            {
+                                <a value="@bar.Id" name="barId" onclick="UnhideBar(@bar.Id)" class="btn btn-primary label label-danger">
+                                    Unhide
+                                </a>
+                            }
+                            else
+                            {
+                                <a value="@bar.Id" name="barId" onclick="HideBar(@bar.Id)" class="btn btn-primary label label-danger">
+                                    Hide
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</form>
+<div hidden="hidden">
+    <input id="current-page" asp-for="Page" value="@Model.Page" />
+    <input id="current-keyword" asp-for="Keyword" value="@Model.Keyword" />
+</div>
+@if (Model.Bars.Count != 0)
+{
+    <div class="pager-wrapper">
+
+        <ul class="pager-list">
+            @if (Model.Page != 1)
+            {
+                <li class="paging-nav"><a onclick="changePage(-1)"><i class="fa fa-angle-left"></i></a></li>
+            }
+            <li class="number">
+                <span class="mr-5"><span class="font600">page</span></span>
+            </li>
+            <li class="number">
+                <span class="font600">@Model.Page</span>
+            </li>
+            @if (!Model.LastPage)
+            {
+                <li class="paging-nav"><a onclick="changePage(1)"><i class="fa fa-angle-right"></i></a></li>
+            }
+
+        </ul>
+
+    </div>
+}
+
+<script>
+    function UnhideBar(barId) {
+        $.ajax({
+            url: '/magician/bar/unhidebar',
+            type: "POST",
+            data: { barId: barId },
+            success: function () {
+                changePage(0);
+            }
+        });
+    }
+    function HideBar(barId) {
+        $.ajax({
+            url: '/magician/bar/hidebar',
+            type: "POST",
+            data: { barId: barId },
+            success: function () {
+                changePage(0);
+            }
+        });
+    }
+</script>

@@ -144,6 +144,7 @@ namespace ServiceLayer
                 .Include(p => p.Comments)
                 .Include(p => p.Cocktails)
                 .Include(p => p.FavoritedBy)
+                .Where(p => p.Hidden == 0)
                 .AsQueryable();
 
             switch (keywordCriteria)
@@ -200,6 +201,58 @@ namespace ServiceLayer
             return new Tuple<IList<Bar>, bool>(foundBars, lastPage);
         }
 
+        public async Task<Tuple<IList<Bar>, bool>> FindBarForCatalogAsync(string keyword, int page, int pageSize, int userId)
+        {
+            bool lastPage = true;
+
+            var bars = dbContext.Bars
+                .Include(p => p.City)
+                .Include(p => p.Country)
+                .Include(p => p.FavoritedBy)
+                .Where(p=>p.FavoritedBy.Any(x=>x.UserId==userId))
+                .AsQueryable();
+
+            bars = bars.Where(p =>
+            p.Name.ToLower().Contains(keyword.ToLower())
+            || p.Country.Name.ToLower().Contains(keyword.ToLower())
+            || p.City.Name.ToLower().Contains(keyword.ToLower()));
+
+            bars = bars.Skip((page - 1) * pageSize);
+            var foundBars = await bars.ToListAsync();
+
+            if (foundBars.Count > pageSize)
+            {
+                lastPage = false;
+            }
+            foundBars = foundBars.Take(pageSize).ToList();
+            return new Tuple<IList<Bar>, bool>(foundBars, lastPage);
+        }
+
+        public async Task<Tuple<IList<Bar>, bool>> FindBarForCatalogAsync(string keyword, int page, int pageSize)
+        {
+            bool lastPage = true;
+
+            var bars = dbContext.Bars
+                .Include(p => p.City)
+                .Include(p => p.Country)
+                .AsQueryable();
+
+            bars = bars.Where(p =>
+            p.Name.ToLower().Contains(keyword.ToLower())
+            || p.Country.Name.ToLower().Contains(keyword.ToLower())
+            || p.City.Name.ToLower().Contains(keyword.ToLower()));
+
+            bars = bars.Skip((page - 1) * pageSize);
+            var foundBars = await bars.ToListAsync();
+
+            if (foundBars.Count > pageSize)
+            {
+                lastPage = false;
+            }
+            foundBars = foundBars.Take(pageSize).ToList();
+            return new Tuple<IList<Bar>, bool>(foundBars, lastPage);
+        }
+
         public async Task<IList<Bar>> GetNewestBarsAsync()
         {
             var bars = await dbContext.Bars.Include(p => p.City).Include(p => p.Country).Include(p => p.Ratings)
@@ -225,5 +278,19 @@ namespace ServiceLayer
             await dbContext.Bars.Where(p => p.Name.ToLower() == barName.ToLower()).Include(p => p.City).Include(p => p.Country).Include(p => p.Ratings)
             .Include(p => p.Comments).Include(p => p.Cocktails).Include(p => p.FavoritedBy)
             .FirstOrDefaultAsync();
+
+        public async Task HideBarAsync(int id)
+        {
+            var bar = await FindBarByIdAsync(id);
+            bar.Hidden = 1;
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task UnhideBarAsync(int id)
+        {
+            var bar = await FindBarByIdAsync(id);
+            bar.Hidden = 0;
+            await dbContext.SaveChangesAsync();
+        }
     }
 }

@@ -12,10 +12,10 @@ namespace CocktailMagician.Models
         public BarViewModel(IBar bar)
         {
             StringBuilder stringBuilder = new StringBuilder();
-            if (bar.Description.Length<256)
+            if (bar.Description.Length < 256)
                 stringBuilder.Append(bar.Description.Substring(0));
             else
-                stringBuilder.Append(bar.Description.Substring(0,255));
+                stringBuilder.Append(bar.Description.Substring(0, 255));
             stringBuilder.Append("...");
             Id = bar.Id;
             Name = bar.Name;
@@ -30,6 +30,7 @@ namespace CocktailMagician.Models
             Comments = new BarCommentListViewModel(bar.Comments);
             Cocktails = new BarCocktailListViewModel(bar.Cocktails);
             FavoritedBy = new UserBarListViewModel(bar.FavoritedBy);
+            Hidden = bar.Hidden == 1 ? true : false;
         }
         public BarViewModel()
         {
@@ -49,5 +50,6 @@ namespace CocktailMagician.Models
         public BarCommentListViewModel Comments { get; set; }
         public BarCocktailListViewModel Cocktails { get; set; }
         public UserBarListViewModel FavoritedBy { get; set; }
+        public bool Hidden { get; set; }
     }
 }

@@ -154,7 +154,9 @@ namespace ServiceLayer
                 .Include(p => p.Ingredients)
                 .AsQueryable();
 
-            cocktails = cocktails.Where(p => p.Name.ToLower().Contains(keyword.ToLower()));
+            cocktails = cocktails.Where(p => p.Name.ToLower().Contains(keyword.ToLower()) 
+            || p.Ingredients.Any(x=>x.IngredientName.ToLower().Contains(keyword.ToLower())));
+
             cocktails = cocktails.Skip((page - 1) * pageSize);
             var foundCocktails = await cocktails.ToListAsync();
 
@@ -179,6 +181,7 @@ namespace ServiceLayer
                 .Include(p => p.Ratings)
                 .Include(p => p.Comments)
                 .Include(p => p.FavoritedBy)
+                .Where(p => p.Hidden == 0)
                 .AsQueryable();
 
             switch (keywordCriteria)

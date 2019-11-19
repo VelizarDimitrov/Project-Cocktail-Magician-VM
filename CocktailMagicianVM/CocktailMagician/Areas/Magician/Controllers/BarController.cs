@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CocktailMagician.Areas.Magician.Models;
 using CocktailMagician.Models;
+using Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -53,6 +54,45 @@ namespace CocktailMagician.Areas.Magician.Controllers
                 return View("AddBar");
             }
             return RedirectToAction("BarSearch", "Bar");
+        }
+
+        public IActionResult Manage()
+        {
+            return View("Bars");
+        }
+
+        public async Task<IActionResult> BarSearchResults(string keyword, string page, string pageSize)
+        {
+            Tuple<IList<Bar>, bool> bars;
+            var model = new BarSearchViewModel()
+            {
+                Keyword = keyword == null ? "" : keyword,
+                Page = int.Parse(page)
+            };
+            bars = await barService.FindBarForCatalogAsync(model.Keyword, model.Page, int.Parse(pageSize));
+
+            foreach (var bar in bars.Item1)
+            {
+                model.Bars.Add(new BarViewModel(bar));
+            }
+            model.LastPage = bars.Item2;
+            return PartialView("_MagicianBarsView", model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> HideBar(string barId)
+        {
+            var id = int.Parse(barId);
+            await barService.HideBarAsync(id);
+            return RedirectToAction("Manage");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UnhideBar(string barId)
+        {
+            var id = int.Parse(barId);
+            await barService.UnhideBarAsync(id);
+            return RedirectToAction("Manage");
         }
     }
 }
