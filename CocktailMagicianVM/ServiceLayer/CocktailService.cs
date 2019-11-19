@@ -261,5 +261,12 @@ namespace ServiceLayer
             cocktail.Hidden = 1;
             await dbContext.SaveChangesAsync();
         }
+
+        public async Task UnhideCocktailAsync(int id)
+        {
+            var cocktail = await FindCocktailByIdAsync(id);
+            cocktail.Hidden = 0;
+            await dbContext.SaveChangesAsync();
+        }
     }
 }

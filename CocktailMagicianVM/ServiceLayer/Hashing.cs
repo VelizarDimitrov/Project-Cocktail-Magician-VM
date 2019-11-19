@@ -50,8 +50,6 @@ namespace ServiceLayer
         }
         private byte[] HashAndSalt(string password, byte[] salt)
         {
-
-
             return KeyDerivation.Pbkdf2(
                 password: password,
                 salt: salt,

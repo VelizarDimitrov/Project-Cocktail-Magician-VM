@@ -35,6 +35,8 @@ namespace Data.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<byte>("Hidden");
+
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
@@ -153,6 +155,8 @@ namespace Data.Migrations
                     b.Property<double>("AverageRating");
 
                     b.Property<string>("Description");
+
+                    b.Property<byte>("Hidden");
 
                     b.Property<string>("Name");
 
@@ -303,11 +307,17 @@ namespace Data.Migrations
 
                     b.Property<string>("AccountType");
 
+                    b.Property<string>("City");
+
                     b.Property<int?>("CityId");
+
+                    b.Property<string>("Country");
 
                     b.Property<int?>("CountryId");
 
                     b.Property<string>("FirstName");
+
+                    b.Property<byte>("Frozen");
 
                     b.Property<DateTime?>("LastLogIn");
 
@@ -502,11 +512,11 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Models.User", b =>
                 {
-                    b.HasOne("Data.Models.City", "City")
+                    b.HasOne("Data.Models.City")
                         .WithMany("Users")
                         .HasForeignKey("CityId");
 
-                    b.HasOne("Data.Models.Country", "Country")
+                    b.HasOne("Data.Models.Country")
                         .WithMany("Users")
                         .HasForeignKey("CountryId");
                 });

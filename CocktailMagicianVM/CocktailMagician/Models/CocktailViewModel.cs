@@ -36,7 +36,7 @@ namespace CocktailMagician.Models
             Bars = new BarCocktailListViewModel(cocktail.Bars);
             FavoritedBy = new UserCocktailListViewModel(cocktail.FavoritedBy);
             Ingredients = new CocktailIngredientListViewModel(cocktail.Ingredients);
-            Hidden = false;
+            Hidden = cocktail.Hidden == 1 ? true : false;
         }
         public int Id { get; set; }
         public string Name { get; set; }

@@ -38,7 +38,7 @@ namespace ServiceLayer
         //}
         public async Task AddAccountAsync(string userName, string firstName, string lastName, string password, string accountType, string countryName, string cityName)
         {
-            
+
             var user = new User()
             {
                 UserName = userName,
@@ -151,13 +151,13 @@ namespace ServiceLayer
 
         public async Task<User> FindUserByIdAsync(int userId) =>
             await dbContext.Users.Where(p => p.Id == userId)
-            .Include(p=>p.City)
-            .Include(p=>p.Country)
-            .Include(p=>p.UserPhoto)
-            .Include(p=>p.Notifications)
-            .Include(p=>p.FavoriteCocktails)
-            .Include(p=>p.FavoriteBars)
-            .Include(p=>p.CocktailRatings)
+            .Include(p => p.City)
+            .Include(p => p.Country)
+            .Include(p => p.UserPhoto)
+            .Include(p => p.Notifications)
+            .Include(p => p.FavoriteCocktails)
+            .Include(p => p.FavoriteBars)
+            .Include(p => p.CocktailRatings)
             .Include(p => p.CocktailComments)
             .Include(p => p.BarRatings)
             .Include(p => p.BarComments)
@@ -265,11 +265,11 @@ namespace ServiceLayer
             user.UserName = userName;
             user.FirstName = firstName;
             user.LastName = lastName;
-            if (userPhoto!=null)
+            if (userPhoto != null)
             {
-            user.UserPhoto.UserCover = userPhoto;
+                user.UserPhoto.UserCover = userPhoto;
             }
-           await dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
         }
     }
 }

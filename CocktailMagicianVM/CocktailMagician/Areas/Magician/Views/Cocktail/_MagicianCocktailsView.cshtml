@@ -17,7 +17,7 @@
                             <h4>@cocktail.Name</h4>
                         </div>
                         <div class="col-lg-6">
-                            <h6>@string.Join(", ",cocktail.Ingredients.CocktailIngredients.Select(p=>p.IngredientName))</h6>
+                            <h6>@string.Join(", ", cocktail.Ingredients.CocktailIngredients.Select(p => p.IngredientName))</h6>
                         </div>
                         <div class="col-lg-2">
                             <button asp-area="Magician" asp-action="EditCocktail" asp-controller="Cocktail" value="@cocktail.Id" name="cocktailId" class="btn btn-primary label label-danger">
@@ -25,15 +25,15 @@
                             </button>
                             @if (cocktail.Hidden)
                             {
-                                <button asp-area="Magician" asp-action="UnhideCocktail" asp-controller="Cocktail" value="@cocktail.Id" name="cocktailId" class="btn btn-primary label label-danger">
+                                <a value="@cocktail.Id" name="cocktailId" onclick="UnhideCocktail(@cocktail.Id)" class="btn btn-primary label label-danger">
                                     Unhide
-                                </button>
+                                </a>
                             }
                             else
                             {
-                                <button asp-area="Magician" asp-action="HideCocktail" asp-controller="Cocktail" value="@cocktail.Id" name="cocktailId" class="btn btn-primary label label-danger">
+                                <a value="@cocktail.Id" name="cocktailId" onclick="HideCocktail(@cocktail.Id)" class="btn btn-primary label label-danger">
                                     Hide
-                                </button>
+                                </a>
                             }
                         </div>
                     </div>
@@ -71,3 +71,25 @@
     </div>
 }
 
+<script>
+    function UnhideCocktail(cocktailId) {
+        $.ajax({
+            url: '/magician/cocktail/unhidecocktail',
+            type: "POST",
+            data: { cocktailId: cocktailId },
+            success: function () {
+                changePage(0);
+            }
+        });
+        }
+    function HideCocktail(cocktailId) {
+        $.ajax({
+            url: '/magician/cocktail/hidecocktail',
+            type: "POST",
+            data: { cocktailId: cocktailId },
+            success: function () {
+                changePage(0);
+            }
+        });
+    }
+</script>

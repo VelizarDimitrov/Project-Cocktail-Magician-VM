@@ -71,10 +71,19 @@ namespace CocktailMagician.Areas.Magician.Controllers
             return PartialView("_MagicianCocktailsView", model);
         }
 
+        [HttpPost]
         public async Task<IActionResult> HideCocktail(string cocktailId)
         {
             var id = int.Parse(cocktailId);
             await cocktailService.HideCocktailAsync(id);
+            return RedirectToAction("Manage");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UnhideCocktail(string cocktailId)
+        {
+            var id = int.Parse(cocktailId);
+            await cocktailService.UnhideCocktailAsync(id);
             return RedirectToAction("Manage");
         }
 

@@ -16,7 +16,8 @@ namespace Data.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    AverageRating = table.Column<double>(nullable: false)
+                    AverageRating = table.Column<double>(nullable: false),
+                    Hidden = table.Column<byte>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -127,7 +128,8 @@ namespace Data.Migrations
                     Description = table.Column<string>(nullable: true),
                     CityId = table.Column<int>(nullable: true),
                     CountryId = table.Column<int>(nullable: true),
-                    AverageRating = table.Column<double>(nullable: false)
+                    AverageRating = table.Column<double>(nullable: false),
+                    Hidden = table.Column<byte>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -159,8 +161,11 @@ namespace Data.Migrations
                     AccountStatus = table.Column<string>(nullable: true),
                     AccountType = table.Column<string>(nullable: true),
                     CountryId = table.Column<int>(nullable: true),
+                    Country = table.Column<string>(nullable: true),
                     CityId = table.Column<int>(nullable: true),
-                    LastLogIn = table.Column<DateTime>(nullable: true)
+                    City = table.Column<string>(nullable: true),
+                    LastLogIn = table.Column<DateTime>(nullable: true),
+                    Frozen = table.Column<byte>(nullable: false)
                 },
                 constraints: table =>
                 {
