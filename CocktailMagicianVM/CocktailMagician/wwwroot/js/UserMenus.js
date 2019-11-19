@@ -86,3 +86,24 @@ const checkIfPassConfirmed = function () {
         document.getElementById("register-button").disabled = false;
     }
 }
+const checkIfPasswordCorrect = function (password) {
+    //let password = document.getElementById("existing-password").val()
+    const passCorrectSpan = $('#password-check');
+    $.ajax({
+        url: '/auth/checkifpasswordiscorrect',
+        type: "GET",
+        data: { password: password },
+        success: function (result) {
+            if (result === 'incorrect') {
+                passCorrectSpan.removeAttr('hidden');
+                document.getElementById("register-button").disabled = true;
+            }
+            else {
+                passCorrectSpan.attr('hidden', 'hidden');
+                document.getElementById("register-button").disabled = false;
+            }
+        }
+    });
+ }
+
+

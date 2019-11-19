@@ -117,7 +117,7 @@ namespace ServiceLayer
             {
                 throw new ArgumentException("username or password incorrect");
             }
-
+           await SetLastLoginAsync(user.Id);
             return user;
         }
 
@@ -151,8 +151,6 @@ namespace ServiceLayer
 
         public async Task<User> FindUserByIdAsync(int userId) =>
             await dbContext.Users.Where(p => p.Id == userId)
-            .Include(p => p.City)
-            .Include(p => p.Country)
             .Include(p => p.UserPhoto)
             .Include(p => p.Notifications)
             .Include(p => p.FavoriteCocktails)
@@ -269,6 +267,31 @@ namespace ServiceLayer
             {
                 user.UserPhoto.UserCover = userPhoto;
             }
+            await dbContext.SaveChangesAsync();
+        }
+        public async Task<bool> VerifyUserPasswordAsync(string userName, string password)
+        {
+            var user = await dbContext.Users
+               .Where(p => p.UserName == userName)
+               .FirstOrDefaultAsync();
+            bool correct = true;
+            if (!this.hasher.Verify(password, user.Password))
+            {
+                correct = false;
+            }
+           
+            return correct;
+        }
+       public async Task<bool> ValidateUserPasswordAsync(int userId, string password)
+        {
+            var user = await FindUserByIdAsync(userId);
+            var validate = await VerifyUserPasswordAsync(user.UserName, password);
+            return validate;
+        }
+        public async Task UpdatePasswordAsync(int userId, string password)
+        {
+            var user = await FindUserByIdAsync(userId);
+            user.Password = hasher.Hash(password);
             await dbContext.SaveChangesAsync();
         }
     }

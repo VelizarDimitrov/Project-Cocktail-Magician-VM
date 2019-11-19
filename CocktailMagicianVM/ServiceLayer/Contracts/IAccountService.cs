@@ -21,5 +21,8 @@ namespace ServiceLayer.Contracts
         Task UpdateProfileAsync(int userId, string userName, string firstName, string lastName, byte[] userPhoto);
         Task SetLastLoginAsync(int id);
         //Task<IList<User>> FindAllUsersAsync();
+        Task<bool> VerifyUserPasswordAsync(string userName, string password);
+        Task<bool> ValidateUserPasswordAsync(int userId, string password);
+        Task UpdatePasswordAsync(int userId, string password);
     }
 }

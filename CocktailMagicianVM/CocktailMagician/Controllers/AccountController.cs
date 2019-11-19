@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CocktailMagician.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.Contracts;
@@ -114,6 +116,14 @@ namespace CocktailMagician.Controllers
             var user = await aService.FindUserByIdAsync(userId);
             var vm = new UserViewModel(user);
             return PartialView("_ChangePasswordView", vm);
+        }
+        [HttpPost]
+        public async Task<IActionResult> UserPasswordUpdate(UserViewModel vm,string newPassword)
+        {
+            var userId = int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+            await this.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await aService.UpdatePasswordAsync(userId, newPassword);
+            return RedirectToAction("Index", "Home");
         }
     }
 }

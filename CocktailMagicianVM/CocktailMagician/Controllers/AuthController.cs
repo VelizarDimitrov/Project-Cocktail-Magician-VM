@@ -118,5 +118,18 @@ namespace CocktailMagician.Controllers
                 return Json("unavailable");
             }
         }
+        public async Task<IActionResult> CheckIfPasswordIsCorrect(string password)
+        {
+            var userId = int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+            var validate = await aService.ValidateUserPasswordAsync(userId,password);
+            if (validate)
+            {
+                return Json("correct");
+            }
+            else
+            {
+                return Json("incorrect");
+            }
+        }
     }
 }
