@@ -146,7 +146,7 @@ namespace ServiceLayer
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<Tuple<IList<Cocktail>, bool>> FindCocktailsForManagingAsync(string keyword, int page, int pageSize)
+        public async Task<Tuple<IList<Cocktail>, bool>> FindCocktailsForCatalogAsync(string keyword, int page, int pageSize)
         {
             bool lastPage = true;
 
@@ -156,6 +156,29 @@ namespace ServiceLayer
 
             cocktails = cocktails.Where(p => p.Name.ToLower().Contains(keyword.ToLower()) 
             || p.Ingredients.Any(x=>x.IngredientName.ToLower().Contains(keyword.ToLower())));
+
+            cocktails = cocktails.Skip((page - 1) * pageSize);
+            var foundCocktails = await cocktails.ToListAsync();
+
+            if (foundCocktails.Count > pageSize)
+            {
+                lastPage = false;
+            }
+            foundCocktails = foundCocktails.Take(pageSize).ToList();
+            return new Tuple<IList<Cocktail>, bool>(foundCocktails, lastPage);
+        }
+
+        public async Task<Tuple<IList<Cocktail>, bool>> FindCocktailsForCatalogAsync(string keyword, int page, int pageSize, int userId)
+        {
+            bool lastPage = true;
+
+            var cocktails = dbContext.Cocktails
+                .Include(p => p.Ingredients)
+                .Where(p => p.FavoritedBy.Any(x => x.UserId == userId))
+                .AsQueryable();
+
+            cocktails = cocktails.Where(p => p.Name.ToLower().Contains(keyword.ToLower())
+            || p.Ingredients.Any(x => x.IngredientName.ToLower().Contains(keyword.ToLower())));
 
             cocktails = cocktails.Skip((page - 1) * pageSize);
             var foundCocktails = await cocktails.ToListAsync();
