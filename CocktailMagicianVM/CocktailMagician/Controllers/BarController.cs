@@ -134,5 +134,12 @@ namespace CocktailMagician.Controllers
             else
                 return RedirectToAction("Index", "Home");
         }
+        [HttpPost]
+        public async Task<IActionResult> UnFavoriteBar(string barId)
+        {
+            var userId = int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+            await aService.RemoveBarFromFavoritesAsync(int.Parse(barId),userId);
+            return Ok();
+        }
     }
 }

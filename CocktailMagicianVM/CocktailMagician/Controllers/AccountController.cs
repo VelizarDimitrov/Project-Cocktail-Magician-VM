@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CocktailMagician.Models;
+using Data.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
@@ -15,10 +16,14 @@ namespace CocktailMagician.Controllers
     public class AccountController : Controller
     {
         private readonly IAccountService aService;
+        private readonly IBarService barService;
+        private readonly ICocktailService cocktailService;
 
-        public AccountController(IAccountService aService)
+        public AccountController(IAccountService aService,IBarService barService,ICocktailService cocktailService)
         {
             this.aService = aService;
+            this.barService = barService;
+            this.cocktailService = cocktailService;
         }
 
         [HttpPost]
@@ -52,6 +57,7 @@ namespace CocktailMagician.Controllers
             var userId = int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
             var user = await aService.FindUserByIdAsync(userId);
             var vm = new UserViewModel(user);
+            vm.Initial = "userPage";
             return View("Profile", vm);
         }
         public async Task<IActionResult> UserProfilePartial()
@@ -124,6 +130,67 @@ namespace CocktailMagician.Controllers
             await this.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             await aService.UpdatePasswordAsync(userId, newPassword);
             return RedirectToAction("Index", "Home");
+        }
+        public async Task<IActionResult> UserFavoriteBars()
+        {
+            var userId = int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+            var user = await aService.FindUserByIdAsync(userId);
+            var vm = new UserViewModel(user);
+            vm.Initial = "favoriteBars";
+            return View("Profile", vm);
+        }
+        public async Task<IActionResult> UserProfileFavoriteCocktails()
+        {
+            var userId = int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+            var user = await aService.FindUserByIdAsync(userId);
+            var vm = new UserViewModel(user);
+            vm.Initial = "favoriteCocktails";
+            return View("Profile", vm);
+        }
+        public IActionResult FavoriteBarsPartial()
+        {
+            
+            return PartialView("_FavoriteBarsView");
+        }
+        public IActionResult FavoriteCocktailsPartial()
+        {
+            return PartialView("_FavoriteCocktailsView");
+        }
+        public async Task<IActionResult> FavoriteBarsResultPartial(string keyword,string pageSize,string page)
+        {
+            var userId = int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+            Tuple<IList<Bar>, bool> bars;
+            var model = new BarSearchViewModel()
+            {
+                Keyword = keyword == null ? "" : keyword,
+                Page = int.Parse(page)
+            };
+            bars = await barService.FindBarsForCatalogAsync(model.Keyword, model.Page, int.Parse(pageSize),userId);
+
+            foreach (var bar in bars.Item1)
+            {
+                model.Bars.Add(new BarViewModel(bar));
+            }
+            model.LastPage = bars.Item2;
+            return PartialView("_FavoriteBarsResultView",model);
+        }
+        public async Task<IActionResult> FavoriteCocktailsResultPartial(string keyword, string pageSize, string page)
+        {
+            var userId = int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+            Tuple<IList<Cocktail>, bool> cocktails;
+            var model = new CocktailSearchViewModel()
+            {
+                Keyword = keyword == null ? "" : keyword,
+                Page = int.Parse(page)
+            };
+            cocktails = await cocktailService.FindCocktailsForCatalogAsync(model.Keyword, model.Page, int.Parse(pageSize), userId);
+
+            foreach (var cocktail in cocktails.Item1)
+            {
+                model.Cocktails.Add(new CocktailViewModel(cocktail));
+            }
+            model.LastPage = cocktails.Item2;
+            return PartialView("_FavoriteCocktailsResultView", model);
         }
     }
 }

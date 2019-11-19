@@ -58,5 +58,6 @@ namespace CocktailMagician.Models
         public DateTime? LastLogIn { get; set; }
         public int Page { get; set; }
         public bool LastPage { get; set; }
+        public string Initial { get; set; }
     }
 }

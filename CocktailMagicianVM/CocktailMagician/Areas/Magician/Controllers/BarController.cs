@@ -69,7 +69,7 @@ namespace CocktailMagician.Areas.Magician.Controllers
                 Keyword = keyword == null ? "" : keyword,
                 Page = int.Parse(page)
             };
-            bars = await barService.FindBarForCatalogAsync(model.Keyword, model.Page, int.Parse(pageSize));
+            bars = await barService.FindBarsForCatalogAsync(model.Keyword, model.Page, int.Parse(pageSize));
 
             foreach (var bar in bars.Item1)
             {

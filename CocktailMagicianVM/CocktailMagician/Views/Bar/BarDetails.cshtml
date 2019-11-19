@@ -30,38 +30,48 @@
                         <div class="blog-wrapper">
 
                             <div class="blog-item blog-single">
+                                <div class="row">
+                                    <div class="col-md-5">
 
-                                <h2>@Model.Name</h2>
+                                        <h2>@Model.Name</h2>
+                                    </div>
+                                    <div class=" col-md-4">
+                                        <div class="feature no-margin-bottom">
+                                            <i class="icon icon-Star"></i>
+                                        </div>
+                                    </div>
+
+                                </div>
                                 @if (User.Identity.IsAuthenticated)
                                 {
-                                    <ul class="list-unstyled list-inline rating-star pull-left">
-                                        <li>
-                                            <span style="color:#CCCCCC;" id="star-1" onmouseover="hoverStarOn(1)" onmouseout="hoverStarOff()" onclick="starClick(1,@Model.Id)">
-                                                <i class="fa fa-star"></i>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span style="color:#CCCCCC;" id="star-2" onmouseover="hoverStarOn(2)" onmouseout="hoverStarOff()" onclick="starClick(2,@Model.Id)">
+                                <ul class="list-unstyled list-inline rating-star pull-left">
+                                    <li>
+                                        <span style="color:#CCCCCC;" id="star-1" onmouseover="hoverStarOn(1)" onmouseout="hoverStarOff()" onclick="starClick(1,@Model.Id)">
+                                            <i class="fa fa-star"></i>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span style="color:#CCCCCC;" id="star-2" onmouseover="hoverStarOn(2)" onmouseout="hoverStarOff()" onclick="starClick(2,@Model.Id)">
 
-                                                <i class="fa fa-star"></i>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span style="color:#CCCCCC;" id="star-3" onmouseover="hoverStarOn(3)" onmouseout="hoverStarOff()" onclick="starClick(3,@Model.Id)">
-                                                <i class="fa fa-star"></i>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span style="color:#CCCCCC;" id="star-4" onmouseover="hoverStarOn(4)" onmouseout="hoverStarOff()" onclick="starClick(4,@Model.Id)">
-                                                <i class="fa fa-star"></i>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span style="color:#CCCCCC;" id="star-5" onmouseover="hoverStarOn(5)" onmouseout="hoverStarOff()" onclick="starClick(5,@Model.Id)">
-                                                <i class="fa fa-star"></i>
-                                            </span>
-                                        </li>
-                                    </ul>
+                                            <i class="fa fa-star"></i>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span style="color:#CCCCCC;" id="star-3" onmouseover="hoverStarOn(3)" onmouseout="hoverStarOff()" onclick="starClick(3,@Model.Id)">
+                                            <i class="fa fa-star"></i>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span style="color:#CCCCCC;" id="star-4" onmouseover="hoverStarOn(4)" onmouseout="hoverStarOff()" onclick="starClick(4,@Model.Id)">
+                                            <i class="fa fa-star"></i>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span style="color:#CCCCCC;" id="star-5" onmouseover="hoverStarOn(5)" onmouseout="hoverStarOff()" onclick="starClick(5,@Model.Id)">
+                                            <i class="fa fa-star"></i>
+                                        </span>
+                                    </li>
+                                </ul>
                                 }
                                 <h4>Rating: @Model.AverageRating/5</h4>
                                 <div class="blog-media">
@@ -109,28 +119,28 @@
                                 <h3 class="uppercase">Leave a Comment</h3>
                                 @if (User.Identity.IsAuthenticated)
                                 {
-                                    <form method="post" id="contactForm" action="#" class="comment-form">
-                                        <div class="clear"></div>
-                                        <div class="row">
-                                            <div class="col-md-12 mb-15">
-                                                <div class="form-group">
-                                                    <label for="comment-message">Message <span class="text-danger">*</span></label>
-                                                    <textarea maxlength="500" id="comment-message" asp-for="@Model.CreateComment" class="form-control" rows="8"></textarea>
-
-                                                </div>
-                                                <div hidden="hidden">
-                                                    <input asp-for="@Model.Id" value="@Model.Id" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <button type="submit" asp-action="AddBarComment" asp-controller="Bar" class="btn btn-primary">Comment</button>
-                                            </div>
-                                        </div>
-                                    </form>
-
+                                <form method="post" id="contactForm" action="#" class="comment-form">
                                     <div class="clear"></div>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-15">
+                                            <div class="form-group">
+                                                <label for="comment-message">Message <span class="text-danger">*</span></label>
+                                                <textarea maxlength="500" id="comment-message" asp-for="@Model.CreateComment" class="form-control" rows="8"></textarea>
+
+                                            </div>
+                                            <div hidden="hidden">
+                                                <input asp-for="@Model.Id" value="@Model.Id" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <button type="submit" asp-action="AddBarComment" asp-controller="Bar" class="btn btn-primary">Comment</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <div class="clear"></div>
                                 }
                             </div>
 
@@ -150,21 +160,22 @@
 
                                     @if (!Model.Cocktails.BarCocktails.Any())
                                     {
-                                        <p>There aren't any cocktails available yet</p>
+                                    <p>There aren't any cocktails available yet</p>
+
                                     }
                                     <ul class="sidebar-post">
                                         @foreach (var cocktail in Model.Cocktails.BarCocktails.Take(6))
                                         {
-                                            <li class="clearfix">
-                                                <a href="blog-single.html">
-                                                    <div class="img-center-cropped"
-                                                         style="background-image:url(@Url.Action("GetCocktailPhoto", "Cocktail" , new { id=cocktail.CocktailId })">
-                                                    </div>
-                                                    <div class="content">
-                                                        <h6>@cocktail.CocktailName</h6>
-                                                    </div>
-                                                </a>
-                                            </li>
+                                        <li class="clearfix">
+                                            <a href="blog-single.html">
+                                                <div class="img-center-cropped"
+                                                     style="background-image:url(@Url.Action("GetCocktailPhoto", "Cocktail" , new { id=cocktail.CocktailId })">
+                                                </div>
+                                                <div class="content">
+                                                    <h6>@cocktail.CocktailName</h6>
+                                                </div>
+                                            </a>
+                                        </li>
                                         }
                                     </ul>
 
@@ -189,11 +200,11 @@
         <input id="bar-name" value="@Model.Name" />
         @if (User.Identity.IsAuthenticated && Model.Ratings.BarRatings.Any(p => p.UserId == int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value)))
         {
-            <input id="initial-rating" value="@Model.Ratings.BarRatings.First(p=>p.UserId==int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value)).Rating" />
+        <input id="initial-rating" value="@Model.Ratings.BarRatings.First(p=>p.UserId==int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value)).Rating" />
         }
         else
         {
-            <input id="initial-rating" value="0" />
+        <input id="initial-rating" value="0" />
         }
     </div>
 </div>

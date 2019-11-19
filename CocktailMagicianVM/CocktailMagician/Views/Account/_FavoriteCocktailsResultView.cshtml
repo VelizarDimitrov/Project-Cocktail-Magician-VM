@@ -1,0 +1,77 @@
+﻿@model CocktailSearchViewModel
+@if (!Model.Cocktails.Any())
+{
+    <p>No bars found with that name</p>
+}
+<ul class="comment-item">
+    @foreach (var cocktail in Model.Cocktails)
+    {
+
+        <li>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <h4>@cocktail.Name</h4>
+                    </div>
+                    <div class="col-lg-5">
+                        <h6>Rating: @cocktail.AverageRating</h6>
+                        <h5>@cocktail.ShortDescription</h5>
+                    </div>
+                    <div class="col-lg-3">
+                        <button value="@cocktail.Id" onclick="unFavorite(this.value)" class="btn btn-primary label label-danger">
+                            Unfavorite
+                        </button>
+
+                        <form>
+                            <button asp-area="Cocktail" asp-action="CocktailDetails" asp-controller="Bar" value="@cocktail.Id" name="cocktailId" class="btn btn-primary label label-danger">
+                                Details
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </li>
+    }
+</ul>
+<div hidden="hidden">
+    <input id="current-page" asp-for="Page" value="@Model.Page" />
+    <input id="current-keyword" asp-for="Keyword" value="@Model.Keyword" />
+</div>
+@if (Model.Cocktails.Count != 0)
+{
+    <div class="pager-wrapper">
+
+        <ul class="pager-list">
+            @if (Model.Page != 1)
+            {
+                <li class="paging-nav"><a onclick="changePage(-1)"><i class="fa fa-angle-left"></i></a></li>
+            }
+            <li class="number">
+                <span class="mr-5"><span class="font600">page</span></span>
+            </li>
+            <li class="number">
+                <span class="font600">@Model.Page</span>
+            </li>
+            @if (!Model.LastPage)
+            {
+                <li class="paging-nav"><a onclick="changePage(1)"><i class="fa fa-angle-right"></i></a></li>
+            }
+
+        </ul>
+
+    </div>
+}
+
+<script>
+    function unFavorite(cocktailId) {
+        $.ajax({
+            url: '/cocktail/unfavoritecocktail',
+            type: "POST",
+            data: { cocktailId: cocktailId },
+            success: function () {
+                changePage(0);
+            }
+        });
+    }
+</script>

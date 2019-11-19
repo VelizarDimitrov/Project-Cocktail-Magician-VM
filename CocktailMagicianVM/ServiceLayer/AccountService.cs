@@ -117,7 +117,7 @@ namespace ServiceLayer
             {
                 throw new ArgumentException("username or password incorrect");
             }
-           await SetLastLoginAsync(user.Id);
+            await SetLastLoginAsync(user.Id);
             return user;
         }
 
@@ -279,10 +279,10 @@ namespace ServiceLayer
             {
                 correct = false;
             }
-           
+
             return correct;
         }
-       public async Task<bool> ValidateUserPasswordAsync(int userId, string password)
+        public async Task<bool> ValidateUserPasswordAsync(int userId, string password)
         {
             var user = await FindUserByIdAsync(userId);
             var validate = await VerifyUserPasswordAsync(user.UserName, password);
@@ -292,6 +292,20 @@ namespace ServiceLayer
         {
             var user = await FindUserByIdAsync(userId);
             user.Password = hasher.Hash(password);
+            await dbContext.SaveChangesAsync();
+        }
+        public async Task RemoveBarFromFavoritesAsync(int barId,int userId)
+        {
+            var user = await FindUserByIdAsync(userId);
+            var bar = user.FavoriteBars.Where(p => p.BarId == barId).FirstOrDefault();
+            user.FavoriteBars.Remove(bar);
+            await dbContext.SaveChangesAsync();
+        }
+        public async Task RemoveCocktailFromFavoritesAsync(int cocktailId, int userId)
+        {
+            var user = await FindUserByIdAsync(userId);
+            var cocktail = user.FavoriteCocktails.Where(p => p.CocktailId == cocktailId).FirstOrDefault();
+            user.FavoriteCocktails.Remove(cocktail);
             await dbContext.SaveChangesAsync();
         }
     }

@@ -24,5 +24,7 @@ namespace ServiceLayer.Contracts
         Task<bool> VerifyUserPasswordAsync(string userName, string password);
         Task<bool> ValidateUserPasswordAsync(int userId, string password);
         Task UpdatePasswordAsync(int userId, string password);
+        Task RemoveBarFromFavoritesAsync(int barId, int userId);
+        Task RemoveCocktailFromFavoritesAsync(int cocktailId, int userId);
     }
 }

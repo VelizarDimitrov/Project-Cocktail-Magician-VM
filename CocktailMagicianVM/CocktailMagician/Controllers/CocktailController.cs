@@ -93,6 +93,12 @@ namespace CocktailMagician.Controllers
             var barForView = new CocktailViewModel(bar);
             return View("CocktailDetails", barForView);
         }
-
+        [HttpPost]
+        public async Task<IActionResult> UnFavoriteCocktail(string cocktailId)
+        {
+            var userId = int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+            await aService.RemoveCocktailFromFavoritesAsync(int.Parse(cocktailId), userId);
+            return Ok();
+        }
     }
 }

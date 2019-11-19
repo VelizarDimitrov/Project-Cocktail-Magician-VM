@@ -74,7 +74,9 @@
                     <div class="GridLex-col-9_sm-8_xs-12" id="user-view">
                     </div>
                 </div>
-
+                <div hidden="hidden">
+                    <input id="initial" value="@Model.Initial" />
+                </div>
             </div>
 
         </div>
@@ -87,6 +89,6 @@
             $('body').attr('class', 'not-transparent-header');
         }
         window.onload = transparency;
-        userProfile();
+        checkPartial();
     </script>
 }
