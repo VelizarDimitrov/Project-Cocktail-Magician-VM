@@ -19,7 +19,7 @@
         <div class="container">
 
             <div class="second-search-result-inner">
-                <span class="labeling">Bar Search</span>
+                <span class="labeling">User Search</span>
                 <div class="row">
 
                     <div class="col-xss-12 col-xs-6 col-sm-6 col-md-7">
@@ -51,26 +51,7 @@
 
 
 @section Scripts {
-    @*
-        <script src="~/js/BarSearch.js"></script>*@
-    <script>
-        const transparency = function () {
-            $('body').attr('class', 'not-transparent-header');
-        }
-        window.onload = transparency;
+    
+        <script src="~/js/AdminUserSearch.js"></script>
 
-        function changePage(number) {
-            let keyword = $('#current-keyword').val();
-            let page = parseInt($('#current-page').val()) + number;
-            let pageSize = 15;
-            $('#search-results').load('/administration/admin/usersearchresults', { keyword: keyword, page: page, pageSize: pageSize });
-        }
-        function searchEventHandler() {
-            let keyword = $('#keyword').val();
-            let page = 1;
-            let pageSize = 15;
-            $('#search-results').load('/administration/admin/usersearchresults', { keyword: keyword, page: page, pageSize: pageSize });
-        }
-        searchEventHandler();
-    </script>
 }
