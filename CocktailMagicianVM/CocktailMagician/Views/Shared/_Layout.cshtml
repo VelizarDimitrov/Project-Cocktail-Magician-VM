@@ -117,6 +117,12 @@
                                 </li>
                             }
                         </ul>
+                            @if (User.IsInRole("Admin"))
+                            {
+                             <form>
+                                 <a button style="cursor:pointer" asp-area="Administration" asp-action="ManageUsers" asp-controller="Admin"></a>
+                             </form>
+                            }
 
                     </div><!--/.nav-collapse -->
                     @if (User.Identity.IsAuthenticated)
