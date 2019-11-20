@@ -1,0 +1,53 @@
+﻿<div class="main-wrapper">
+
+    <div class="second-search-restaurant-wrapper">
+
+        <div class="container">
+
+            <div class="second-search-result-inner">
+                <span class="labeling">Bar Search</span>
+                <div class="row">
+
+                    <div class="col-xss-12 col-xs-6 col-sm-6 col-md-7">
+                        <div class="form-group form-lg">
+                            <input id="keyword" class="form-control" oninput="searchEventHandler()" placeholder="Enter a Keyword" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <div class="section sm">
+
+        <div class="container">
+
+            <div id="search-results" style="min-height:600px">
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+    <script>
+        function changePage(number) {
+            let keyword = $('#current-keyword').val();
+            let page = parseInt($('#current-page').val()) + number;
+            let pageSize = 15;
+            $('#search-results').load('/account/favoritebarsresultpartial', { keyword: keyword, page: page, pageSize: pageSize });
+        }
+        function searchEventHandler() {
+            let keyword = $('#keyword').val();
+            let page = 1;
+            let pageSize = 15;
+            $('#search-results').load('/account/favoritebarsresultpartial', { keyword: keyword, page: page, pageSize: pageSize });
+        }
+        searchEventHandler();
+    </script>
+}
+

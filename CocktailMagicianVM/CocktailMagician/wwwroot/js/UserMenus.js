@@ -19,13 +19,13 @@ const userDashboard = function () {
     $("#user-dashboard").attr("class", "active");
 }
 const userBars = function () {
-    $('#user-view').load('/account/userprofile');
+    $('#user-view').load('/account/favoritebarspartial');
     removeActive();
     $("#user-bars").attr("class", "active");
 }
 
 const userCocktails = function () {
-    $('#user-view').load('/account/userprofile');
+    $('#user-view').load('/account/favoritecocktailspartial');
     removeActive();
     $("#user-cocktails").attr("class", "active");
 }
@@ -104,6 +104,18 @@ const checkIfPasswordCorrect = function (password) {
             }
         }
     });
- }
+}
+const checkPartial = function () {
+    const result = $("#initial").val();
+    if (result=="userPage") {
+        userProfile();
+    }
+    if (result=="favoriteBars") {
+        userBars();
+    }
+    if (result=="favoriteCocktails") {
+        userCocktails();
+    }
+}
 
 

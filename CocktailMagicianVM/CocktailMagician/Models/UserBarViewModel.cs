@@ -14,6 +14,7 @@ namespace CocktailMagician.Models
             UserName = userBar.UserName;
             BarId = userBar.BarId;
             BarName = userBar.BarName;
+            
         }
         public int UserId { get; set; }
         public string UserName { get; set; }

@@ -203,7 +203,7 @@ namespace ServiceLayer
             return new Tuple<IList<Bar>, bool>(foundBars, lastPage);
         }
 
-        public async Task<Tuple<IList<Bar>, bool>> FindBarForCatalogAsync(string keyword, int page, int pageSize, int userId)
+        public async Task<Tuple<IList<Bar>, bool>> FindBarsForCatalogAsync(string keyword, int page, int pageSize, int userId)
         {
             bool lastPage = true;
 
@@ -230,7 +230,7 @@ namespace ServiceLayer
             return new Tuple<IList<Bar>, bool>(foundBars, lastPage);
         }
 
-        public async Task<Tuple<IList<Bar>, bool>> FindBarForCatalogAsync(string keyword, int page, int pageSize)
+        public async Task<Tuple<IList<Bar>, bool>> FindBarsForCatalogAsync(string keyword, int page, int pageSize)
         {
             bool lastPage = true;
 
