@@ -55,4 +55,49 @@ function changePage(number) {
     let pageSize = 4;
     $('#search-results').load('/bar/barsearchresults', { keyword: keyword, criteria: criteria, page: page, rating: rating, pageSize: pageSize });
 }
+const favoriteThisCocktail = function () {
+    let cocktailId = $("#cocktail-id").val();
+    $.ajax({
+        url: '/account/favoritecocktail',
+        type: "POST",
+        data: { cocktailId: cocktailId },
+        success: function () {
+            $("#favorite-button").toggle();
+            $("#unfavorite-button").toggle();
+        }
+
+    });
+}
+const unFavoriteThisCocktail = function () {
+    let cocktailId = $("#cocktail-id").val();
+    $.ajax({
+        url: '/cocktail/unfavoritecocktail',
+        type: "POST",
+        data: { cocktailId: cocktailId },
+        success: function () {
+            $("#unfavorite-button").toggle();
+            $("#favorite-button").toggle();
+        }
+
+    });
+}
+const buttonONOrOff = function () {
+    let cocktailId = $("#cocktail-id").val();
+    $.ajax({
+        url: '/account/checkforfavoritecocktail',
+        type: "GET",
+        data: { cocktailId: cocktailId },
+        success: function (result) {
+            if (result == "exist") {
+                $("#favorite-button").toggle();
+            }
+            else {
+                $("#unfavorite-button").toggle();
+            }
+        }
+    })
+
+
+}
 searchEventHandler();
+buttonONOrOff();

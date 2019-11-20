@@ -296,17 +296,73 @@ namespace ServiceLayer
         }
         public async Task RemoveBarFromFavoritesAsync(int barId,int userId)
         {
-            var user = await FindUserByIdAsync(userId);
-            var bar = user.FavoriteBars.Where(p => p.BarId == barId).FirstOrDefault();
-            user.FavoriteBars.Remove(bar);
+
+            var barUser = await dbContext.UserBar.Where(p => (p.BarId == barId && p.UserId == userId)).FirstOrDefaultAsync();
+            dbContext.UserBar.Remove(barUser);
             await dbContext.SaveChangesAsync();
         }
         public async Task RemoveCocktailFromFavoritesAsync(int cocktailId, int userId)
         {
-            var user = await FindUserByIdAsync(userId);
-            var cocktail = user.FavoriteCocktails.Where(p => p.CocktailId == cocktailId).FirstOrDefault();
-            user.FavoriteCocktails.Remove(cocktail);
+         
+            var cocktailUser = await dbContext.UserCocktail.Where(p =>( p.CocktailId == cocktailId &&p.UserId==userId)).FirstOrDefaultAsync();
+            dbContext.UserCocktail.Remove(cocktailUser);
             await dbContext.SaveChangesAsync();
+        }
+       public async Task FavoriteBarAsync(int userId, int barId)
+        {
+            var user = await FindUserByIdAsync(userId);
+            var bar = await dbContext.Bars.Where(p => p.Id == barId).FirstOrDefaultAsync();
+            var userBar = new UserBar()
+            {
+                UserId = userId,
+                BarId = barId,
+                User = user,
+                Bar = bar,
+                UserName = user.UserName,
+                BarName = bar.Name
+            };
+            dbContext.UserBar.Add(userBar);
+            await dbContext.SaveChangesAsync();
+        }
+       public async Task<string> CheckForFavoriteBarAsync(int userId, int barId)
+        {
+            var user = await FindUserByIdAsync(userId);
+            if (user.FavoriteBars.Any(p=>p.BarId==barId))
+            {
+                return "exist";
+            }
+            else
+            {
+               return "not exist";
+            }
+        }
+        public async Task FavoriteCocktailAsync(int userId, int cocktailId)
+        {
+            var user = await FindUserByIdAsync(userId);
+            var cocktail = await dbContext.Cocktails.Where(p => p.Id == cocktailId).FirstOrDefaultAsync();
+            var userCocktail = new UserCocktail()
+            {
+                UserId = userId,
+                CocktailId = cocktailId,
+                User = user,
+                Cocktail = cocktail,
+                UserUserName = user.UserName,
+                CocktailName = cocktail.Name
+            };
+            dbContext.UserCocktail.Add(userCocktail);
+            await dbContext.SaveChangesAsync();
+        }
+        public async Task<string> CheckForFavoriteCocktailAsync(int userId, int cocktailId)
+        {
+            var user = await FindUserByIdAsync(userId);
+            if (user.FavoriteCocktails.Any(p => p.CocktailId == cocktailId))
+            {
+                return "exist";
+            }
+            else
+            {
+                return "not exist";
+            }
         }
     }
 }
