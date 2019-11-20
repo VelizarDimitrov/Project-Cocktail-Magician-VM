@@ -53,7 +53,7 @@ namespace CocktailMagician.Areas.Magician.Controllers
             return View("Cocktails");
         }
 
-        public async Task<IActionResult> CocktailSearchResults(string keyword, string page, string rating, string pageSize)
+        public async Task<IActionResult> CocktailSearchResults(string keyword, string page, string pageSize)
         {
             Tuple<IList<Cocktail>, bool> cocktails;
             var model = new CocktailSearchViewModel()
@@ -69,6 +69,24 @@ namespace CocktailMagician.Areas.Magician.Controllers
             }
             model.LastPage = cocktails.Item2;
             return PartialView("_MagicianCocktailsView", model);
+        }
+        public async Task<IActionResult> CocktailManageResults(string keyword, string page, string pageSize, string barId)
+        {
+            Tuple<IList<Cocktail>, bool> cocktails;
+            var model = new CocktailSearchViewModel()
+            {
+                Keyword = keyword == null ? "" : keyword,
+                Page = int.Parse(page),
+                BarId = int.Parse(barId)
+            };
+            cocktails = await cocktailService.FindCocktailsForCatalogAsync(model.Keyword, model.Page, int.Parse(pageSize));
+
+            foreach (var cocktail in cocktails.Item1)
+            {
+                model.Cocktails.Add(new CocktailViewModel(cocktail));
+            }
+            model.LastPage = cocktails.Item2;
+            return PartialView("_BarCocktails", model);
         }
 
         [HttpPost]
@@ -87,7 +105,6 @@ namespace CocktailMagician.Areas.Magician.Controllers
             return RedirectToAction("Manage");
         }
 
-
-
+        
     }
 }

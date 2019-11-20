@@ -11,7 +11,8 @@ namespace CocktailMagician.Models
         public BarCocktailListViewModel(ICollection<BarCocktail> barCocktails)
         {
             this.BarCocktails = new List<BarCocktailViewModel>();
-            foreach (var barCocktail in barCocktails)
+            var reversed = barCocktails.Reverse();
+            foreach (var barCocktail in reversed)
             {
                 BarCocktails.Add(new BarCocktailViewModel(barCocktail));
             }

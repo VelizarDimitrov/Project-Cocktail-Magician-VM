@@ -19,5 +19,6 @@ namespace CocktailMagician.Models
         public bool LastPage { get; set; }
         public List<CocktailViewModel> Cocktails { get; set; }
         public int RowSize { get; set; }
+        public int BarId { get; set; }
     }
 }

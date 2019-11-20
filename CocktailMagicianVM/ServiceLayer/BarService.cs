@@ -18,12 +18,14 @@ namespace ServiceLayer
         private readonly CocktailDatabaseContext dbContext;
         private readonly ICountryService countryService;
         private readonly ICityService cityService;
+        private readonly ICocktailService cocktailService;
 
-        public BarService(CocktailDatabaseContext dbContext, ICountryService countryService, ICityService cityService)
+        public BarService(CocktailDatabaseContext dbContext, ICountryService countryService, ICityService cityService, ICocktailService cocktailService)
         {
             this.dbContext = dbContext;
             this.countryService = countryService;
             this.cityService = cityService;
+            this.cocktailService = cocktailService;
         }
 
         // Non-Async version of methods for Pre-Load
@@ -209,7 +211,7 @@ namespace ServiceLayer
                 .Include(p => p.City)
                 .Include(p => p.Country)
                 .Include(p => p.FavoritedBy)
-                .Where(p=>p.FavoritedBy.Any(x=>x.UserId==userId))
+                .Where(p => p.FavoritedBy.Any(x => x.UserId == userId))
                 .AsQueryable();
 
             bars = bars.Where(p =>
@@ -290,6 +292,30 @@ namespace ServiceLayer
         {
             var bar = await FindBarByIdAsync(id);
             bar.Hidden = 0;
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task AddCocktailBarAsync(int barId, int cocktailId)
+        {
+            var bar = await FindBarByIdAsync(barId);
+            var cocktail = await cocktailService.FindCocktailByIdAsync(cocktailId);
+
+            var barCocktail = new BarCocktail()
+            {
+                Bar = bar,
+                Cocktail = cocktail,
+                CocktailName = cocktail.Name,
+                BarName = bar.Name
+            };
+            await dbContext.BarCocktail.AddAsync(barCocktail);
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task RemoveCoctailBarAsync(int barId, int cocktailId)
+        {
+            var barCocktail = await dbContext.BarCocktail
+                .Where(p => p.BarId == barId && p.CocktailId == cocktailId).FirstOrDefaultAsync();
+            dbContext.BarCocktail.Remove(barCocktail);
             await dbContext.SaveChangesAsync();
         }
     }

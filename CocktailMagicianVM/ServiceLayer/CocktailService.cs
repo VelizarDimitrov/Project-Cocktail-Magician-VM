@@ -152,6 +152,7 @@ namespace ServiceLayer
 
             var cocktails = dbContext.Cocktails
                 .Include(p => p.Ingredients)
+                .Include(p => p.Bars)
                 .AsQueryable();
 
             cocktails = cocktails.Where(p => p.Name.ToLower().Contains(keyword.ToLower()) 
@@ -213,10 +214,10 @@ namespace ServiceLayer
                     cocktails = cocktails.Where(p => p.Name.ToLower().Contains(keyword.ToLower()));
                     break;
                 case "Bar":
-                    cocktails = cocktails.Where(p => p.Name.ToLower().Contains(keyword.ToLower()));
+                    cocktails = cocktails.Where(p => p.Bars.Any(x=>x.BarName.ToLower().Contains(keyword.ToLower())));
                     break;
                 case "Ingredient":
-                    cocktails = cocktails.Where(p => p.Name.ToLower().Contains(keyword.ToLower()));
+                    cocktails = cocktails.Where(p => p.Ingredients.Any(x=>x.IngredientName.ToLower().Contains(keyword.ToLower())));
                     break;
             }
 

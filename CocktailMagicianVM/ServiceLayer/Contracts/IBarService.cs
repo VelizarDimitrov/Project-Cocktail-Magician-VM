@@ -25,5 +25,7 @@ namespace ServiceLayer.Contracts
         Task<Bar> FindBarByNameAsync(string barName);
         Task HideBarAsync(int id);
         Task UnhideBarAsync(int id);
+        Task AddCocktailBarAsync(int barId, int cocktailId);
+        Task RemoveCoctailBarAsync(int barId, int cocktailId);
     }
 }

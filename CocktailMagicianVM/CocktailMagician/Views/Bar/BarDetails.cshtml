@@ -156,12 +156,14 @@
                                         @foreach (var cocktail in Model.Cocktails.BarCocktails.Take(6))
                                         {
                                             <li class="clearfix">
-                                                <a href="blog-single.html">
-                                                    <div class="img-center-cropped"
-                                                         style="background-image:url(@Url.Action("GetCocktailPhoto", "Cocktail" , new { id=cocktail.CocktailId })">
-                                                    </div>
-                                                    <div class="content">
-                                                        <h6>@cocktail.CocktailName</h6>
+                                                <a>
+                                                    <div class="row">
+                                                        <div class="img-center-cropped col-lg-5"
+                                                             style="background-image:url(@Url.Action("GetCocktailPhoto", "Cocktail" , new { id=cocktail.CocktailId })">
+                                                        </div>
+                                                        <div class="col-lg-4" style="max-width:100px;">
+                                                            <h6>@cocktail.CocktailName</h6>
+                                                        </div>
                                                     </div>
                                                 </a>
                                             </li>

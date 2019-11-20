@@ -1,41 +1,34 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model CocktailMagician.Models.BarSearchViewModel
+@model CocktailMagician.Models.CocktailSearchViewModel
 
-@if (!Model.Bars.Any())
+@if (!Model.Cocktails.Any())
 {
-    <p>No bars found</p>
+    <p>No cocktails found</p>
 }
 <form>
     <ul class="comment-item">
-        @foreach (var bar in Model.Bars)
+        @foreach (var cocktail in Model.Cocktails)
         {
-
             <li>
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-3">
-                            <h4>@bar.Name</h4>
+                            <h4>@cocktail.Name</h4>
                         </div>
-                        <div class="col-lg-5">
-                            <h6>@bar.City, @bar.Country - @bar.Address</h6>
+                        <div class="col-lg-6">
+                            <h6>@string.Join(", ", cocktail.Ingredients.CocktailIngredients.Select(p => p.IngredientName))</h6>
                         </div>
-                        <div class="col-lg-3">
-                            <button asp-area="Magician" asp-action="EditBar" asp-controller="Bar" value="@bar.Id" name="barId" class="btn btn-primary label label-danger">
-                                Edit
-                            </button>
-                            <button asp-area="Magician" asp-action="EditBarCocktails" asp-controller="Bar" value="@bar.Id" name="barId" class="btn btn-primary label label-danger">
-                                Cocktails
-                            </button>
-                            @if (bar.Hidden)
+                        <div class="col-lg-2">
+                            @if (!cocktail.Bars.BarCocktails.Any(p=>p.BarId==Model.BarId))
                             {
-                                <a value="@bar.Id" name="barId" onclick="unhideBar(@bar.Id)" class="btn btn-primary label label-danger">
-                                    Unhide
+                                <a value="@cocktail.Id" name="cocktailId" onclick="addCocktail(@cocktail.Id)" class="btn btn-primary label label-danger">
+                                    Add
                                 </a>
                             }
                             else
                             {
-                                <a value="@bar.Id" name="barId" onclick="hideBar(@bar.Id)" class="btn btn-primary label label-danger">
-                                    Hide
+                                <a value="@cocktail.Id" name="cocktailId" onclick="removeCocktail(@cocktail.Id)" class="btn btn-primary label label-danger">
+                                    Remove
                                 </a>
                             }
                         </div>
@@ -49,7 +42,7 @@
     <input id="current-page" asp-for="Page" value="@Model.Page" />
     <input id="current-keyword" asp-for="Keyword" value="@Model.Keyword" />
 </div>
-@if (Model.Bars.Count != 0)
+@if (Model.Cocktails.Count != 0)
 {
     <div class="pager-wrapper">
 
@@ -75,21 +68,23 @@
 }
 
 <script>
-    function unhideBar(barId) {
+    function addCocktail(cocktailId) {
+        var barId = $('#bar-id').val();
         $.ajax({
-            url: '/magician/bar/unhidebar',
+            url: '/magician/bar/addcocktail',
             type: "POST",
-            data: { barId: barId },
+            data: { cocktailId: cocktailId, barId: barId },
             success: function () {
                 changePage(0);
             }
         });
-    }
-    function hideBar(barId) {
+        }
+    function removeCocktail(cocktailId) {
+        var barId = $('#bar-id').val();
         $.ajax({
-            url: '/magician/bar/hidebar',
+            url: '/magician/bar/removecocktail',
             type: "POST",
-            data: { barId: barId },
+            data: { cocktailId: cocktailId, barId: barId },
             success: function () {
                 changePage(0);
             }

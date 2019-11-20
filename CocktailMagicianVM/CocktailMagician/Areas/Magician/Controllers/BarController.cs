@@ -21,13 +21,15 @@ namespace CocktailMagician.Areas.Magician.Controllers
         private readonly ICityService cityService;
         private readonly IBarService barService;
         private readonly IAccountService aService;
+        private readonly ICocktailService cService;
 
-        public BarController(ICountryService countryService, ICityService cityService, IBarService barService, IAccountService aService)
+        public BarController(ICountryService countryService, ICityService cityService, IBarService barService, IAccountService aService, ICocktailService cService)
         {
             this.countryService = countryService;
             this.cityService = cityService;
             this.barService = barService;
             this.aService = aService;
+            this.cService = cService;
         }
 
         public IActionResult AddBar()
@@ -93,6 +95,30 @@ namespace CocktailMagician.Areas.Magician.Controllers
             var id = int.Parse(barId);
             await barService.UnhideBarAsync(id);
             return RedirectToAction("Manage");
+        }
+
+        public IActionResult EditBarCocktails(string barId)
+        {
+            var vm = new ManageBarCocktailsViewModel(int.Parse(barId));
+            return View("BarCocktails",vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddCocktail(string cocktailId, string barId)
+        {
+            var bId = int.Parse(barId);
+            var cId = int.Parse(cocktailId);
+            await barService.AddCocktailBarAsync(bId, cId);
+            return Ok();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveCocktail(string cocktailId, string barId)
+        {
+            var bId = int.Parse(barId);
+            var cId = int.Parse(cocktailId);
+            await barService.RemoveCoctailBarAsync(bId, cId);
+            return Ok();
         }
     }
 }

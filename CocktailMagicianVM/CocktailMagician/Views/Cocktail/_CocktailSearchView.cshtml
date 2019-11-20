@@ -16,7 +16,7 @@
                         <form method="post">
                             <button asp-action="CocktailDetails" asp-controller="Cocktail" value="@cocktail.Id" name="cocktailId">
 
-                                <div class="center-cropped"
+                                <div class="cocktail-center-cropped"
                                      style="background-image:url(@Url.Action("GetCocktailPhoto", "Cocktail", new { id=cocktail.Id }));">
                                 </div>
 
@@ -87,7 +87,7 @@
 </div>
 
 <style>
-    .center-cropped {
+    .cocktail-center-cropped {
         width: 100%;
         height: 140px;
         background-position: center center;
