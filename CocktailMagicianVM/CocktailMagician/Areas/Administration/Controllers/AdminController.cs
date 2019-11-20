@@ -26,22 +26,48 @@ namespace CocktailMagician.Areas.Administration.Controllers
         {
             return View("Users");
         }
+        public async Task<IActionResult> UserSearchResults(string keyword, string page, string pageSize)
+        {
+            var userId = int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+            Tuple<IList<User>, bool> users;
+            var model = new UserSearchViewModel()
+            {
+                Keyword = keyword == null ? "" : keyword,
+                Page = int.Parse(page)
+            };
+            users = await aService.FindUsersForAdminAsync(model.Keyword, model.Page, int.Parse(pageSize));
+           var admin = users.Item1.Where(p => p.Id == userId).FirstOrDefault();
+            users.Item1.Remove(admin);
+            foreach (var user in users.Item1)
+            {
+                model.Users.Add(new UserViewModel(user));
+            }
+            model.LastPage = users.Item2;
+            return PartialView("_AdminUsersResultView", model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> UnFreezeUser(string userId)
+        {
+            await aService.UnFreezeUserAsync(int.Parse(userId));
+            return Ok();
+        }
+        [HttpPost]
+        public async Task<IActionResult> FreezeUser(string userId)
+        {
+            await aService.FreezeUserAsync(int.Parse(userId));
+            return Ok();
+        }
+        [HttpPost]
+        public async Task<IActionResult> PromoteUser(string userId)
+        {
+            await aService.PromoteUserAsync(int.Parse(userId));
+            return Ok();
+        }
+        [HttpPost]
+        public async Task<IActionResult> DemoteUser(string userId)
+        {
+            await aService.DemoteUserAsync(int.Parse(userId));
+            return Ok();
+        }
     }
-    //public async Task<IActionResult> UserSearchResults(string keyword, string page, string pageSize)
-    //{
-    //    Tuple<IList<User>, bool> users;
-    //    var model = new UserSearchViewModel()
-    //    {
-    //        Keyword = keyword == null ? "" : keyword,
-    //        Page = int.Parse(page)
-    //    };
-    //    users = await aService.FindUsersForAdminAsync(model.Keyword, model.Page, int.Parse(pageSize));
-
-    //    foreach (var user in users.Item1)
-    //    {
-    //        model.Users.Add(new UserViewModel(user));
-    //    }
-    //    model.LastPage = users.Item2;
-    //    return PartialView("_AdminUsersResultView", model);
-    //}
 }

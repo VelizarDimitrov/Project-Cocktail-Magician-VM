@@ -32,7 +32,7 @@
                                     Freeze
                                 </a>
                             }
-                            @if (user.AccountStatus == "Bar Crawler")
+                            @if (user.AccountType == "Bar Crawler")
                             {
                                 <a value="@user.Id" name="userId" onclick="promoteUser(@user.Id)" class="btn btn-primary label label-danger">
                                     Promote
@@ -83,7 +83,7 @@
 <script>
     function unFreezeUser(userId) {
         $.ajax({
-            url: '/magician/bar/unhidebar',
+            url: '/administration/admin/unfreezeuser',
             type: "POST",
             data: { userId: userId },
             success: function () {
@@ -93,7 +93,7 @@
     }
     function freezeUser(userId) {
         $.ajax({
-            url: '/magician/bar/hidebar',
+            url: '/administration/admin/freezeuser',
             type: "POST",
             data: { userId: userId },
             success: function () {
@@ -103,7 +103,7 @@
     }
         function promoteUser(userId) {
         $.ajax({
-            url: '/magician/bar/unhidebar',
+            url: '/administration/admin/promoteuser',
             type: "POST",
             data: { userId: userId },
             success: function () {
@@ -113,7 +113,7 @@
     }
     function demoteUser(userId) {
         $.ajax({
-            url: '/magician/bar/hidebar',
+            url: '/administration/admin/demoteuser',
             type: "POST",
             data: { userId: userId },
             success: function () {
