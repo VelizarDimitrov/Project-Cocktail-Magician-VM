@@ -111,30 +111,30 @@ function ingredientsautocomplete(inp) {
 }
 
 
-var primaryCount = 1;
-var ingredientCount = 1;
+var pIngCount = 1;
+var sIngCount = 1;
 function addPrimaryIngredientField() {
-    primaryCount++;
+    pIngCount++;
     console.log($("main-ingredients"));
-    $("#main-ingredients").append(`<input class="form-control" placeholder="Primary ingredient" type="text" id="primary-${primaryCount}">`);
-    ingredientsautocomplete(document.getElementById(`primary-${primaryCount}`));
+    $("#main-ingredients").append(`<input class="form-control" placeholder="Primary ingredient" type="text" id="primary-${pIngCount}">`);
+    ingredientsautocomplete(document.getElementById(`primary-${pIngCount}`));
 }
 function addIngredientField() {
-    ingredientCount++;
-    $("#ingredients").append(`<input class="form-control" placeholder="Ingredient" type="text" id="ingredient-${ingredientCount}">`);
-    ingredientsautocomplete(document.getElementById(`ingredient-${ingredientCount}`));
+    sIngCount++;
+    $("#ingredients").append(`<input class="form-control" placeholder="Ingredient" type="text" id="ingredient-${sIngCount}">`);
+    ingredientsautocomplete(document.getElementById(`ingredient-${sIngCount}`));
 }
 function removePrimaryIngredientField() {
-    if (primaryCount>1) {
-    $(`#primary-${primaryCount}`).remove();
-    primaryCount--;       
+    if (pIngCount>1) {
+    $(`#primary-${pIngCount}`).remove();
+    pIngCount--;       
     }
 }
 
 function removeIngredientField() {
-    if (ingredientCount > 1) {
-        $(`#ingredient-${ingredientCount}`).remove();
-        ingredientCount--;
+    if (sIngCount > 1) {
+        $(`#ingredient-${sIngCount}`).remove();
+        sIngCount--;
     }
 }
 function addCocktail() {
@@ -143,11 +143,11 @@ function addCocktail() {
     formData.append('image', image);
     let name = $("#cocktail-name").val();
     let primaryIngredients = [];
-    for (var i = 1; i <= primaryCount; i++) {
+    for (var i = 1; i <= pIngCount; i++) {
         primaryIngredients[i-1] = $(`#primary-${i}`).val();
     }
     let ingredients = new Array;
-    for (var i = 1; i <= ingredientCount; i++) {
+    for (var i = 1; i <= sIngCount; i++) {
         ingredients[i-1] = $(`#ingredient-${i}`).val();
     }
     let description = $("#cocktail-description").val();

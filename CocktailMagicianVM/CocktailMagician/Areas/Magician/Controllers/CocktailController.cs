@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using CocktailMagician.Areas.Magician.Models;
 using CocktailMagician.Models;
 using Data.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -105,6 +106,31 @@ namespace CocktailMagician.Areas.Magician.Controllers
             return RedirectToAction("Manage");
         }
 
-        
+        [HttpGet]
+        public async Task<IActionResult> EditCocktail(string cocktailId)
+        {
+            var id = int.Parse(cocktailId);
+            var cocktail = await cocktailService.FindCocktailByIdAsync(id);
+            var ingredients = await iService.GetIngredientsByCocktail(id);
+            var vm = new EditCocktailViewModel(cocktail, ingredients);
+            return View("EditCocktail", vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditCocktail(string name, string primaryIngredients, string ingredients, string description)
+        {
+            byte[] cocktailPhoto;
+            var file = Request.Form.Files[0];
+            using (var stream = new MemoryStream())
+            {
+                await file.CopyToAsync(stream);
+                cocktailPhoto = stream.ToArray();
+            }
+            var primaryIngredientsArr = primaryIngredients.Split(',');
+            var ingredientsArr = ingredients.Split(',');
+            await cocktailService.UpdateCocktailAsync(name, description, primaryIngredientsArr, ingredientsArr, cocktailPhoto);
+            return Ok();
+        }
+
     }
 }
