@@ -192,5 +192,29 @@ namespace CocktailMagician.Controllers
             model.LastPage = cocktails.Item2;
             return PartialView("_FavoriteCocktailsResultView", model);
         }
+        public async Task<IActionResult> FavoriteBar(string barId)
+        {
+            var userId = int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+            await aService.FavoriteBarAsync(userId,int.Parse(barId));
+            return Ok();
+        }
+        public async Task<IActionResult> FavoriteCocktail(string cocktailId)
+        {
+            var userId = int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+            await aService.FavoriteCocktailAsync(userId, int.Parse(cocktailId));
+            return Ok();
+        }
+        public async Task<IActionResult> CheckForFavoriteBar(string barId)
+        {
+            var userId = int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+          var result = await aService.CheckForFavoriteBarAsync(userId, int.Parse(barId));
+            return Json(result);
+        }
+        public async Task<IActionResult> CheckForFavoriteCocktail(string cocktailId)
+        {
+            var userId = int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+            var result = await aService.CheckForFavoriteCocktailAsync(userId, int.Parse(cocktailId));
+            return Json(result);
+        }
     }
 }

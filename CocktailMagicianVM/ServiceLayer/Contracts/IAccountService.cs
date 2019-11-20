@@ -26,5 +26,9 @@ namespace ServiceLayer.Contracts
         Task UpdatePasswordAsync(int userId, string password);
         Task RemoveBarFromFavoritesAsync(int barId, int userId);
         Task RemoveCocktailFromFavoritesAsync(int cocktailId, int userId);
+        Task FavoriteBarAsync(int userId, int barId);
+        Task FavoriteCocktailAsync(int userId, int cocktailId);
+        Task<string> CheckForFavoriteBarAsync(int userId, int barId);
+        Task<string> CheckForFavoriteCocktailAsync(int userId, int cocktailId);
     }
 }

@@ -55,4 +55,49 @@ function changePage(number) {
     let rowSize = 3;
     $('#search-results').load('/cocktail/cocktailsearchresults', { keyword: keyword, criteria: criteria, page: page, rowSize: rowSize, rating: rating });
 }
+const favoriteThisBar = function () {
+    let barId = $("#bar-id").val();
+    $.ajax({
+        url: '/account/favoritebar',
+        type: "POST",
+        data: { barId: barId },
+        success: function () {
+            $("#favorite-button").toggle();
+            $("#unfavorite-button").toggle();
+        }
+        
+    });
+}
+const unFavoriteThisBar = function () {
+    let barId = $("#bar-id").val();
+    $.ajax({
+        url: '/bar/unfavoritebar',
+        type: "POST",
+        data: { barId: barId },
+        success: function () {
+            $("#unfavorite-button").toggle();
+            $("#favorite-button").toggle();
+        }
+
+    });
+}
+const buttonONOrOff = function () {
+    let barId = $("#bar-id").val();
+    $.ajax({
+        url: '/account/checkforfavoritebar',
+        type: "GET",
+        data: { barId: barId },
+        success: function (result) {
+            if (result=="exist") {
+                $("#favorite-button").toggle();
+            }
+            else {
+                $("#unfavorite-button").toggle();
+            }
+        }
+    })
+
+
+}
 searchEventHandler();
+buttonONOrOff();

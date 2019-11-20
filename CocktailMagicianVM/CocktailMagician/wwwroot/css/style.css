@@ -1213,6 +1213,25 @@ ul.quick-search-keyword li:last-child a:after {
 /**
  * Team
  */
+.btn-favorite {
+    font-size: medium;
+    background-size: auto;
+    background: white;
+    border-color: orangered;
+    color: orangered;
+    padding-top: 6px;
+    padding-right: 11px;
+    padding-bottom: 7px;
+    padding-left: 11px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+    .btn-favorite:hover, .btn-favorite:active, .btn-favorite:focus, .button-activated {
+        background: orangered;
+        border-color: white;
+        color: white;
+    }
 
 .team-item {
     text-align: center;

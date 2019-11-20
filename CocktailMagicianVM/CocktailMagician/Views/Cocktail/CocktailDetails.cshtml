@@ -31,41 +31,61 @@
                         <div class="blog-wrapper">
 
                             <div class="blog-item blog-single">
+                                <div class="row">
+                                    <div class="col-md-5" style="width:auto">
 
-                                <h2>@Model.Name</h2>
-                                @if (User.Identity.IsAuthenticated)
-                                {
-                                    <ul class="list-unstyled list-inline rating-star pull-left">
-                                        <li>
-                                            <span style="color:#CCCCCC;" id="star-1" onmouseover="hoverStarOn(1)" onmouseout="hoverStarOff()" onclick="starClick(1,@Model.Id)">
-                                                <i class="fa fa-star"></i>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span style="color:#CCCCCC;" id="star-2" onmouseover="hoverStarOn(2)" onmouseout="hoverStarOff()" onclick="starClick(2,@Model.Id)">
+                                        <h2>@Model.Name</h2>
+                                    </div>
 
-                                                <i class="fa fa-star"></i>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span style="color:#CCCCCC;" id="star-3" onmouseover="hoverStarOn(3)" onmouseout="hoverStarOff()" onclick="starClick(3,@Model.Id)">
-                                                <i class="fa fa-star"></i>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span style="color:#CCCCCC;" id="star-4" onmouseover="hoverStarOn(4)" onmouseout="hoverStarOff()" onclick="starClick(4,@Model.Id)">
-                                                <i class="fa fa-star"></i>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span style="color:#CCCCCC;" id="star-5" onmouseover="hoverStarOn(5)" onmouseout="hoverStarOff()" onclick="starClick(5,@Model.Id)">
-                                                <i class="fa fa-star"></i>
-                                            </span>
-                                        </li>
-                                    </ul>
-                                }
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3" style="width:auto">
 
-                                <h4>Rating: @Model.AverageRating/5</h4>
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <ul class="list-unstyled list-inline rating-star pull-left">
+                                                <li>
+                                                    <span style="color:#CCCCCC;" id="star-1" onmouseover="hoverStarOn(1)" onmouseout="hoverStarOff()" onclick="starClick(1,@Model.Id)">
+                                                        <i class="fa fa-star"></i>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span style="color:#CCCCCC;" id="star-2" onmouseover="hoverStarOn(2)" onmouseout="hoverStarOff()" onclick="starClick(2,@Model.Id)">
+
+                                                        <i class="fa fa-star"></i>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span style="color:#CCCCCC;" id="star-3" onmouseover="hoverStarOn(3)" onmouseout="hoverStarOff()" onclick="starClick(3,@Model.Id)">
+                                                        <i class="fa fa-star"></i>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span style="color:#CCCCCC;" id="star-4" onmouseover="hoverStarOn(4)" onmouseout="hoverStarOff()" onclick="starClick(4,@Model.Id)">
+                                                        <i class="fa fa-star"></i>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span style="color:#CCCCCC;" id="star-5" onmouseover="hoverStarOn(5)" onmouseout="hoverStarOff()" onclick="starClick(5,@Model.Id)">
+                                                        <i class="fa fa-star"></i>
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        }
+                                    </div>
+                                    <div class="col-md-2" style="width:auto">
+
+                                        <h4>Rating: @Model.AverageRating/5</h4>
+                                    </div>
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <div class=" col-md-4">
+                                            <a class="btn-favorite" onclick="favoriteThisCocktail()" id="favorite-button">Favorite</a>
+                                            <a class="btn-favorite button-activated" onclick="unFavoriteThisCocktail()" id="unfavorite-button">Unfavorite</a>
+                                        </div>
+
+                                    }
+                                </div>
                                 <div class="blog-media">
                                     <div class="center-cropped"
                                          style="background-image:url(@Url.Action("GetCocktailPhoto", "Cocktail" , new { id=Model.Id }));">
@@ -128,7 +148,7 @@
 
                                                 </div>
                                                 <div hidden="hidden">
-                                                    <input asp-for="@Model.Id" value="@Model.Id" />
+                                                    <input asp-for="@Model.Id" value="@Model.Id" id="cocktail-id" />
                                                 </div>
                                             </div>
                                         </div>
@@ -219,6 +239,7 @@
         background-repeat: no-repeat;
         background-size: cover;
     }
+
     .center-cropped {
         width: 100%;
         height: 360px;

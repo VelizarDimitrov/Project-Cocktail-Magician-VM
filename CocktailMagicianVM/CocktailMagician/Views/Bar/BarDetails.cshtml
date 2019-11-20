@@ -31,17 +31,15 @@
 
                             <div class="blog-item blog-single">
                                 <div class="row">
-                                    <div class="col-md-5">
+                                    <div class="col-md-5" style="width:auto">
 
                                         <h2>@Model.Name</h2>
                                     </div>
-                                    <div class=" col-md-4">
-                                        <div class="feature no-margin-bottom">
-                                            <i class="icon icon-Star"></i>
-                                        </div>
-                                    </div>
 
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-3" style="width:auto">
+
                                 @if (User.Identity.IsAuthenticated)
                                 {
                                 <ul class="list-unstyled list-inline rating-star pull-left">
@@ -73,7 +71,20 @@
                                     </li>
                                 </ul>
                                 }
+                                    </div>
+                                    <div class="col-md-2" style="width:auto">
+
                                 <h4>Rating: @Model.AverageRating/5</h4>
+                                    </div>
+                                    @if(User.Identity.IsAuthenticated)
+                                    {
+                                <div class=" col-md-4">
+                                    <a class="btn-favorite" onclick="favoriteThisBar()" id="favorite-button">Favorite</a>
+                                    <a class="btn-favorite button-activated" onclick="unFavoriteThisBar()" id="unfavorite-button">Unfavorite</a>
+                                </div>
+
+                                    }
+                                </div>
                                 <div class="blog-media">
                                     <div class="center-cropped"
                                          style="background-image:url(@Url.Action("GetBarPhoto", "Bar" , new { id=Model.Id }));">
@@ -129,7 +140,7 @@
 
                                             </div>
                                             <div hidden="hidden">
-                                                <input asp-for="@Model.Id" value="@Model.Id" />
+                                                <input asp-for="@Model.Id" value="@Model.Id" id="bar-id" />
                                             </div>
                                         </div>
                                     </div>
@@ -233,4 +244,5 @@
         background-repeat: no-repeat;
         background-size: cover;
     }
+        
 </style>

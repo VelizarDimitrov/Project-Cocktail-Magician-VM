@@ -22,8 +22,8 @@
                             Unfavorite
                         </button>
 
-                        <form>
-                            <button asp-area="Cocktail" asp-action="CocktailDetails" asp-controller="Bar" value="@cocktail.Id" name="cocktailId" class="btn btn-primary label label-danger">
+                        <form method="post">
+                            <button asp-action="CocktailDetails" asp-controller="Cocktail" value="@cocktail.Id" name="cocktailId" class="btn btn-primary label label-danger">
                                 Details
                             </button>
                         </form>

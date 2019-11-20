@@ -1,0 +1,76 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<div class="breadcrumb-wrapper">
+
+    <div class="container">
+
+        <ol class="breadcrumb-list booking-step">
+            <li><a asp-action="Index" asp-controller="Home">Home</a></li>
+            <li><span>Manage Users</span></li>
+        </ol>
+
+    </div>
+
+</div>
+<div class="main-wrapper">
+
+    <div class="second-search-restaurant-wrapper">
+
+        <div class="container">
+
+            <div class="second-search-result-inner">
+                <span class="labeling">Bar Search</span>
+                <div class="row">
+
+                    <div class="col-xss-12 col-xs-6 col-sm-6 col-md-7">
+                        <div class="form-group form-lg">
+                            <input id="keyword" class="form-control" oninput="searchEventHandler()" placeholder="Enter a Keyword" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <div class="section sm">
+
+        <div class="container">
+
+            <div id="search-results" style="min-height:600px">
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+
+@section Scripts {
+    @*
+        <script src="~/js/BarSearch.js"></script>*@
+    <script>
+        const transparency = function () {
+            $('body').attr('class', 'not-transparent-header');
+        }
+        window.onload = transparency;
+
+        function changePage(number) {
+            let keyword = $('#current-keyword').val();
+            let page = parseInt($('#current-page').val()) + number;
+            let pageSize = 15;
+            $('#search-results').load('/administration/admin/usersearchresults', { keyword: keyword, page: page, pageSize: pageSize });
+        }
+        function searchEventHandler() {
+            let keyword = $('#keyword').val();
+            let page = 1;
+            let pageSize = 15;
+            $('#search-results').load('/administration/admin/usersearchresults', { keyword: keyword, page: page, pageSize: pageSize });
+        }
+        searchEventHandler();
+    </script>
+}

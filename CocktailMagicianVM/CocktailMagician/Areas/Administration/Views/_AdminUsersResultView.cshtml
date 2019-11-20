@@ -1,0 +1,124 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model CocktailMagician.Areas.Administration.Models.UserSearchViewModel
+
+@if (!Model.Users.Any())
+{
+    <p>No users found</p>
+}
+<form>
+    <ul class="comment-item">
+        @foreach (var user in Model.Users)
+        {
+
+            <li>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <h4>@user.UserName</h4>
+                        </div>
+                        <div class="col-lg-5">
+                            <h6>@user.City, @user.Country - @user.LastLogIn</h6>
+                        </div>
+                        <div class="col-lg-3">
+                            @if (user.AccountStatus == "Frozen")
+                            {
+                                <a value="@user.Id" name="userId" onclick="unFreezeUser(@user.Id)" class="btn btn-primary label label-danger">
+                                    Unfreeze
+                                </a>
+                            }
+                            else
+                            {
+                                <a value="@user.Id" name="userId" onclick="freezeUser(@user.Id)" class="btn btn-primary label label-danger">
+                                    Freeze
+                                </a>
+                            }
+                            @if (user.AccountStatus == "Bar Crawler")
+                            {
+                                <a value="@user.Id" name="userId" onclick="promoteUser(@user.Id)" class="btn btn-primary label label-danger">
+                                    Promote
+                                </a>
+                            }
+                            else
+                            {
+                                <a value="@user.Id" name="userId" onclick="demoteUser(@user.Id)" class="btn btn-primary label label-danger">
+                                    Demote
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</form>
+<div hidden="hidden">
+    <input id="current-page" asp-for="Page" value="@Model.Page" />
+    <input id="current-keyword" asp-for="Keyword" value="@Model.Keyword" />
+</div>
+@if (Model.Users.Count != 0)
+{
+    <div class="pager-wrapper">
+
+        <ul class="pager-list">
+            @if (Model.Page != 1)
+            {
+                <li class="paging-nav"><a onclick="changePage(-1)"><i class="fa fa-angle-left"></i></a></li>
+            }
+            <li class="number">
+                <span class="mr-5"><span class="font600">page</span></span>
+            </li>
+            <li class="number">
+                <span class="font600">@Model.Page</span>
+            </li>
+            @if (!Model.LastPage)
+            {
+                <li class="paging-nav"><a onclick="changePage(1)"><i class="fa fa-angle-right"></i></a></li>
+            }
+
+        </ul>
+
+    </div>
+}
+
+<script>
+    function unFreezeUser(userId) {
+        $.ajax({
+            url: '/magician/bar/unhidebar',
+            type: "POST",
+            data: { userId: userId },
+            success: function () {
+                changePage(0);
+            }
+        });
+    }
+    function freezeUser(userId) {
+        $.ajax({
+            url: '/magician/bar/hidebar',
+            type: "POST",
+            data: { userId: userId },
+            success: function () {
+                changePage(0);
+            }
+        });
+    }
+        function promoteUser(userId) {
+        $.ajax({
+            url: '/magician/bar/unhidebar',
+            type: "POST",
+            data: { userId: userId },
+            success: function () {
+                changePage(0);
+            }
+        });
+    }
+    function demoteUser(userId) {
+        $.ajax({
+            url: '/magician/bar/hidebar',
+            type: "POST",
+            data: { userId: userId },
+            success: function () {
+                changePage(0);
+            }
+        });
+    }
+</script>

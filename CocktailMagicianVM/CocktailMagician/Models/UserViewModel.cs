@@ -59,5 +59,6 @@ namespace CocktailMagician.Models
         public int Page { get; set; }
         public bool LastPage { get; set; }
         public string Initial { get; set; }
+     
     }
 }
