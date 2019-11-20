@@ -27,6 +27,5 @@ namespace Data.Contracts
         ICollection<UserBar> FavoriteBars { get; set; }
         ICollection<UserCocktail> FavoriteCocktails { get; set; }
         ICollection<Notification> Notifications { get; set; }
-        byte Frozen { get; set; }
     }
 }

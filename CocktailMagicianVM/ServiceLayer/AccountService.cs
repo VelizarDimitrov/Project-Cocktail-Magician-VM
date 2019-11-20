@@ -49,7 +49,7 @@ namespace ServiceLayer
                 AccountStatus = "Active",
                 Country = countryName,
                 City = cityName,
-                Frozen = 0
+               
             };
             await dbContext.Users.AddAsync(user);
             var userPhoto = new UserPhoto()
@@ -97,7 +97,7 @@ namespace ServiceLayer
                 AccountStatus = "Active",
                 Country = countryName,
                 City = cityName,
-                Frozen = 0
+                
             };
             dbContext.Users.Add(user);
             var userPhoto = new UserPhoto()
@@ -362,6 +362,65 @@ namespace ServiceLayer
             else
             {
                 return "not exist";
+            }
+        }
+       public async Task<Tuple<IList<User>, bool>> FindUsersForAdminAsync(string keyword, int page, int pageSize)
+        {
+            bool lastPage = true;
+
+            var users = dbContext.Users
+            
+                .AsQueryable();
+
+            users = users.Where(p =>
+            p.UserName.ToLower().Contains(keyword.ToLower())
+            || p.Country.ToLower().Contains(keyword.ToLower())
+            || p.City.ToLower().Contains(keyword.ToLower()));
+
+            users = users.Skip((page - 1) * pageSize);
+            var foundUsers = await users.ToListAsync();
+
+            if (foundUsers.Count > pageSize)
+            {
+                lastPage = false;
+            }
+            foundUsers = foundUsers.Take(pageSize).ToList();
+            return new Tuple<IList<User>, bool>(foundUsers, lastPage);
+        }
+       public async Task UnFreezeUserAsync(int userId)
+        {
+            var user = await dbContext.Users.Where(p => p.Id == userId).FirstOrDefaultAsync();
+            if (user.AccountStatus=="Frozen")
+            {
+                user.AccountStatus = "Active";
+                await dbContext.SaveChangesAsync();
+            }
+        }
+        public async Task FreezeUserAsync(int userId)
+        {
+            var user = await dbContext.Users.Where(p => p.Id == userId).FirstOrDefaultAsync();
+            if (user.AccountStatus == "Active")
+            {
+                user.AccountStatus = "Frozen";
+                await dbContext.SaveChangesAsync();
+            }
+        }
+       public async Task PromoteUserAsync(int userId)
+        {
+            var user = await dbContext.Users.Where(p => p.Id == userId).FirstOrDefaultAsync();
+            if (user.AccountType == "Bar Crawler")
+            {
+                user.AccountType = "Cocktail Magician";
+                await dbContext.SaveChangesAsync();
+            }
+        }
+        public async Task DemoteUserAsync(int userId)
+        {
+            var user = await dbContext.Users.Where(p => p.Id == userId).FirstOrDefaultAsync();
+            if (user.AccountType == "Cocktail Magician")
+            {
+                user.AccountType = "Bar Crawler";
+                await dbContext.SaveChangesAsync();
             }
         }
     }

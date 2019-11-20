@@ -41,7 +41,6 @@ namespace Data.Models
         public ICollection<UserCocktail> FavoriteCocktails { get; set; }
         public ICollection<Notification> Notifications { get; set; }
         public DateTime? LastLogIn { get; set; }
-        public byte Frozen { get; set; }
 
     }
 }

@@ -31,7 +31,7 @@
     "FirstName": "Sarah",
     "LastName": "Connor",
     "Password": "123321",
-    "AccountType": "Bar Crawler",
+    "AccountType": "Admin",
     "Country": "Russia",
     "City": "Moscow"
   },
