@@ -185,12 +185,15 @@
                                         @foreach (var bar in Model.Bars.BarCocktails)
                                         {
                                             <li class="clearfix">
-                                                <a href="blog-single.html">
-                                                    <div class="img-center-cropped"
-                                                         style="background-image:url(@Url.Action("GetBarPhoto", "Bar" , new { id=bar.BarId })">
-                                                    </div>
-                                                    <div class="content">
-                                                        <h6>@bar.BarName</h6>
+                                                <a>
+                                                    <div class="row">
+                                                        <div class="col-lg-1"></div>
+                                                        <div class="img-center-cropped col-lg-5"
+                                                             style="background-image:url(@Url.Action("GetBarPhoto", "Bar", new { id = bar.BarId })">
+                                                        </div>
+                                                        <div class="col-lg-4" style="max-width:100px;">
+                                                            <h6>@bar.BarName</h6>
+                                                        </div>
                                                     </div>
                                                 </a>
                                             </li>

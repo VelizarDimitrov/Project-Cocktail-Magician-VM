@@ -1,5 +1,4 @@
 ﻿var array;
-getIngredients();
 
 function getIngredients() {
     $.ajax({
@@ -7,8 +6,12 @@ function getIngredients() {
         type: "GET",
         success: function (result) {
             array = result;
-            ingredientsautocomplete(document.getElementById("primary-1"));
-            ingredientsautocomplete(document.getElementById("ingredient-1"));
+            for (var i = 1; i <= pIngCount; i++) {
+            ingredientsautocomplete(document.getElementById("primary-"+i));
+            }
+            for (var i = 1; i <= sIngCount; i++) {
+            ingredientsautocomplete(document.getElementById("ingredient-"+i));
+            }
         }
     });
 }
@@ -113,6 +116,7 @@ function ingredientsautocomplete(inp) {
 
 var pIngCount = $('#primary-count').val();
 var sIngCount = $('#secondary-count').val();
+getIngredients();
 function addPrimaryIngredientField() {
     pIngCount++;
     console.log($("main-ingredients"));
@@ -142,6 +146,7 @@ function EditCocktail() {
     var formData = new FormData();
     var image = document.getElementById('rand').files[0];
     formData.append('image', image);
+    var cocktailId = $('#cocktail-id').val();
     let name = $("#cocktail-name").val();
     let primaryIngredients = [];
     for (var i = 1; i <= pIngCount; i++) {
@@ -153,6 +158,7 @@ function EditCocktail() {
     }
     let description = $("#cocktail-description").val();
 
+    formData.append("cocktailId", cocktailId);
     formData.append("name", name);
     formData.append("primaryIngredients", primaryIngredients);
     formData.append("ingredients", ingredients);
@@ -160,13 +166,14 @@ function EditCocktail() {
 
     console.log(formData);
     $.ajax({
-        url: '/magician/cocktail/createcocktail',
+        url: '/magician/cocktail/editcocktail',
         type: "POST",
         data: formData,
         processData: false,
         contentType: false,
         success: function (result) {
             var url = $("#RedirectTo").val();
+            console.log(url);
             window.location.href = url;
         }
     });

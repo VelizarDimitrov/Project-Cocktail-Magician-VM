@@ -63,5 +63,11 @@ namespace ServiceLayer
 
         public async Task<IList<Ingredient>> GetIngredientsByCocktail(int CocktailId) =>
             await dbContext.Ingredients.Include(p => p.Cocktails).Where(p => p.Cocktails.Any(x => x.CocktailId == CocktailId)).ToListAsync();
+
+        public async Task<bool> CheckIfIngredientExistsAsync(string name, byte primary) =>
+            await dbContext.Ingredients.Where(p => (p.Name.ToLower() == name.ToLower() && p.Primary == primary)).AnyAsync();
+
+        public async Task<IList<CocktailIngredient>> GetCocktailIngredientsByCocktail(int CocktailId) =>
+            await dbContext.CocktailIngredient.Where(x => x.CocktailId == CocktailId).ToListAsync();
     }
 }

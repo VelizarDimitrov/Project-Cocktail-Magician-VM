@@ -117,15 +117,13 @@ namespace ServiceLayer
 
             foreach (var item in primaryIngredients)
             {
-                // CheckIfIngredientExistsAsync at inggredienntServices
-                if (!await dbContext.Ingredients.Where(p => (p.Name.ToLower() == item.ToLower() && p.Primary == 1)).AnyAsync())
+                if (!await iService.CheckIfIngredientExistsAsync(item, 1))
                     await iService.CreateIngredientAsync(item, 1);
                 await AddIngredientToCocktailAsync(cocktail.Name, item.ToLower(), 1);
             }
             foreach (var item in ingredients)
             {
-                // CheckIfIngredientExistsAsync at inggredienntServices
-                if (!await dbContext.Ingredients.Where(p => (p.Name.ToLower() == item.ToLower() && p.Primary == 0)).AnyAsync())
+                if (!await iService.CheckIfIngredientExistsAsync(item, 0))
                     await iService.CreateIngredientAsync(item, 0);
                 await AddIngredientToCocktailAsync(cocktail.Name, item.ToLower(), 0);
             }
@@ -133,8 +131,8 @@ namespace ServiceLayer
 
         public async Task AddIngredientToCocktailAsync(string cocktailName, string ingredientName, byte ingredientPrimary)
         {
-            var cocktail = await dbContext.Cocktails.FirstOrDefaultAsync(p => p.Name == cocktailName);
-            var ingredient = await dbContext.Ingredients.FirstOrDefaultAsync(p => p.Name == ingredientName);
+            var cocktail = await FindCocktailByNameAsync(cocktailName);
+            var ingredient = await iService.GetIngredientByNameTypeAsync(ingredientName,ingredientPrimary);
             var link = new CocktailIngredient()
             {
                 Cocktail = cocktail,
@@ -155,8 +153,8 @@ namespace ServiceLayer
                 .Include(p => p.Bars)
                 .AsQueryable();
 
-            cocktails = cocktails.Where(p => p.Name.ToLower().Contains(keyword.ToLower()) 
-            || p.Ingredients.Any(x=>x.IngredientName.ToLower().Contains(keyword.ToLower())));
+            cocktails = cocktails.Where(p => p.Name.ToLower().Contains(keyword.ToLower())
+            || p.Ingredients.Any(x => x.IngredientName.ToLower().Contains(keyword.ToLower())));
 
             cocktails = cocktails.Skip((page - 1) * pageSize);
             var foundCocktails = await cocktails.ToListAsync();
@@ -168,6 +166,9 @@ namespace ServiceLayer
             foundCocktails = foundCocktails.Take(pageSize).ToList();
             return new Tuple<IList<Cocktail>, bool>(foundCocktails, lastPage);
         }
+
+        public async Task<Cocktail> FindCocktailByNameAsync(string name) =>
+            await dbContext.Cocktails.FirstOrDefaultAsync(p => p.Name.ToLower() == name.ToLower());
 
         public async Task<Tuple<IList<Cocktail>, bool>> FindCocktailsForCatalogAsync(string keyword, int page, int pageSize, int userId)
         {
@@ -214,10 +215,10 @@ namespace ServiceLayer
                     cocktails = cocktails.Where(p => p.Name.ToLower().Contains(keyword.ToLower()));
                     break;
                 case "Bar":
-                    cocktails = cocktails.Where(p => p.Bars.Any(x=>x.BarName.ToLower().Contains(keyword.ToLower())));
+                    cocktails = cocktails.Where(p => p.Bars.Any(x => x.BarName.ToLower().Contains(keyword.ToLower())));
                     break;
                 case "Ingredient":
-                    cocktails = cocktails.Where(p => p.Ingredients.Any(x=>x.IngredientName.ToLower().Contains(keyword.ToLower())));
+                    cocktails = cocktails.Where(p => p.Ingredients.Any(x => x.IngredientName.ToLower().Contains(keyword.ToLower())));
                     break;
             }
 
@@ -294,6 +295,41 @@ namespace ServiceLayer
             var cocktail = await FindCocktailByIdAsync(id);
             cocktail.Hidden = 0;
             await dbContext.SaveChangesAsync();
+        }
+
+        public async Task UpdateCocktailAsync(int id, string name, string description, string[] primaryIngredientsArr, string[] ingredientsArr, byte[] cocktailPhoto)
+        {
+            var cocktail = await FindCocktailByIdAsync(id);
+
+            if (cocktailPhoto != null)
+                cocktail.Photo.CocktailCover = cocktailPhoto;
+            cocktail.Name = name;
+            cocktail.Description = description;
+
+            var oldIngredients = await iService.GetCocktailIngredientsByCocktail(id);
+
+            foreach (var ingredient in oldIngredients)
+            {
+                dbContext.CocktailIngredient.Remove(ingredient);
+            }
+            await dbContext.SaveChangesAsync();
+
+
+
+            foreach (var item in primaryIngredientsArr)
+            {
+                if (!await iService.CheckIfIngredientExistsAsync(item, 1))
+                    await iService.CreateIngredientAsync(item, 1);
+                await AddIngredientToCocktailAsync(cocktail.Name, item.ToLower(), 1);
+            }
+
+            foreach (var item in ingredientsArr)
+            {
+                if (!await iService.CheckIfIngredientExistsAsync(item, 0))
+                    await iService.CreateIngredientAsync(item, 0);
+                await AddIngredientToCocktailAsync(cocktail.Name, item.ToLower(), 0);
+            }
+
         }
     }
 }

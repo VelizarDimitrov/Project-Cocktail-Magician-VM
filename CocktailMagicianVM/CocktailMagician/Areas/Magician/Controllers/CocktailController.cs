@@ -7,6 +7,7 @@ using CocktailMagician.Areas.Magician.Models;
 using CocktailMagician.Models;
 using Data.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.Contracts;
 
@@ -59,7 +60,7 @@ namespace CocktailMagician.Areas.Magician.Controllers
             Tuple<IList<Cocktail>, bool> cocktails;
             var model = new CocktailSearchViewModel()
             {
-                Keyword=keyword==null?"":keyword,
+                Keyword = keyword == null ? "" : keyword,
                 Page = int.Parse(page)
             };
             cocktails = await cocktailService.FindCocktailsForCatalogAsync(model.Keyword, model.Page, int.Parse(pageSize));
@@ -117,18 +118,22 @@ namespace CocktailMagician.Areas.Magician.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditCocktail(string name, string primaryIngredients, string ingredients, string description)
+        public async Task<IActionResult> EditCocktail(string cocktailId, string name, string primaryIngredients, string ingredients, string description)
         {
-            byte[] cocktailPhoto;
-            var file = Request.Form.Files[0];
-            using (var stream = new MemoryStream())
+            byte[] cocktailPhoto = null;
+            IFormFile file;
+            if (Request.Form.Files.Any())
             {
-                await file.CopyToAsync(stream);
-                cocktailPhoto = stream.ToArray();
+                file = Request.Form.Files[0];
+                using (var stream = new MemoryStream())
+                {
+                    await file.CopyToAsync(stream);
+                    cocktailPhoto = stream.ToArray();
+                }
             }
             var primaryIngredientsArr = primaryIngredients.Split(',');
             var ingredientsArr = ingredients.Split(',');
-            await cocktailService.UpdateCocktailAsync(name, description, primaryIngredientsArr, ingredientsArr, cocktailPhoto);
+            await cocktailService.UpdateCocktailAsync(int.Parse(cocktailId), name, description, primaryIngredientsArr, ingredientsArr, cocktailPhoto);
             return Ok();
         }
 

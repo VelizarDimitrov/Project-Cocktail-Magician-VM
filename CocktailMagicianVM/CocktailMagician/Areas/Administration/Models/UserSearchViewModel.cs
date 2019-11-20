@@ -21,4 +21,4 @@ namespace CocktailMagician.Areas.Administration.Models
         public List<UserViewModel> Users { get; set; }
     }
 }
-}
+

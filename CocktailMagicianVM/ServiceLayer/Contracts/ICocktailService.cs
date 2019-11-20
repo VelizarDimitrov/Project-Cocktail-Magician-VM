@@ -21,6 +21,7 @@ namespace ServiceLayer.Contracts
         Task UpdateAverageRatingAsync(int cocktailId);
         Task HideCocktailAsync(int id);
         Task UnhideCocktailAsync(int id);
+        Task UpdateCocktailAsync(int id, string name, string description, string[] primaryIngredientsArr, string[] ingredientsArr, byte[] cocktailPhoto);
         //Task AddCocktailAsync(string name, string[] primaryIngredients, string[] ingredients, string description, byte[] cocktailPhoto);
     }
 }

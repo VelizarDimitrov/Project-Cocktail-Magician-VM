@@ -13,7 +13,10 @@ namespace ServiceLayer.Contracts
         Task<IList<string>> GetAllIngredientNamesAsync();
         Task CreateIngredientAsync(string name, byte primary);
         Task<Ingredient> GetIngredientByNameAsync(string name);
+        Task<Ingredient> GetIngredientByNameTypeAsync(string name, int primary);
         Task<IList<Ingredient>> GetAllMainIngredientsAsync();
         Task<IList<Ingredient>> GetIngredientsByCocktail(int CocktailId);
+        Task<bool> CheckIfIngredientExistsAsync(string name, byte primary);
+        Task<IList<CocktailIngredient>> GetCocktailIngredientsByCocktail(int CocktailId);
     }
 }

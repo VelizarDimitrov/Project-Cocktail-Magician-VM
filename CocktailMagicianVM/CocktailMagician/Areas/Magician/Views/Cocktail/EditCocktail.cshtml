@@ -17,7 +17,7 @@
 
     </div>
     <!-- end hero-header -->
-    @Html.Hidden("RedirectTo", Url.Action("CocktailSearch", "Cocktail"));
+    @Html.Hidden("RedirectTo", Url.Action("Manage", "Cocktail", new { area = "Magician" }));
     <div class="login-container-wrapper">
 
         <div class="container">
@@ -82,7 +82,7 @@
                                                         {
                                                             <input value="@Model.Ingredients[i-1]" class="form-control" placeholder="Ingredient" type="text" id="ingredient-@i">
                                                         }
-                                                        </div>
+                                                    </div>
                                                     <div class="pull-left">
 
                                                         <div class="update-product">

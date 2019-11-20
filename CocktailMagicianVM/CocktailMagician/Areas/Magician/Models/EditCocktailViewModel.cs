@@ -13,7 +13,7 @@ namespace CocktailMagician.Areas.Magician.Models
         {
             Id = cocktail.Id;
             Name = cocktail.Name;
-            Description = Description;
+            Description = cocktail.Description;
             MainIngredients = ingredients.Where(p => p.Primary == 1).Select(p => p.Name).ToList();
             Ingredients = ingredients.Where(p => p.Primary == 0).Select(p => p.Name).ToList();
         }
