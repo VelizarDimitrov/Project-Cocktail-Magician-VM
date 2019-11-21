@@ -1,0 +1,96 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model CocktailMagician.Areas.Magician.Models.IngredientSearchViewModel
+
+@if (!Model.Ingredients.Any())
+{
+    <p>No ingredients found</p>
+}
+<form method="post">
+    <ul class="comment-item">
+        @foreach (var ingredient in Model.Ingredients)
+        {
+
+            <li>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <h4>@ingredient.Name</h4>
+                        </div>
+                        <div class="col-lg-5">
+                            @if (ingredient.Primary == "one")
+                            {
+                                <h6>Primary</h6>
+                            }
+                            else
+                            {
+                                <h6>Not Primary</h6>
+                            }
+                        </div>
+                        @if (ingredient.CocktailCount == 0)
+                        {
+                            <div class="col-lg-3">
+       
+                                <button asp-area="Magician" asp-action="RemoveIngredient" asp-controller="Ingredient" value="@ingredient.Id" name="ingredientId" class="btn btn-primary label label-danger">
+                                    Remove
+                                </button>
+
+                            </div>
+
+                        }
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</form>
+<div hidden="hidden">
+    <input id="current-page" asp-for="Page" value="@Model.Page" />
+    <input id="current-keyword" asp-for="Keyword" value="@Model.Keyword" />
+</div>
+@if (Model.Ingredients.Count != 0)
+{
+    <div class="pager-wrapper">
+
+        <ul class="pager-list">
+            @if (Model.Page != 1)
+            {
+                <li class="paging-nav"><a onclick="changePage(-1)"><i class="fa fa-angle-left"></i></a></li>
+            }
+            <li class="number">
+                <span class="mr-5"><span class="font600">page</span></span>
+            </li>
+            <li class="number">
+                <span class="font600">@Model.Page</span>
+            </li>
+            @if (!Model.LastPage)
+            {
+                <li class="paging-nav"><a onclick="changePage(1)"><i class="fa fa-angle-right"></i></a></li>
+            }
+
+        </ul>
+
+    </div>
+}
+
+<script>
+    function UnhideCocktail(cocktailId) {
+        $.ajax({
+            url: '/magician/cocktail/unhidecocktail',
+            type: "POST",
+            data: { cocktailId: cocktailId },
+            success: function () {
+                changePage(0);
+            }
+        });
+    }
+    function HideCocktail(cocktailId) {
+        $.ajax({
+            url: '/magician/cocktail/hidecocktail',
+            type: "POST",
+            data: { cocktailId: cocktailId },
+            success: function () {
+                changePage(0);
+            }
+        });
+    }
+</script>

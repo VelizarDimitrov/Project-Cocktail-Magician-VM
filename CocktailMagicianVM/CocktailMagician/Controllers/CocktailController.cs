@@ -100,5 +100,6 @@ namespace CocktailMagician.Controllers
             await aService.RemoveCocktailFromFavoritesAsync(int.Parse(cocktailId), userId);
             return Ok();
         }
+
     }
 }
