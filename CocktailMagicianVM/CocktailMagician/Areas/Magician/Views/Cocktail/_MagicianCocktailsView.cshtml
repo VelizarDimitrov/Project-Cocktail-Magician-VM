@@ -5,43 +5,43 @@
 {
     <p>No cocktails found</p>
 }
-<form>
-    <ul class="comment-item">
-        @foreach (var cocktail in Model.Cocktails)
-        {
+<ul class="comment-item">
+    @foreach (var cocktail in Model.Cocktails)
+    {
 
-            <li>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-3">
-                            <h4>@cocktail.Name</h4>
-                        </div>
-                        <div class="col-lg-6">
-                            <h6>@string.Join(", ", cocktail.Ingredients.CocktailIngredients.Select(p => p.IngredientName))</h6>
-                        </div>
-                        <div class="col-lg-2">
-                            <button asp-area="Magician" asp-action="EditCocktail" asp-controller="Cocktail" value="@cocktail.Id" name="cocktailId" class="btn btn-primary label label-danger">
+        <li>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <h4>@cocktail.Name</h4>
+                    </div>
+                    <div class="col-lg-6">
+                        <h6>@string.Join(", ", cocktail.Ingredients.CocktailIngredients.Select(p => p.IngredientName))</h6>
+                    </div>
+                    <div class="col-lg-2">
+                        <form>
+                            <button asp-area="Magician" asp-action="Edit" asp-controller="Cocktail" value="@cocktail.Id" name="cocktailId" class="btn btn-primary label label-danger">
                                 Edit
                             </button>
-                            @if (cocktail.Hidden)
-                            {
-                                <a value="@cocktail.Id" name="cocktailId" onclick="UnhideCocktail(@cocktail.Id)" class="btn btn-primary label label-danger">
-                                    Unhide
-                                </a>
-                            }
-                            else
-                            {
-                                <a value="@cocktail.Id" name="cocktailId" onclick="HideCocktail(@cocktail.Id)" class="btn btn-primary label label-danger">
-                                    Hide
-                                </a>
-                            }
-                        </div>
+                        </form>
+                        @if (cocktail.Hidden)
+                        {
+                            <button value="@cocktail.Id" name="cocktailId" onclick="UnhideCocktail(@cocktail.Id)" class="btn btn-primary label label-danger">
+                                Unhide
+                            </button>
+                        }
+                        else
+                        {
+                            <button value="@cocktail.Id" name="cocktailId" onclick="HideCocktail(@cocktail.Id)" class="btn btn-primary label label-danger">
+                                Hide
+                            </button>
+                        }
                     </div>
                 </div>
-            </li>
-        }
-    </ul>
-</form>
+            </div>
+        </li>
+    }
+</ul>
 <div hidden="hidden">
     <input id="current-page" asp-for="Page" value="@Model.Page" />
     <input id="current-keyword" asp-for="Keyword" value="@Model.Keyword" />
@@ -81,7 +81,7 @@
                 changePage(0);
             }
         });
-        }
+    }
     function HideCocktail(cocktailId) {
         $.ajax({
             url: '/magician/cocktail/hidecocktail',

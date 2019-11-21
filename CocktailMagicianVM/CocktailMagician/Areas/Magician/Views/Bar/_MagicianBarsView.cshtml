@@ -5,46 +5,48 @@
 {
     <p>No bars found</p>
 }
-<form>
-    <ul class="comment-item">
-        @foreach (var bar in Model.Bars)
-        {
 
-            <li>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-3">
-                            <h4>@bar.Name</h4>
-                        </div>
-                        <div class="col-lg-5">
-                            <h6>@bar.City, @bar.Country - @bar.Address</h6>
-                        </div>
-                        <div class="col-lg-3">
+<ul class="comment-item">
+    @foreach (var bar in Model.Bars)
+    {
+
+        <li>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <h4>@bar.Name</h4>
+                    </div>
+                    <div class="col-lg-5">
+                        <h6>@bar.City, @bar.Country - @bar.Address</h6>
+                    </div>
+                    <div class="col-lg-3">
+                        <form>
                             <button asp-area="Magician" asp-action="EditBar" asp-controller="Bar" value="@bar.Id" name="barId" class="btn btn-primary label label-danger">
                                 Edit
                             </button>
                             <button asp-area="Magician" asp-action="EditBarCocktails" asp-controller="Bar" value="@bar.Id" name="barId" class="btn btn-primary label label-danger">
                                 Cocktails
                             </button>
-                            @if (bar.Hidden)
-                            {
-                                <a value="@bar.Id" name="barId" onclick="unhideBar(@bar.Id)" class="btn btn-primary label label-danger">
-                                    Unhide
-                                </a>
-                            }
-                            else
-                            {
-                                <a value="@bar.Id" name="barId" onclick="hideBar(@bar.Id)" class="btn btn-primary label label-danger">
-                                    Hide
-                                </a>
-                            }
-                        </div>
+                        </form>
+                        @if (bar.Hidden)
+                        {
+                            <button value="@bar.Id" name="barId" onclick="unhideBar(@bar.Id)" class="btn btn-primary label label-danger">
+                                Unhide
+                            </button>
+                        }
+                        else
+                        {
+                            <button value="@bar.Id" name="barId" onclick="hideBar(@bar.Id)" class="btn btn-primary label label-danger">
+                                Hide
+                            </button>
+                        }
                     </div>
                 </div>
-            </li>
-        }
-    </ul>
-</form>
+            </div>
+        </li>
+    }
+</ul>
+
 <div hidden="hidden">
     <input id="current-page" asp-for="Page" value="@Model.Page" />
     <input id="current-keyword" asp-for="Keyword" value="@Model.Keyword" />

@@ -115,13 +115,13 @@ namespace ServiceLayer
             await dbContext.CocktailPhotos.AddAsync(cocktailPhoto);
             await dbContext.SaveChangesAsync();
 
-            foreach (var item in primaryIngredients)
+            foreach (var item in primaryIngredients.Where(p=>!String.IsNullOrEmpty(p)))
             {
                 if (!await iService.CheckIfIngredientExistsAsync(item, 1))
                     await iService.CreateIngredientAsync(item, 1);
                 await AddIngredientToCocktailAsync(cocktail.Name, item.ToLower(), 1);
             }
-            foreach (var item in ingredients)
+            foreach (var item in (ingredients ?? new string[0]).Where(p => !String.IsNullOrEmpty(p)))
             {
                 if (!await iService.CheckIfIngredientExistsAsync(item, 0))
                     await iService.CreateIngredientAsync(item, 0);
@@ -176,7 +176,7 @@ namespace ServiceLayer
 
             var cocktails = dbContext.Cocktails
                 .Include(p => p.Ingredients)
-                .Where(p => p.FavoritedBy.Any(x => x.UserId == userId))
+                .Where(p => p.FavoritedBy.Any(x => x.UserId == userId) && p.Hidden==0)
                 .AsQueryable();
 
             cocktails = cocktails.Where(p => p.Name.ToLower().Contains(keyword.ToLower())
@@ -235,12 +235,6 @@ namespace ServiceLayer
                     else
                         cocktails = cocktails.OrderByDescending(p => p.Name);
                     break;
-                case "Ingredient":
-                    if (sortOrder == "Ascending")
-                        cocktails = cocktails.OrderBy(p => p.Ingredients.First().IngredientName);
-                    else
-                        cocktails = cocktails.OrderByDescending(p => p.Ingredients.First().IngredientName);
-                    break;
                 case "Rating":
                     if (sortOrder == "Ascending")
                         cocktails = cocktails.OrderBy(p => p.AverageRating);
@@ -262,19 +256,19 @@ namespace ServiceLayer
             return new Tuple<IList<Cocktail>, bool>(foundCocktails, lastPage);
         }
 
-        public async Task<byte[]> FindCocktailPhotoAsync(int id) =>
-            (await dbContext.CocktailPhotos.FirstOrDefaultAsync(p => p.CocktailId == id)).CocktailCover;
+        public async Task<CocktailPhoto> FindCocktailPhotoAsync(int id) =>
+            await dbContext.CocktailPhotos.FirstOrDefaultAsync(p => p.CocktailId == id);
 
         public async Task<Cocktail> FindCocktailByIdAsync(int id) =>
             await dbContext.Cocktails.Include(p => p.Ingredients).Include(p => p.Bars).Include(p => p.Ratings)
                 .Include(p => p.Comments).Include(p => p.FavoritedBy).FirstOrDefaultAsync(p => p.Id == id);
 
-        public async Task<IList<CocktailComment>> GetCocktailCommentsAsync(int id, int loadNumber)
-        {
-            var comments = await dbContext.CocktailComment.Where(p => p.CocktailId == id).ToListAsync();
-            comments.Reverse();
-            return comments.Take(loadNumber).ToList();
-        }
+        public async Task<IList<CocktailComment>> GetCocktailCommentsAsync(int id, int loadNumber) =>
+            await dbContext.CocktailComment
+                .Where(p => p.CocktailId == id)
+                .OrderByDescending(c => c.CreatedOn)
+                .Take(loadNumber)
+                .ToListAsync();
 
         public async Task UpdateAverageRatingAsync(int cocktailId)
         {
@@ -300,9 +294,10 @@ namespace ServiceLayer
         public async Task UpdateCocktailAsync(int id, string name, string description, string[] primaryIngredientsArr, string[] ingredientsArr, byte[] cocktailPhoto)
         {
             var cocktail = await FindCocktailByIdAsync(id);
+            var photo = await FindCocktailPhotoAsync(id);
 
             if (cocktailPhoto != null)
-                cocktail.Photo.CocktailCover = cocktailPhoto;
+                photo.CocktailCover = cocktailPhoto;
             cocktail.Name = name;
             cocktail.Description = description;
 
@@ -316,14 +311,13 @@ namespace ServiceLayer
 
 
 
-            foreach (var item in primaryIngredientsArr)
+            foreach (var item in primaryIngredientsArr.Where(p => !String.IsNullOrEmpty(p)))
             {
                 if (!await iService.CheckIfIngredientExistsAsync(item, 1))
                     await iService.CreateIngredientAsync(item, 1);
                 await AddIngredientToCocktailAsync(cocktail.Name, item.ToLower(), 1);
             }
-
-            foreach (var item in ingredientsArr)
+            foreach (var item in (ingredientsArr ?? new string[0]).Where(p => !String.IsNullOrEmpty(p)))
             {
                 if (!await iService.CheckIfIngredientExistsAsync(item, 0))
                     await iService.CreateIngredientAsync(item, 0);

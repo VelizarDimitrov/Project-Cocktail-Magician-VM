@@ -9,7 +9,7 @@
         <div class="container">
 
             <ol class="breadcrumb-list">
-                <li><a>Home</a></li>
+                <li><a asp-action="Index" asp-controller="Home">Home</a></li>
                 <li><span>Add Cocktail</span></li>
             </ol>
 
@@ -29,7 +29,7 @@
                     <div class="row">
 
                         <div class="col-sm-6 col-sm-offset-3">
-                            <form asp-area="Magician" asp-action="AddCocktail" asp-controller="Cocktail" method="post" enctype="multipart/form-data" autocomplete="off">
+                            <form id="form" asp-area="Magician" asp-action="AddCocktail" asp-controller="Cocktail" method="post" enctype="multipart/form-data" autocomplete="off">
 
                                 <div class="login-box-wrapper">
 
@@ -45,17 +45,21 @@
 
                                                 <div class="form-group">
                                                     <label>Cocktail Name</label>
-                                                    <input class="form-control" placeholder="Enter name of the cocktail" type="text" id="cocktail-name">
+                                                    <input class="form-control" asp-for="Name" placeholder="Enter name of the cocktail" type="text" id="cocktail-name">
+                                                    <span asp-validation-for="Name" class="text-danger"></span>
                                                 </div>
 
+                                            </div>
+                                            <div hidden="hidden">
+                                                <input asp-for="MainIngString" id="main-ing-list" />
+                                                <input asp-for="IngString" id="ing-list" />
                                             </div>
                                             <div class="col-lg-6">
 
                                                 <label>Primary Ingredient</label>
                                                 <div class="form-group">
                                                     <div class="col-lg-12" style="padding:unset;" id="main-ingredients">
-
-                                                        <input class="form-control" placeholder="Primary ingredient" type="text" id="primary-1">
+                                                        <input class="form-control" oninput="addCocktail()" placeholder="Primary ingredient" type="text" id="primary-1">
                                                     </div>
                                                     <div class="update-product">
                                                         <a title="Add ingredient" onclick="addPrimaryIngredientField()">
@@ -77,7 +81,7 @@
                                                 <label>Ingredient</label>
                                                 <div class="form-group">
                                                     <div class="col-lg-12" style="padding:unset;" id="ingredients">
-                                                        <input class="form-control" placeholder="Ingredient" type="text" id="ingredient-1">
+                                                        
                                                     </div>
                                                     <div class="pull-left">
 
@@ -104,7 +108,8 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Description</label>
-                                                <textarea class="form-control" placeholder="Enter bar description" type="text" rows="8" id="cocktail-description"></textarea>
+                                                <textarea asp-for="Description" class="form-control" placeholder="Enter bar description" type="text" rows="8" id="cocktail-description"></textarea>
+                                                <span asp-validation-for="Description" class="text-danger"></span>
                                             </div>
 
                                         </div>
@@ -114,7 +119,7 @@
                                     </div>
 
                                     <div class="modal-footer text-center">
-                                        <a onclick="addCocktail()" class="btn btn-primary">Add Cocktail</a>
+                                        <button type="submit" id="submit" @*onclick="addCocktail()"*@ class="btn btn-primary">Add Cocktail</button>
                                     </div>
 
                                 </div>
@@ -132,7 +137,7 @@
     </div>
 </div>
 @section Scripts {
-    <script type="text/javascript" src="~/js/CocktailAddAutoComplete.js"></script>
+    <script type="text/javascript" src="~/js/CocktailAdd.js"></script>
     <script>
         const transparency = function () {
             $('body').attr('class', 'not-transparent-header');

@@ -7,10 +7,10 @@ function getIngredients() {
         success: function (result) {
             array = result;
             for (var i = 1; i <= pIngCount; i++) {
-            ingredientsautocomplete(document.getElementById("primary-"+i));
+                ingredientsautocomplete(document.getElementById(`primary-${i}`));
             }
             for (var i = 1; i <= sIngCount; i++) {
-            ingredientsautocomplete(document.getElementById("ingredient-"+i));
+                ingredientsautocomplete(document.getElementById(`ingredient-${i}`));
             }
         }
     });
@@ -48,6 +48,7 @@ function ingredientsautocomplete(inp) {
                 b.addEventListener("click", function (e) {
                     /*insert the value for the autocomplete text field:*/
                     inp.value = this.getElementsByTagName("input")[0].value;
+                    EditCocktail();
                     /*close the list of autocompleted values,
                     (or any other open lists of autocompleted values:*/
                     closeAllLists();
@@ -120,12 +121,12 @@ getIngredients();
 function addPrimaryIngredientField() {
     pIngCount++;
     console.log($("main-ingredients"));
-    $("#main-ingredients").append(`<input class="form-control" placeholder="Primary ingredient" type="text" id="primary-${pIngCount}">`);
+    $("#main-ingredients").append(`<input class="form-control" oninput="EditCocktail()" placeholder="Primary ingredient" type="text" id="primary-${pIngCount}">`);
     ingredientsautocomplete(document.getElementById(`primary-${pIngCount}`));
 }
 function addIngredientField() {
     sIngCount++;
-    $("#ingredients").append(`<input class="form-control" placeholder="Ingredient" type="text" id="ingredient-${sIngCount}">`);
+    $("#ingredients").append(`<input class="form-control" oninput="EditCocktail()" placeholder="Ingredient" type="text" id="ingredient-${sIngCount}">`);
     ingredientsautocomplete(document.getElementById(`ingredient-${sIngCount}`));
 }
 function removePrimaryIngredientField() {
@@ -136,18 +137,18 @@ function removePrimaryIngredientField() {
 }
 
 function removeIngredientField() {
-    if (sIngCount > 1) {
+    if (sIngCount > 0) {
         $(`#ingredient-${sIngCount}`).remove();
         sIngCount--;
     }
 }
 
 function EditCocktail() {
-    var formData = new FormData();
-    var image = document.getElementById('rand').files[0];
-    formData.append('image', image);
-    var cocktailId = $('#cocktail-id').val();
-    let name = $("#cocktail-name").val();
+    //var formData = new FormData();
+    //var image = document.getElementById('rand').files[0];
+    //formData.append('image', image);
+    //var cocktailId = $('#cocktail-id').val();
+    //let name = $("#cocktail-name").val();
     let primaryIngredients = [];
     for (var i = 1; i <= pIngCount; i++) {
         primaryIngredients[i - 1] = $(`#primary-${i}`).val();
@@ -157,24 +158,26 @@ function EditCocktail() {
         ingredients[i - 1] = $(`#ingredient-${i}`).val();
     }
     let description = $("#cocktail-description").val();
+    $('#main-ing-list').val(primaryIngredients);
+    $('#ing-list').val(ingredients);
 
-    formData.append("cocktailId", cocktailId);
-    formData.append("name", name);
-    formData.append("primaryIngredients", primaryIngredients);
-    formData.append("ingredients", ingredients);
-    formData.append("description", description);
+    //formData.append("cocktailId", cocktailId);
+    //formData.append("name", name);
+    //formData.append("primaryIngredients", primaryIngredients);
+    //formData.append("ingredients", ingredients);
+    //formData.append("description", description);
 
-    console.log(formData);
-    $.ajax({
-        url: '/magician/cocktail/editcocktail',
-        type: "POST",
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (result) {
-            var url = $("#RedirectTo").val();
-            console.log(url);
-            window.location.href = url;
-        }
-    });
+    //console.log(formData);
+    //$.ajax({
+    //    url: '/magician/cocktail/editcocktail',
+    //    type: "POST",
+    //    data: formData,
+    //    processData: false,
+    //    contentType: false,
+    //    success: function (result) {
+    //        var url = $("#RedirectTo").val();
+    //        console.log(url);
+    //        window.location.href = url;
+    //    }
+    //});
 }

@@ -1,9 +1,7 @@
 ﻿using Data;
-using Data.Contracts;
 using Data.Models;
 using Microsoft.EntityFrameworkCore;
 using ServiceLayer.Contracts;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,8 +20,6 @@ namespace ServiceLayer
         }
 
         // Non-Async version of methods for Pre-Load
-
-
         public void CreateCity(string cityName, string countryName)
         {
             if (dbContext.Countries.Where(p => p.Name.ToLower() == countryName.ToLower()).Count() == 0)

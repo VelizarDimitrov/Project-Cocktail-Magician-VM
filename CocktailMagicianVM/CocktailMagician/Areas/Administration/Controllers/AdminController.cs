@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CocktailMagician.Areas.Administration.Models;
+using CocktailMagician.Infrastructure.Extensions;
 using CocktailMagician.Models;
 using Data.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -28,7 +29,8 @@ namespace CocktailMagician.Areas.Administration.Controllers
         }
         public async Task<IActionResult> UserSearchResults(string keyword, string page, string pageSize)
         {
-            var userId = int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+            //var userId = int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+            var userId = this.User.GetId();
             Tuple<IList<User>, bool> users;
             var model = new UserSearchViewModel()
             {

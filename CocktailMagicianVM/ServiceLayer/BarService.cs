@@ -19,13 +19,15 @@ namespace ServiceLayer
         private readonly ICountryService countryService;
         private readonly ICityService cityService;
         private readonly ICocktailService cocktailService;
+        private readonly INotificationService nService;
 
-        public BarService(CocktailDatabaseContext dbContext, ICountryService countryService, ICityService cityService, ICocktailService cocktailService)
+        public BarService(CocktailDatabaseContext dbContext, ICountryService countryService, ICityService cityService, ICocktailService cocktailService, INotificationService nService)
         {
             this.dbContext = dbContext;
             this.countryService = countryService;
             this.cityService = cityService;
             this.cocktailService = cocktailService;
+            this.nService = nService;
         }
 
         // Non-Async version of methods for Pre-Load
@@ -113,6 +115,8 @@ namespace ServiceLayer
             };
             await dbContext.BarPhotos.AddAsync(barPhoto);
             await dbContext.SaveChangesAsync();
+
+            await nService.CityNotification(name, cityName);
         }
 
         public async Task<int> BarsCountAsync() =>
@@ -125,13 +129,19 @@ namespace ServiceLayer
             await dbContext.Bars.Where(p => p.City.Name == cityName).Select(p => p.Name).ToListAsync();
 
 
-        public async Task<byte[]> FindBarPhotoAsync(int id) =>
-            (await dbContext.BarPhotos.FirstOrDefaultAsync(p => p.BarId == id)).BarCover;
+        public async Task<BarPhoto> FindBarPhotoAsync(int id) =>
+            await dbContext.BarPhotos.FirstOrDefaultAsync(p => p.BarId == id);
 
         public async Task<Bar> FindBarByIdAsync(int id) =>
-            await dbContext.Bars.Where(p => p.Id == id).Include(p => p.City).Include(p => p.Country).Include(p => p.Ratings)
-                .Include(p => p.Comments).Include(p => p.Cocktails).Include(p => p.FavoritedBy).FirstOrDefaultAsync();
-
+            await dbContext.Bars
+                        .Where(p => p.Id == id)
+                        .Include(p => p.City)
+                        .Include(p => p.Country)
+                        .Include(p => p.Ratings)
+                        .Include(p => p.Comments)
+                        .Include(p => p.Cocktails)
+                        .Include(p => p.FavoritedBy)
+                        .FirstOrDefaultAsync();
 
         public async Task<Tuple<IList<Bar>, bool>> FindBarsForCatalogAsync(string keyword, string keywordCriteria, int page, string selectedOrderBy, string rating, string sortOrder, int pageSize)
         {
@@ -203,7 +213,8 @@ namespace ServiceLayer
             return new Tuple<IList<Bar>, bool>(foundBars, lastPage);
         }
 
-        public async Task<Tuple<IList<Bar>, bool>> FindBarsForCatalogAsync(string keyword, int page, int pageSize, int userId)
+        // rename method and use it from manage and favorite pages 
+        public async Task<Tuple<IList<Bar>, bool>> FindBarsForCatalogAsync(string keyword, int page, int pageSize, int? userId = null)
         {
             bool lastPage = true;
 
@@ -211,8 +222,12 @@ namespace ServiceLayer
                 .Include(p => p.City)
                 .Include(p => p.Country)
                 .Include(p => p.FavoritedBy)
-                .Where(p => p.FavoritedBy.Any(x => x.UserId == userId))
                 .AsQueryable();
+
+            if (userId != null)
+            {
+                bars = bars.Where(p => (p.FavoritedBy.Any(x => x.UserId == userId) && p.Hidden == 0));
+            }
 
             bars = bars.Where(p =>
             p.Name.ToLower().Contains(keyword.ToLower())
@@ -230,38 +245,42 @@ namespace ServiceLayer
             return new Tuple<IList<Bar>, bool>(foundBars, lastPage);
         }
 
-        public async Task<Tuple<IList<Bar>, bool>> FindBarsForCatalogAsync(string keyword, int page, int pageSize)
-        {
-            bool lastPage = true;
+        //public async Task<Tuple<IList<Bar>, bool>> FindBarsForCatalogAsync(string keyword, int page, int pageSize)
+        //{
+        //    bool lastPage = true;
 
-            var bars = dbContext.Bars
-                .Include(p => p.City)
-                .Include(p => p.Country)
-                .AsQueryable();
+        //    var bars = dbContext.Bars
+        //        .Include(p => p.City)
+        //        .Include(p => p.Country)
+        //        .AsQueryable();
 
-            bars = bars.Where(p =>
-            p.Name.ToLower().Contains(keyword.ToLower())
-            || p.Country.Name.ToLower().Contains(keyword.ToLower())
-            || p.City.Name.ToLower().Contains(keyword.ToLower()));
+        //    bars = bars.Where(p =>
+        //    p.Name.ToLower().Contains(keyword.ToLower())
+        //    || p.Country.Name.ToLower().Contains(keyword.ToLower())
+        //    || p.City.Name.ToLower().Contains(keyword.ToLower()));
 
-            bars = bars.Skip((page - 1) * pageSize);
-            var foundBars = await bars.ToListAsync();
+        //    bars = bars.Skip((page - 1) * pageSize);
+        //    var foundBars = await bars.ToListAsync();
 
-            if (foundBars.Count > pageSize)
-            {
-                lastPage = false;
-            }
-            foundBars = foundBars.Take(pageSize).ToList();
-            return new Tuple<IList<Bar>, bool>(foundBars, lastPage);
-        }
+        //    if (foundBars.Count > pageSize)
+        //    {
+        //        lastPage = false;
+        //    }
+        //    foundBars = foundBars.Take(pageSize).ToList();
+        //    return new Tuple<IList<Bar>, bool>(foundBars, lastPage);
+        //}
 
-        public async Task<IList<Bar>> GetNewestBarsAsync()
-        {
-            var bars = await dbContext.Bars.Include(p => p.City).Include(p => p.Country).Include(p => p.Ratings)
-                 .Include(p => p.Comments).Include(p => p.Cocktails).Include(p => p.FavoritedBy).ToListAsync();
-            bars = bars.TakeLast(6).ToList();
-            return bars;
-        }
+        public async Task<IList<Bar>> GetNewestBarsAsync() =>
+            await dbContext.Bars
+                        .Include(p => p.City)
+                        .Include(p => p.Country)
+                        .Include(p => p.Ratings)
+                        .Include(p => p.Comments)
+                        .Include(p => p.Cocktails)
+                        .Include(p => p.FavoritedBy)
+                        .Take(6)
+                        .ToListAsync();
+
         public async Task UpdateAverageRatingAsync(int barId)
         {
             var bar = await FindBarByIdAsync(barId);
@@ -269,30 +288,45 @@ namespace ServiceLayer
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<IList<BarComment>> GetBarCommentsAsync(int barId, int loadNumber)
-        {
-            var comments = await dbContext.BarComment.Where(p => p.BarId == barId).ToListAsync();
-            comments.Reverse();
-            return comments.Take(loadNumber).ToList();
-        }
+        public async Task<IList<BarComment>> GetBarCommentsAsync(int barId, int loadNumber) =>
+        await dbContext.BarComment
+                    .Where(p => p.BarId == barId)
+                    .OrderByDescending(p => p.CreatedOn)
+                    .Take(6)
+                    .ToListAsync();
+
 
         public async Task<Bar> FindBarByNameAsync(string barName) =>
-            await dbContext.Bars.Where(p => p.Name.ToLower() == barName.ToLower()).Include(p => p.City).Include(p => p.Country).Include(p => p.Ratings)
-            .Include(p => p.Comments).Include(p => p.Cocktails).Include(p => p.FavoritedBy)
-            .FirstOrDefaultAsync();
+            await dbContext.Bars
+                            .Where(p => p.Name.ToLower() == barName.ToLower())
+                            .Include(p => p.City)
+                            .Include(p => p.Country)
+                            .Include(p => p.Ratings)
+                            .Include(p => p.Comments)
+                            .Include(p => p.Cocktails)
+                            .Include(p => p.FavoritedBy)
+                            .FirstOrDefaultAsync();
 
         public async Task HideBarAsync(int id)
         {
             var bar = await FindBarByIdAsync(id);
-            bar.Hidden = 1;
-            await dbContext.SaveChangesAsync();
+
+            if (bar != null)
+            {
+                bar.Hidden = 1;
+                await dbContext.SaveChangesAsync();
+            }
         }
 
         public async Task UnhideBarAsync(int id)
         {
             var bar = await FindBarByIdAsync(id);
-            bar.Hidden = 0;
-            await dbContext.SaveChangesAsync();
+
+            if (bar != null)
+            {
+                bar.Hidden = 0;
+                await dbContext.SaveChangesAsync();
+            }
         }
 
         public async Task AddCocktailBarAsync(int barId, int cocktailId)
@@ -300,23 +334,59 @@ namespace ServiceLayer
             var bar = await FindBarByIdAsync(barId);
             var cocktail = await cocktailService.FindCocktailByIdAsync(cocktailId);
 
-            var barCocktail = new BarCocktail()
+            if (bar != null && cocktail != null)
             {
-                Bar = bar,
-                Cocktail = cocktail,
-                CocktailName = cocktail.Name,
-                BarName = bar.Name
-            };
-            await dbContext.BarCocktail.AddAsync(barCocktail);
-            await dbContext.SaveChangesAsync();
+                var barCocktail = new BarCocktail()
+                {
+                    Bar = bar,
+                    Cocktail = cocktail,
+                    CocktailName = cocktail.Name,
+                    BarName = bar.Name
+                };
+                await dbContext.BarCocktail.AddAsync(barCocktail);
+                await dbContext.SaveChangesAsync();
+            }
+            await nService.FavBarNotification(bar.Name, cocktail.Name);
+            await nService.FavCocktailNotification(bar.Name,cocktail.Name,bar.City.Name);
         }
 
         public async Task RemoveCoctailBarAsync(int barId, int cocktailId)
         {
-            var barCocktail = await dbContext.BarCocktail
-                .Where(p => p.BarId == barId && p.CocktailId == cocktailId).FirstOrDefaultAsync();
-            dbContext.BarCocktail.Remove(barCocktail);
+            var barCocktail = await dbContext.BarCocktail.FirstOrDefaultAsync(p => p.BarId == barId && p.CocktailId == cocktailId);
+
+            if (barCocktail != null)
+            {
+                dbContext.BarCocktail.Remove(barCocktail);
+                await dbContext.SaveChangesAsync();
+            }
+        }
+
+        public async Task UpdateBarAsync(int id, string name, string address, string description, string countryName, string cityName, byte[] barPhoto)
+        {
+            var bar = await FindBarByIdAsync(id);
+            if (barPhoto!=null)
+            {
+                var photo = await FindBarPhotoAsync(id);
+                photo.BarCover = barPhoto;
+            }
+
+            bar.Name = name;
+            bar.Address = address;
+            bar.Description = description;
+
+            if (!await countryService.CheckIfCountryExistsAsync(countryName))
+                await countryService.CreateCountryAsync(countryName);
+
+            if (!await cityService.CheckIfCityExistsAsync(cityName))
+                await cityService.CreateCityAsync(cityName, countryName);
+
+            var country = await countryService.GetCountryByNameAsync(countryName);
+            var city = await cityService.GetCityByNameAsync(cityName);
+
+            bar.Country = country;
+            bar.City = city;
             await dbContext.SaveChangesAsync();
+
         }
     }
 }

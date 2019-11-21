@@ -39,22 +39,25 @@ namespace CocktailMagician.Areas.Magician.Controllers
         }
 
         [HttpPost]
+        //[AutoValidateAntiforgeryToken]
         public async Task<IActionResult> AddBar(AddBarViewModel barModel, IFormFile file)
         {
-            byte[] barPhoto;
-            using (var stream = new MemoryStream())
+            if (file != null && this.ModelState.IsValid)
             {
-                await file.CopyToAsync(stream);
-                barPhoto = stream.ToArray();
-            }
-            try
-            {
+                byte[] barPhoto;
+                using (var stream = new MemoryStream())
+                {
+                    await file.CopyToAsync(stream);
+                    barPhoto = stream.ToArray();
+                }
                 await barService.AddBarAsync(barModel.Name, barModel.Address, barModel.Description, barModel.Country, barModel.City, barPhoto);
             }
-            catch
+            else
             {
-                return View("AddBar");
+
+                return View("AddBar", barModel);
             }
+
             return RedirectToAction("BarSearch", "Bar");
         }
 
@@ -63,6 +66,7 @@ namespace CocktailMagician.Areas.Magician.Controllers
             return View("Bars");
         }
 
+        [HttpPost]
         public async Task<IActionResult> BarSearchResults(string keyword, string page, string pageSize)
         {
             Tuple<IList<Bar>, bool> bars;
@@ -71,7 +75,7 @@ namespace CocktailMagician.Areas.Magician.Controllers
                 Keyword = keyword == null ? "" : keyword,
                 Page = int.Parse(page)
             };
-            bars = await barService.FindBarsForCatalogAsync(model.Keyword, model.Page, int.Parse(pageSize));
+            bars = await barService.FindBarsForCatalogAsync(model.Keyword, model.Page, int.Parse(pageSize), null);
 
             foreach (var bar in bars.Item1)
             {
@@ -100,7 +104,7 @@ namespace CocktailMagician.Areas.Magician.Controllers
         public IActionResult EditBarCocktails(string barId)
         {
             var vm = new ManageBarCocktailsViewModel(int.Parse(barId));
-            return View("BarCocktails",vm);
+            return View("BarCocktails", vm);
         }
 
         [HttpPost]
@@ -120,5 +124,32 @@ namespace CocktailMagician.Areas.Magician.Controllers
             await barService.RemoveCoctailBarAsync(bId, cId);
             return Ok();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> EditBar(string barId)
+        {
+            var id = int.Parse(barId);
+            var bar = await barService.FindBarByIdAsync(id);
+            var vm = new EditBarViewModel(bar);
+            return View("EditBar", vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditBar(EditBarViewModel barModel, IFormFile file)
+        {
+            byte[] barPhoto = null;
+            if (file != null && this.ModelState.IsValid)
+            {
+                using (var stream = new MemoryStream())
+                {
+                    await file.CopyToAsync(stream);
+                    barPhoto = stream.ToArray();
+                }
+            }
+
+            await barService.UpdateBarAsync(barModel.Id ,barModel.Name, barModel.Address, barModel.Description, barModel.Country, barModel.City, barPhoto);
+            return RedirectToAction("Manage");
+        }
+
     }
 }

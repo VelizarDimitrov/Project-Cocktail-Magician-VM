@@ -110,7 +110,7 @@ namespace CocktailMagician.Controllers
         {
             var picture = await barService.FindBarPhotoAsync(id);
 
-            return File(picture, "image/png");
+            return File(picture.BarCover, "image/png");
         }
 
         public async Task<IActionResult> GetAllBars(string cityName)

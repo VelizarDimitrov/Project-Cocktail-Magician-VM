@@ -2,6 +2,7 @@
 using Data.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,6 +10,11 @@ namespace CocktailMagician.Areas.Magician.Models
 {
     public class EditCocktailViewModel
     {
+        public EditCocktailViewModel()
+        {
+            MainIngredients = new List<string>();
+            Ingredients = new List<string>();
+        }
         public EditCocktailViewModel(ICocktail cocktail, IList<Ingredient> ingredients)
         {
             Id = cocktail.Id;
@@ -19,10 +25,15 @@ namespace CocktailMagician.Areas.Magician.Models
         }
 
         public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required]
+        public string Description { get; set; }
+        public string IngString { get; set; }
+        [Required]
+        public string MainIngString { get; set; }
         public List<string> MainIngredients { get; set; }
         public List<string> Ingredients { get; set; }
-        public string Description { get; set; }
 
     }
 }

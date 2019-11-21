@@ -30,25 +30,53 @@ namespace CocktailMagician.Areas.Magician.Controllers
 
         public IActionResult AddCocktail()
         {
-
-            return View("AddCocktail");
+            var vm = new AddCocktailViewModel();
+            return View("AddCocktail", vm);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCocktail(string name, string primaryIngredients, string ingredients, string description)
+        public async Task<IActionResult> AddCocktail(AddCocktailViewModel model, IFormFile file)
         {
+            if (!String.IsNullOrWhiteSpace(model.MainIngString))
+                model.MainIngredients = model.MainIngString.Split(',').ToList();
+            else
+                return View("AddCocktail", model);
+
+            if (!this.ModelState.IsValid && model.MainIngredients.All(p => String.IsNullOrWhiteSpace(p)) && file != null)
+            {
+                return View("AddCocktail", model);
+            }
+
             byte[] cocktailPhoto;
-            var file = Request.Form.Files[0];
             using (var stream = new MemoryStream())
             {
                 await file.CopyToAsync(stream);
                 cocktailPhoto = stream.ToArray();
             }
-            var primaryIngredientsArr = primaryIngredients.Split(',');
-            var ingredientsArr = ingredients.Split(',');
-            await cocktailService.CreateCocktailAsync(name, description, primaryIngredientsArr, ingredientsArr, cocktailPhoto);
-            return Ok();
+            await cocktailService.CreateCocktailAsync(model.Name, model.Description, model.MainIngredients.ToArray(), model.IngString == null ? null : model.IngString.Split(','), cocktailPhoto);
+
+            return RedirectToAction("Manage");
         }
+
+        //[HttpPost]
+        //public async Task<IActionResult> CreateCocktail(string name, string primaryIngredients, string ingredients, string description)
+        //{
+        //    if (!Request.Form.Files.Any() || String.IsNullOrEmpty(name) || String.IsNullOrEmpty(primaryIngredients) || String.IsNullOrEmpty(ingredients) || String.IsNullOrEmpty(description))
+        //    {
+        //        throw new ArgumentException();
+        //    }
+        //    byte[] cocktailPhoto;
+        //    var file = Request.Form.Files[0];
+        //    using (var stream = new MemoryStream())
+        //    {
+        //        await file.CopyToAsync(stream);
+        //        cocktailPhoto = stream.ToArray();
+        //    }
+        //    var primaryIngredientsArr = primaryIngredients.Split(',');
+        //    var ingredientsArr = ingredients.Split(',');
+        //    await cocktailService.CreateCocktailAsync(name, description, primaryIngredientsArr, ingredientsArr, cocktailPhoto);
+        //    return Ok();
+        //}
 
         public IActionResult Manage()
         {
@@ -108,7 +136,7 @@ namespace CocktailMagician.Areas.Magician.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditCocktail(string cocktailId)
+        public async Task<IActionResult> Edit(string cocktailId)
         {
             var id = int.Parse(cocktailId);
             var cocktail = await cocktailService.FindCocktailByIdAsync(id);
@@ -118,23 +146,31 @@ namespace CocktailMagician.Areas.Magician.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditCocktail(string cocktailId, string name, string primaryIngredients, string ingredients, string description)
+        public async Task<IActionResult> Edit(EditCocktailViewModel model, IFormFile file)
         {
-            byte[] cocktailPhoto = null;
-            IFormFile file;
-            if (Request.Form.Files.Any())
+            if (!String.IsNullOrWhiteSpace(model.MainIngString))
+                model.MainIngredients = model.MainIngString.Split(',').ToList();
+            else
+                return View("EditCocktail", model);
+
+            if (!this.ModelState.IsValid && model.MainIngredients.All(p => String.IsNullOrWhiteSpace(p)))
             {
-                file = Request.Form.Files[0];
+                return View("EditCocktail", model);
+            }
+
+            byte[] cocktailPhoto = null;
+            if (file != null)
+            {
                 using (var stream = new MemoryStream())
                 {
                     await file.CopyToAsync(stream);
                     cocktailPhoto = stream.ToArray();
                 }
             }
-            var primaryIngredientsArr = primaryIngredients.Split(',');
-            var ingredientsArr = ingredients.Split(',');
-            await cocktailService.UpdateCocktailAsync(int.Parse(cocktailId), name, description, primaryIngredientsArr, ingredientsArr, cocktailPhoto);
-            return Ok();
+            await cocktailService.UpdateCocktailAsync(model.Id, model.Name, model.Description, model.MainIngredients.ToArray(), model.IngString == null ? null : model.IngString.Split(','), cocktailPhoto);
+
+            return RedirectToAction("Manage");
+
         }
 
     }

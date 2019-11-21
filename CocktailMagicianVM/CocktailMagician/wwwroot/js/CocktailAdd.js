@@ -1,5 +1,4 @@
 ﻿var array;
-getIngredients();
 
 function getIngredients() {
     $.ajax({
@@ -45,6 +44,7 @@ function ingredientsautocomplete(inp) {
                 b.addEventListener("click", function (e) {
                     /*insert the value for the autocomplete text field:*/
                     inp.value = this.getElementsByTagName("input")[0].value;
+                    addCocktail();
                     /*close the list of autocompleted values,
                     (or any other open lists of autocompleted values:*/
                     closeAllLists();
@@ -112,61 +112,79 @@ function ingredientsautocomplete(inp) {
 
 
 var pIngCount = 1;
-var sIngCount = 1;
+var sIngCount = 0;
+getIngredients();
+
 function addPrimaryIngredientField() {
     pIngCount++;
     console.log($("main-ingredients"));
-    $("#main-ingredients").append(`<input class="form-control" placeholder="Primary ingredient" type="text" id="primary-${pIngCount}">`);
+    $("#main-ingredients").append(`<input class="form-control" oninput="addCocktail()" placeholder="Primary ingredient" type="text" id="primary-${pIngCount}">`);
     ingredientsautocomplete(document.getElementById(`primary-${pIngCount}`));
 }
+
 function addIngredientField() {
     sIngCount++;
-    $("#ingredients").append(`<input class="form-control" placeholder="Ingredient" type="text" id="ingredient-${sIngCount}">`);
+    $("#ingredients").append(`<input class="form-control" oninput="addCocktail()" placeholder="Ingredient" type="text" id="ingredient-${sIngCount}">`);
     ingredientsautocomplete(document.getElementById(`ingredient-${sIngCount}`));
 }
+
 function removePrimaryIngredientField() {
-    if (pIngCount>1) {
-    $(`#primary-${pIngCount}`).remove();
-    pIngCount--;       
+    if (pIngCount > 1) {
+        $(`#primary-${pIngCount}`).remove();
+        pIngCount--;
     }
 }
 
 function removeIngredientField() {
-    if (sIngCount > 1) {
+    if (sIngCount > 0) {
         $(`#ingredient-${sIngCount}`).remove();
         sIngCount--;
     }
 }
+
+//$('#submit').on('click', function () {
+//    addCocktail();
+
+//    $('#form').submit();
+//});
+
+
 function addCocktail() {
-    var formData = new FormData();
-    var image = document.getElementById('rand').files[0];
-    formData.append('image', image);
-    let name = $("#cocktail-name").val();
+    //var formData = new FormData();
+    //var image = document.getElementById('rand').files[0];
+    //formData.append('image', image);
+    //let name = $("#cocktail-name").val();
     let primaryIngredients = [];
     for (var i = 1; i <= pIngCount; i++) {
-        primaryIngredients[i-1] = $(`#primary-${i}`).val();
+        primaryIngredients[i - 1] = $(`#primary-${i}`).val();
     }
     let ingredients = new Array;
     for (var i = 1; i <= sIngCount; i++) {
-        ingredients[i-1] = $(`#ingredient-${i}`).val();
+        ingredients[i - 1] = $(`#ingredient-${i}`).val();
     }
-    let description = $("#cocktail-description").val();
-    formData.append("name", name);
-    formData.append("primaryIngredients",primaryIngredients);
-    formData.append("ingredients", ingredients);
-    formData.append("description", description);
-    console.log(formData);
-    $.ajax({
-        url: '/magician/cocktail/createcocktail',
-        type: "POST",
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (result) {
-            var url = $("#RedirectTo").val();
-            window.location.href = url;
-        }
-    });
+    $('#main-ing-list').val(primaryIngredients);
+    $('#ing-list').val(ingredients);
+
+    //let description = $("#cocktail-description").val();
+    //formData.append("name", name);
+    //formData.append("primaryIngredients",primaryIngredients);
+    //formData.append("ingredients", ingredients);
+    //formData.append("description", description);
+    //console.log(formData);
+    //$.ajax({
+    //    url: '/magician/cocktail/createcocktail',
+    //    type: "POST",
+    //    data: formData,
+    //    processData: false,
+    //    contentType: false,
+    //    success: function (result) {
+    //        var url = $("#RedirectTo").val();
+    //        window.location.href = url;
+    //    },
+    //    error: function () {
+
+    //    }
+    //});
 }
 
 

@@ -1,5 +1,5 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model CocktailMagician.Areas.Magician.Models.AddBarViewModel
+@model CocktailMagician.Areas.Magician.Models.EditBarViewModel
 <div class="main-wrapper">
 
     <!-- start hero-header -->
@@ -8,8 +8,8 @@
         <div class="container">
 
             <ol class="breadcrumb-list">
-                <li><a asp-action="Index" asp-controller="Home">Home</a></li>
-                <li><span>Add Bar</span></li>
+                <li><a>Home</a></li>
+                <li><span>Edit Bar</span></li>
             </ol>
 
         </div>
@@ -28,12 +28,12 @@
                     <div class="row">
 
                         <div class="col-sm-6 col-sm-offset-3">
-                            <form asp-area="Magician" asp-action="AddBar" asp-controller="Bar" method="post" enctype="multipart/form-data" autocomplete="off">
+                            <form asp-area="Magician" asp-action="EditBar" asp-controller="Bar" method="post" enctype="multipart/form-data" autocomplete="off">
 
                                 <div class="login-box-wrapper">
 
                                     <div class="modal-header">
-                                        <h4 class="modal-title text-center">Create Bar</h4>
+                                        <h4 class="modal-title text-center">Edit Bar</h4>
                                     </div>
 
                                     <div class="modal-body">
@@ -45,7 +45,7 @@
 
                                                 <div class="form-group">
                                                     <label>Bar Name</label>
-                                                    <input class="form-control" asp-for="@Model.Name" placeholder="Enter name of the bar" type="text">
+                                                    <input class="form-control" value="@Model.Name" asp-for="@Model.Name" placeholder="Enter name of the bar" type="text">
                                                     <span asp-validation-for="Name" class="text-danger"></span>
                                                 </div>
 
@@ -55,7 +55,7 @@
 
                                                 <div class="form-group">
                                                     <label>Address</label>
-                                                    <input class="form-control" asp-for="@Model.Address" placeholder="Enter address of the bar" type="text">
+                                                    <input class="form-control" value="@Model.Address" asp-for="@Model.Address" placeholder="Enter address of the bar" type="text">
                                                     <span asp-validation-for="Address" class="text-danger"></span>
                                                 </div>
 
@@ -65,7 +65,7 @@
 
                                                 <div class="form-group">
                                                     <label>Country</label>
-                                                    <input class="form-control" asp-for="@Model.Country" id="CountryInput" oninput="getCities(this.value)" placeholder="Select Country" type="text">
+                                                    <input class="form-control" value="@Model.Country" asp-for="@Model.Country" id="CountryInput" oninput="getCities(this.value)" placeholder="Select Country" type="text">
                                                     <span asp-validation-for="Country" class="text-danger"></span>
                                                 </div>
 
@@ -75,7 +75,7 @@
 
                                                 <div class="form-group">
                                                     <label>City</label>
-                                                    <input class="form-control" asp-for="@Model.City" id="CityInput" placeholder="Select City" type="text">
+                                                    <input class="form-control" value="@Model.City" asp-for="@Model.City" id="CityInput" placeholder="Select City" type="text">
                                                     <span asp-validation-for="City" class="text-danger"></span>
                                                 </div>
 
@@ -90,17 +90,20 @@
 
                                                 <div class="form-group">
                                                     <label>Description</label>
-                                                    <textarea class="form-control" asp-for="@Model.Description" placeholder="Enter bar description" type="text" rows="8"></textarea>
+                                                    <textarea class="form-control" asp-for="@Model.Description" placeholder="Enter bar description" type="text" rows="8">@Model.Description</textarea>
                                                     <span asp-validation-for="Description" class="text-danger"></span>
                                                 </div>
 
+                                            </div>
+                                            <div hidden="hidden">
+                                                <input asp-for="Id" value="@Model.Id" />
                                             </div>
                                         </div>
 
                                     </div>
 
                                     <div class="modal-footer text-center">
-                                        <button type="submit" class="btn btn-primary">Add Bar</button>
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
                                     </div>
 
                                 </div>

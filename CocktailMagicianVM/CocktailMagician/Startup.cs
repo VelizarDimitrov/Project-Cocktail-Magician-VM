@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CocktailMagician.Infrastructure.Extensions;
 using Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -38,6 +39,7 @@ namespace CocktailMagician
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IIngredientService, IngredientService>();
+            services.AddScoped<INotificationService, NotificationService>();
 
             services
                .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -54,12 +56,18 @@ namespace CocktailMagician
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                //app.UseDatabaseErrorPage();
+                //app.UseExceptionHandler("/Error/Index");
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                //app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error/Index");
+                //app.UseHsts();
             }
+
             app.UseHttpsRedirection();
+            //app.UseWrongRouteHandler();
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
@@ -74,6 +82,14 @@ namespace CocktailMagician
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute(
+                    name: "errorpage",
+                    template: "errorPage",
+                    defaults: new { controller = "Error", action = "Index" });
+                routes.MapRoute(
+                    name: "notfound",
+                    template: "404",
+                    defaults: new { controller = "Error", action = "PageNotFound" });
             });
         }
     }

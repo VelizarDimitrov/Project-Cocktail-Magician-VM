@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using CocktailMagician.Infrastructure.Extensions;
 using CocktailMagician.Models;
 using Data.Models;
 using Microsoft.AspNetCore.Http;
@@ -17,6 +18,7 @@ namespace CocktailMagician.Controllers
         private readonly IIngredientService iService;
         private readonly IAccountService aService;
 
+        // Authorize + antiforgery on post forms
         public CocktailController(ICocktailService cocktailService, IIngredientService iService, IAccountService aService)
         {
             this.cocktailService = cocktailService;
@@ -65,7 +67,7 @@ namespace CocktailMagician.Controllers
         public async Task<IActionResult> GetCocktailPhoto(int id)
         {
             var picture = await cocktailService.FindCocktailPhotoAsync(id);
-            return File(picture, "image/png");
+            return File(picture.CocktailCover, "image/png");
         }
 
         [HttpPost]
@@ -87,16 +89,16 @@ namespace CocktailMagician.Controllers
         [HttpPost]
         public async Task<IActionResult> AddCocktailComment(CocktailViewModel vm)
         {
-            var userId = int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+            var userId = this.User.GetId();
             await aService.AddCocktailCommentAsync(vm.Id, vm.CreateComment, userId);
-            var bar = await cocktailService.FindCocktailByIdAsync(vm.Id);
-            var barForView = new CocktailViewModel(bar);
-            return View("CocktailDetails", barForView);
+            var cocktail = await cocktailService.FindCocktailByIdAsync(vm.Id); // do we need this
+            var cocktailForView = new CocktailViewModel(cocktail);
+            return View("CocktailDetails", cocktailForView);
         }
         [HttpPost]
         public async Task<IActionResult> UnFavoriteCocktail(string cocktailId)
         {
-            var userId = int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+            var userId = this.User.GetId();
             await aService.RemoveCocktailFromFavoritesAsync(int.Parse(cocktailId), userId);
             return Ok();
         }
