@@ -108,7 +108,7 @@ namespace CocktailMagician.Controllers
 
         public async Task<IActionResult> CheckIfUsernameAvailable(string username)
         {
-            var user = await aService.FindUserByUserName(username);
+            var user = await aService.FindUserByUserNameAsync(username);
             if (user == null)
             {
                 return Json("available");

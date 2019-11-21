@@ -17,6 +17,7 @@ namespace CLI.Core.AutofacConfig.Modules
             builder.RegisterType<CocktailDatabaseContext>().AsSelf().SingleInstance();
             builder.RegisterType<Hashing>().As<IHashing>().SingleInstance();
             builder.RegisterType<IngredientService>().As<IIngredientService>().SingleInstance();
+            builder.RegisterType<NotificationService>().As<INotificationService>().SingleInstance();
         }
     }
 }

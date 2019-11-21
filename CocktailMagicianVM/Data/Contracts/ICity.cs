@@ -10,7 +10,6 @@ namespace Data.Contracts
         int Id { get; set; }
         string Name { get; set; }
         Country Country { get; set; }
-        ICollection<User> Users { get; set; }
         ICollection<Bar> Bars { get; set; }
     }
 }

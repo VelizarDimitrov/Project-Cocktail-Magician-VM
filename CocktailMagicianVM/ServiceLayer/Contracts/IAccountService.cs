@@ -12,7 +12,7 @@ namespace ServiceLayer.Contracts
         Task AddAccountAsync(string userName, string firstName, string lastName, string password, string accountType, string countryName, string cityName);
        void AddAccount(string userName, string firstName, string lastName, string password, string accountType, string countryName, string cityName);
         Task<User> FindUserWebAsync(string userName, string password);
-        Task<User> FindUserByUserName(string username);
+        Task<User> FindUserByUserNameAsync(string username);
         Task RateBarAsync(int userId, int userRating, int barId);
         Task<User> FindUserByIdAsync(int userId);
         Task AddBarCommentAsync(int id, string createComment, int userId);

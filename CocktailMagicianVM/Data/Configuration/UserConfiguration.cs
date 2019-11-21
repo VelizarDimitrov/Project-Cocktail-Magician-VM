@@ -11,7 +11,7 @@ namespace Data.Configuration
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-
+            builder.HasIndex(p => p.UserName).IsUnique();
         }
     }
 }

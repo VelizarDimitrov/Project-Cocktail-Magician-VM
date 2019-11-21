@@ -16,16 +16,12 @@ namespace ServiceLayer
     public class AccountService : IAccountService
     {
         private readonly IHashing hasher;
-        private readonly ICountryService countryService;
-        private readonly ICityService cityService;
         private readonly IBarService barService;
         private readonly ICocktailService cService;
         private readonly CocktailDatabaseContext dbContext;
-        public AccountService(CocktailDatabaseContext dbContext, IHashing hasher, ICountryService countryService, ICityService cityService, IBarService barService, ICocktailService cService)
+        public AccountService(CocktailDatabaseContext dbContext, IHashing hasher, IBarService barService, ICocktailService cService)
         {
             this.hasher = hasher;
-            this.countryService = countryService;
-            this.cityService = cityService;
             this.barService = barService;
             this.cService = cService;
             this.dbContext = dbContext;
@@ -38,6 +34,12 @@ namespace ServiceLayer
         //}
         public async Task AddAccountAsync(string userName, string firstName, string lastName, string password, string accountType, string countryName, string cityName)
         {
+            if (String.IsNullOrWhiteSpace(userName))
+                throw new ArgumentException("Username cannot be null or empty.");
+            if (String.IsNullOrWhiteSpace(password) || password.Length < 6)
+                throw new ArgumentException("Password is required and must be at least 6 characters long.");
+            if (await this.dbContext.Users.AnyAsync(p => p.UserName == userName))
+                throw new ArgumentException("Username is already taken.");
 
             var user = new User()
             {
@@ -49,7 +51,7 @@ namespace ServiceLayer
                 AccountStatus = "Active",
                 Country = countryName,
                 City = cityName,
-               
+
             };
             await dbContext.Users.AddAsync(user);
             var userPhoto = new UserPhoto()
@@ -61,11 +63,12 @@ namespace ServiceLayer
 
         }
 
-        public async Task<User> FindUserByUserName(string userName)
+        public async Task<User> FindUserByUserNameAsync(string userName)
         {
             var user = await dbContext.Users
                  .Where(p => p.UserName == userName)
                  .FirstOrDefaultAsync();
+            if (user == null) throw new ArgumentNullException("No user found.");
             return user;
         }
 
@@ -97,7 +100,7 @@ namespace ServiceLayer
                 AccountStatus = "Active",
                 Country = countryName,
                 City = cityName,
-                
+
             };
             dbContext.Users.Add(user);
             var userPhoto = new UserPhoto()
@@ -294,7 +297,7 @@ namespace ServiceLayer
             user.Password = hasher.Hash(password);
             await dbContext.SaveChangesAsync();
         }
-        public async Task RemoveBarFromFavoritesAsync(int barId,int userId)
+        public async Task RemoveBarFromFavoritesAsync(int barId, int userId)
         {
 
             var barUser = await dbContext.UserBar.Where(p => (p.BarId == barId && p.UserId == userId)).FirstOrDefaultAsync();
@@ -303,12 +306,12 @@ namespace ServiceLayer
         }
         public async Task RemoveCocktailFromFavoritesAsync(int cocktailId, int userId)
         {
-         
-            var cocktailUser = await dbContext.UserCocktail.Where(p =>( p.CocktailId == cocktailId &&p.UserId==userId)).FirstOrDefaultAsync();
+
+            var cocktailUser = await dbContext.UserCocktail.Where(p => (p.CocktailId == cocktailId && p.UserId == userId)).FirstOrDefaultAsync();
             dbContext.UserCocktail.Remove(cocktailUser);
             await dbContext.SaveChangesAsync();
         }
-       public async Task FavoriteBarAsync(int userId, int barId)
+        public async Task FavoriteBarAsync(int userId, int barId)
         {
             var user = await FindUserByIdAsync(userId);
             var bar = await dbContext.Bars.Where(p => p.Id == barId).FirstOrDefaultAsync();
@@ -324,16 +327,16 @@ namespace ServiceLayer
             dbContext.UserBar.Add(userBar);
             await dbContext.SaveChangesAsync();
         }
-       public async Task<string> CheckForFavoriteBarAsync(int userId, int barId)
+        public async Task<string> CheckForFavoriteBarAsync(int userId, int barId)
         {
             var user = await FindUserByIdAsync(userId);
-            if (user.FavoriteBars.Any(p=>p.BarId==barId))
+            if (user.FavoriteBars.Any(p => p.BarId == barId))
             {
                 return "exist";
             }
             else
             {
-               return "not exist";
+                return "not exist";
             }
         }
         public async Task FavoriteCocktailAsync(int userId, int cocktailId)
@@ -364,12 +367,12 @@ namespace ServiceLayer
                 return "not exist";
             }
         }
-       public async Task<Tuple<IList<User>, bool>> FindUsersForAdminAsync(string keyword, int page, int pageSize)
+        public async Task<Tuple<IList<User>, bool>> FindUsersForAdminAsync(string keyword, int page, int pageSize)
         {
             bool lastPage = true;
 
             var users = dbContext.Users
-            
+
                 .AsQueryable();
 
             users = users.Where(p =>
@@ -387,10 +390,10 @@ namespace ServiceLayer
             foundUsers = foundUsers.Take(pageSize).ToList();
             return new Tuple<IList<User>, bool>(foundUsers, lastPage);
         }
-       public async Task UnFreezeUserAsync(int userId)
+        public async Task UnFreezeUserAsync(int userId)
         {
             var user = await dbContext.Users.Where(p => p.Id == userId).FirstOrDefaultAsync();
-            if (user.AccountStatus=="Frozen")
+            if (user.AccountStatus == "Frozen")
             {
                 user.AccountStatus = "Active";
                 await dbContext.SaveChangesAsync();
@@ -405,7 +408,7 @@ namespace ServiceLayer
                 await dbContext.SaveChangesAsync();
             }
         }
-       public async Task PromoteUserAsync(int userId)
+        public async Task PromoteUserAsync(int userId)
         {
             var user = await dbContext.Users.Where(p => p.Id == userId).FirstOrDefaultAsync();
             if (user.AccountType == "Bar Crawler")

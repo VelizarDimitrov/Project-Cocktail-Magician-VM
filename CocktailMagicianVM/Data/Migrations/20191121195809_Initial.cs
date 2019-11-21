@@ -52,6 +52,27 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UserName = table.Column<string>(nullable: false),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: false),
+                    AccountStatus = table.Column<string>(nullable: true),
+                    AccountType = table.Column<string>(nullable: true),
+                    Country = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: true),
+                    LastLogIn = table.Column<DateTime>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CocktailPhotos",
                 columns: table => new
                 {
@@ -113,175 +134,6 @@ namespace Data.Migrations
                         name: "FK_CocktailIngredient_Ingredients_IngredientId",
                         column: x => x.IngredientId,
                         principalTable: "Ingredients",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Bars",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    Address = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    CityId = table.Column<int>(nullable: true),
-                    CountryId = table.Column<int>(nullable: true),
-                    AverageRating = table.Column<double>(nullable: false),
-                    Hidden = table.Column<byte>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Bars", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Bars_Cities_CityId",
-                        column: x => x.CityId,
-                        principalTable: "Cities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Bars_Countries_CountryId",
-                        column: x => x.CountryId,
-                        principalTable: "Countries",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UserName = table.Column<string>(nullable: false),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: false),
-                    AccountStatus = table.Column<string>(nullable: true),
-                    AccountType = table.Column<string>(nullable: true),
-                    CountryId = table.Column<int>(nullable: true),
-                    Country = table.Column<string>(nullable: true),
-                    CityId = table.Column<int>(nullable: true),
-                    City = table.Column<string>(nullable: true),
-                    LastLogIn = table.Column<DateTime>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Users_Cities_CityId",
-                        column: x => x.CityId,
-                        principalTable: "Cities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Users_Countries_CountryId",
-                        column: x => x.CountryId,
-                        principalTable: "Countries",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BarCocktail",
-                columns: table => new
-                {
-                    BarId = table.Column<int>(nullable: false),
-                    CocktailId = table.Column<int>(nullable: false),
-                    CocktailName = table.Column<string>(nullable: true),
-                    BarName = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BarCocktail", x => new { x.BarId, x.CocktailId });
-                    table.ForeignKey(
-                        name: "FK_BarCocktail_Bars_BarId",
-                        column: x => x.BarId,
-                        principalTable: "Bars",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_BarCocktail_Cocktails_CocktailId",
-                        column: x => x.CocktailId,
-                        principalTable: "Cocktails",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BarPhotos",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    BarCover = table.Column<byte[]>(nullable: true),
-                    BarId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BarPhotos", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_BarPhotos_Bars_BarId",
-                        column: x => x.BarId,
-                        principalTable: "Bars",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BarComment",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Comment = table.Column<string>(nullable: true),
-                    UserId = table.Column<int>(nullable: false),
-                    BarId = table.Column<int>(nullable: false),
-                    BarName = table.Column<string>(nullable: true),
-                    UserUserName = table.Column<string>(nullable: true),
-                    CreatedOn = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BarComment", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_BarComment_Bars_BarId",
-                        column: x => x.BarId,
-                        principalTable: "Bars",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_BarComment_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BarRating",
-                columns: table => new
-                {
-                    UserId = table.Column<int>(nullable: false),
-                    BarId = table.Column<int>(nullable: false),
-                    Rating = table.Column<int>(nullable: false),
-                    BarName = table.Column<string>(nullable: true),
-                    UserName = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BarRating", x => new { x.BarId, x.UserId });
-                    table.ForeignKey(
-                        name: "FK_BarRating_Bars_BarId",
-                        column: x => x.BarId,
-                        principalTable: "Bars",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_BarRating_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -367,32 +219,6 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserBar",
-                columns: table => new
-                {
-                    UserId = table.Column<int>(nullable: false),
-                    BarId = table.Column<int>(nullable: false),
-                    BarName = table.Column<string>(nullable: true),
-                    UserName = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserBar", x => new { x.UserId, x.BarId });
-                    table.ForeignKey(
-                        name: "FK_UserBar_Bars_BarId",
-                        column: x => x.BarId,
-                        principalTable: "Bars",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UserBar_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "UserCocktail",
                 columns: table => new
                 {
@@ -432,6 +258,166 @@ namespace Data.Migrations
                     table.PrimaryKey("PK_UserPhotos", x => x.Id);
                     table.ForeignKey(
                         name: "FK_UserPhotos_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Bars",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    Address = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    CityId = table.Column<int>(nullable: true),
+                    CountryId = table.Column<int>(nullable: true),
+                    AverageRating = table.Column<double>(nullable: false),
+                    Hidden = table.Column<byte>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bars", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Bars_Cities_CityId",
+                        column: x => x.CityId,
+                        principalTable: "Cities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Bars_Countries_CountryId",
+                        column: x => x.CountryId,
+                        principalTable: "Countries",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BarCocktail",
+                columns: table => new
+                {
+                    BarId = table.Column<int>(nullable: false),
+                    CocktailId = table.Column<int>(nullable: false),
+                    CocktailName = table.Column<string>(nullable: true),
+                    BarName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BarCocktail", x => new { x.BarId, x.CocktailId });
+                    table.ForeignKey(
+                        name: "FK_BarCocktail_Bars_BarId",
+                        column: x => x.BarId,
+                        principalTable: "Bars",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BarCocktail_Cocktails_CocktailId",
+                        column: x => x.CocktailId,
+                        principalTable: "Cocktails",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BarComment",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Comment = table.Column<string>(nullable: true),
+                    UserId = table.Column<int>(nullable: false),
+                    BarId = table.Column<int>(nullable: false),
+                    BarName = table.Column<string>(nullable: true),
+                    UserUserName = table.Column<string>(nullable: true),
+                    CreatedOn = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BarComment", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BarComment_Bars_BarId",
+                        column: x => x.BarId,
+                        principalTable: "Bars",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BarComment_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BarPhotos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    BarCover = table.Column<byte[]>(nullable: true),
+                    BarId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BarPhotos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BarPhotos_Bars_BarId",
+                        column: x => x.BarId,
+                        principalTable: "Bars",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BarRating",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(nullable: false),
+                    BarId = table.Column<int>(nullable: false),
+                    Rating = table.Column<int>(nullable: false),
+                    BarName = table.Column<string>(nullable: true),
+                    UserName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BarRating", x => new { x.BarId, x.UserId });
+                    table.ForeignKey(
+                        name: "FK_BarRating_Bars_BarId",
+                        column: x => x.BarId,
+                        principalTable: "Bars",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BarRating_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserBar",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(nullable: false),
+                    BarId = table.Column<int>(nullable: false),
+                    BarName = table.Column<string>(nullable: true),
+                    UserName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserBar", x => new { x.UserId, x.BarId });
+                    table.ForeignKey(
+                        name: "FK_UserBar_Bars_BarId",
+                        column: x => x.BarId,
+                        principalTable: "Bars",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserBar_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -527,14 +513,10 @@ namespace Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_CityId",
+                name: "IX_Users_UserName",
                 table: "Users",
-                column: "CityId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_CountryId",
-                table: "Users",
-                column: "CountryId");
+                column: "UserName",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

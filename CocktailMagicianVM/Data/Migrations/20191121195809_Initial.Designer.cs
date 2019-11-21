@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(CocktailDatabaseContext))]
-    [Migration("20191120195726_Initial")]
+    [Migration("20191121195809_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -311,11 +311,7 @@ namespace Data.Migrations
 
                     b.Property<string>("City");
 
-                    b.Property<int?>("CityId");
-
                     b.Property<string>("Country");
-
-                    b.Property<int?>("CountryId");
 
                     b.Property<string>("FirstName");
 
@@ -331,9 +327,8 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CityId");
-
-                    b.HasIndex("CountryId");
+                    b.HasIndex("UserName")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });
@@ -508,17 +503,6 @@ namespace Data.Migrations
                         .WithMany("Notifications")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Data.Models.User", b =>
-                {
-                    b.HasOne("Data.Models.City")
-                        .WithMany("Users")
-                        .HasForeignKey("CityId");
-
-                    b.HasOne("Data.Models.Country")
-                        .WithMany("Users")
-                        .HasForeignKey("CountryId");
                 });
 
             modelBuilder.Entity("Data.Models.UserBar", b =>

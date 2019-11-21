@@ -28,9 +28,7 @@ namespace Data.Models
         public string Password { get; set; }      
         public string AccountStatus { get; set; }
         public string AccountType { get; set; }
-        public int? CountryId { get; set; }
         public string Country { get; set; }
-        public int? CityId { get; set; }
         public string City { get; set; }
         public UserPhoto UserPhoto { get; set; }
         public ICollection<BarRating> BarRatings { get; set; }

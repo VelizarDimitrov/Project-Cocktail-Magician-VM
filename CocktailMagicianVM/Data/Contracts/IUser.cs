@@ -15,9 +15,7 @@ namespace Data.Contracts
         string AccountStatus { get; set; }
         string AccountType { get; set; }
         DateTime? LastLogIn { get; set; }
-        int? CountryId { get; set; }
         string Country { get; set; }
-        int? CityId { get; set; }
         string City { get; set; }
         UserPhoto UserPhoto { get; set; }
         ICollection<BarRating> BarRatings { get; set; }
