@@ -1,0 +1,109 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model CocktailMagician.Areas.Magician.Models.IngredientViewModel
+
+
+<div class="admin-content-wrapper">
+
+    <div class="admin-section-title">
+
+        <h2>Ingredient Update</h2>
+
+
+    </div>
+
+    <form asp-area="Magician" asp-action="IngredientUpdate" asp-controller="Ingredient" method="post">
+
+        <div class="form-group">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" style="width:200px" oninput="checkIfFree(this.value)" value="@Model.Name" />
+            <span asp-validation-for="Name" class="text-danger" hidden="hidden" id="check-name">Ingredient name already taken !</span>
+        </div>
+        <div class=" form-group">
+            <input type="radio" value="1" name="primary" id="primary-ingredient" />
+            <label>Primary</label>
+        </div>
+        <div class=" form-group">
+            <input type="radio" value="0" name="primary" id="secondary-ingredient" />
+            <label>Secondary</label>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-12 mt-10">
+
+                    <button type="submit" class="btn btn-primary" id="register-button" style="color:floralwhite;">SaveChanges</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div hidden="hidden">
+        <input value="@Model.Id" id="hidden-id" />
+    </div>
+    <div hidden="hidden">
+        <input value="@Model.Name" id="hidden-name" />
+    </div>
+    <div hidden="hidden">
+        <input value="@Model.Primary" id="hidden-primary" />
+    </div>
+</div>
+@section Scripts {
+
+
+    <script>
+        function checkIfFree(ingredientname) {
+            let ingredientId = $("#hidden-id").val();
+            $.ajax({
+                url: '/magician/ingredient/checkifnameavailable',
+                type: "GET",
+                data: { ingredientname: ingredientname },
+                success: function (result) {
+                    const userSpan = $('#check-name');
+                    if (result.length == 2) {
+                        userSpan.text("Unavailable as primary and secondary")
+                        userSpan.removeAttr('hidden');
+                        document.getElementById("register-button").disabled = true;
+                    }
+                    else if (result.length == 1) {
+                        if (result[0] == 'primary') {
+                            userSpan.text("Unavailable as primary")
+                            userSpan.removeAttr('hidden');
+                            $("#secondary-ingredient").prop("checked", true);
+                            document.getElementById("register-button").disabled = false;
+                        }
+                        else {
+                            userSpan.text("Unavailable as secondary")
+                            userSpan.removeAttr('hidden');
+                            $("#primary-ingredient").prop("checked", true);
+                            document.getElementById("register-button").disabled = false;
+                        }
+                    }
+                    else {
+                        $("#secondary-ingredient").prop("checked", true);
+                        $("#primary-ingredient").prop("checked", false);
+                        userSpan.attr('hidden', 'hidden');
+                        document.getElementById("register-button").disabled = false;
+                    }
+                }
+            });
+        }
+        const transparency = function () {
+            $('body').attr('class', 'not-transparent-header');
+            $('footer').attr('class', 'footer-wrapper-area footer-atbottom');
+        }
+        window.onload = transparency;
+        let primary = 0;
+        function checkIfPrimary() {
+            let prime = $("#hidden-primary").val();
+            if (prime == 1) {
+
+                $("#primary-ingredient").prop("checked", true);
+
+            }
+            else {
+
+                $("#secondary-ingredient").prop("checked", true);
+            }
+            primary = prime;
+        }
+            //checkIfPrimary();
+    </script>
+}

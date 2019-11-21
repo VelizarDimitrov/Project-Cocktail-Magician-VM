@@ -17,7 +17,7 @@
                             <h4>@user.UserName</h4>
                         </div>
                         <div class="col-lg-5">
-                            <h6>@user.City, @user.Country - @user.LastLogIn</h6>
+                            <h6>@user.City, @user.Country -last login: @user.LastLogIn</h6>
                         </div>
                         <div class="col-lg-3">
                             @if (user.AccountStatus == "Frozen")
@@ -80,45 +80,3 @@
     </div>
 }
 
-<script>
-    function unFreezeUser(userId) {
-        $.ajax({
-            url: '/administration/admin/unfreezeuser',
-            type: "POST",
-            data: { userId: userId },
-            success: function () {
-                changePage(0);
-            }
-        });
-    }
-    function freezeUser(userId) {
-        $.ajax({
-            url: '/administration/admin/freezeuser',
-            type: "POST",
-            data: { userId: userId },
-            success: function () {
-                changePage(0);
-            }
-        });
-    }
-        function promoteUser(userId) {
-        $.ajax({
-            url: '/administration/admin/promoteuser',
-            type: "POST",
-            data: { userId: userId },
-            success: function () {
-                changePage(0);
-            }
-        });
-    }
-    function demoteUser(userId) {
-        $.ajax({
-            url: '/administration/admin/demoteuser',
-            type: "POST",
-            data: { userId: userId },
-            success: function () {
-                changePage(0);
-            }
-        });
-    }
-</script>

@@ -69,5 +69,42 @@ namespace ServiceLayer
 
         public async Task<IList<CocktailIngredient>> GetCocktailIngredientsByCocktail(int CocktailId) =>
             await dbContext.CocktailIngredient.Where(x => x.CocktailId == CocktailId).ToListAsync();
+       public async Task<Tuple<IList<Ingredient>, bool>> FindIngredientsForCatalogAsync(string keyword, int page, int pageSize)
+        {
+            bool lastPage = true;
+
+            var ingredients = dbContext.Ingredients
+                .Include(p=>p.Cocktails)
+                .AsQueryable();
+
+            ingredients = ingredients.Where(p =>
+            p.Name.ToLower().Contains(keyword.ToLower()));
+
+            ingredients = ingredients.Skip((page - 1) * pageSize);
+            var foundIngredients = await ingredients.ToListAsync();
+
+            if (foundIngredients.Count > pageSize)
+            {
+                lastPage = false;
+            }
+            foundIngredients = foundIngredients.Take(pageSize).ToList();
+            return new Tuple<IList<Ingredient>, bool>(foundIngredients, lastPage);
+        }
+       public async Task<Ingredient> FindIngredientByIdAsync(int id)
+        {
+            var ingredient = await dbContext.Ingredients.Where(p => p.Id == id).FirstOrDefaultAsync();
+            return ingredient;
+        }
+       public async Task<List<Ingredient>> FindIngredientsByNameAsync(string name)
+        {         
+         var ingredients = await dbContext.Ingredients.Where(p => p.Name.ToLower() == name.ToLower()).ToListAsync();
+            return ingredients;          
+        }
+      public async Task RemoveIngredientAsync(int ingredientId)
+        {
+            var ingredient = await dbContext.Ingredients.Where(p => p.Id == ingredientId).FirstOrDefaultAsync();
+            dbContext.Ingredients.Remove(ingredient);
+            await dbContext.SaveChangesAsync();
+        }
     }
 }
