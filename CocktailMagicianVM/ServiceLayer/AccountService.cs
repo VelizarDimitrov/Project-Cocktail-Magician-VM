@@ -152,8 +152,9 @@ namespace ServiceLayer
             }
         }
 
-        public async Task<User> FindUserByIdAsync(int userId) =>
-            await dbContext.Users.Where(p => p.Id == userId)
+        public async Task<User> FindUserByIdAsync(int userId)
+        {
+            var user = await dbContext.Users.Where(p => p.Id == userId)
             .Include(p => p.UserPhoto)
             .Include(p => p.Notifications)
             .Include(p => p.FavoriteCocktails)
@@ -163,6 +164,10 @@ namespace ServiceLayer
             .Include(p => p.BarRatings)
             .Include(p => p.BarComments)
             .FirstOrDefaultAsync();
+            if (user == null) throw new ArgumentNullException("No user found.");
+            return user;
+        }
+            
 
         public async Task AddBarCommentAsync(int id, string createComment, int userId)
         {
@@ -257,8 +262,8 @@ namespace ServiceLayer
             }
         }
 
-        public async Task<byte[]> FindUserAvatar(int userId) =>
-            (await dbContext.UserPhotos.FirstOrDefaultAsync(p => p.UserId == userId)).UserCover;
+        public async Task<UserPhoto> FindUserAvatarAsync(int userId) =>
+            (await dbContext.UserPhotos.FirstOrDefaultAsync(p => p.UserId == userId));
 
         public async Task UpdateProfileAsync(int userId, string userName, string firstName, string lastName, byte[] userPhoto)
         {

@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 namespace CocktailMagician.Services.UnitTests.AccountServiceTests
 {
     [TestClass]
-    public class FindUserByUserName_Should
+    public class FindUserByUserNameAsync_Should
     {
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException), "No user found.")]
-        public async Task ThrowArgumentNullException_NoUserFound()
+        public async Task ThrowArgumentNullException_IncorrectUsername()
         {
             //arrange
             string testUsername1 = "TestName1";
@@ -24,7 +24,7 @@ namespace CocktailMagician.Services.UnitTests.AccountServiceTests
             var mockHasher = new Mock<IHashing>().Object;
             var mockBarService = new Mock<IBarService>().Object;
             var mockCocktailService = new Mock<ICocktailService>().Object;
-            var options = TestUtilities.GetOptions(nameof(ThrowArgumentNullException_NoUserFound));
+            var options = TestUtilities.GetOptions(nameof(ThrowArgumentNullException_IncorrectUsername));
 
             using (var arrangeContext = new CocktailDatabaseContext(options))
             {

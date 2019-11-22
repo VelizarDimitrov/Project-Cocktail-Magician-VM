@@ -44,12 +44,13 @@ namespace CocktailMagician.Controllers
         [HttpGet]
         public async Task<IActionResult> GetProfilePic(int id)
         {
-            var picture = await aService.FindUserAvatar(id);
+            byte[] pic;
+            var picture = await aService.FindUserAvatarAsync(id);
             if (picture == null)
-            {
-                picture = System.IO.File.ReadAllBytes(@"../CocktailMagician/wwwroot/images/default-avatar.jpg");
-            }
-            return File(picture, "image/png");
+                pic = System.IO.File.ReadAllBytes(@"../CocktailMagician/wwwroot/images/default-avatar.jpg");
+            else
+                pic = picture.UserCover;
+            return File(pic, "image/png");
         }
 
         public async Task<IActionResult> UserPage()
