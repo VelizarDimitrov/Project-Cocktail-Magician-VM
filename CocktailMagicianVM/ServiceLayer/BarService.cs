@@ -89,6 +89,10 @@ namespace ServiceLayer
 
         public async Task AddBarAsync(string name, string address, string description, string countryName, string cityName, byte[] barCover)
         {
+            if (String.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("Bar name cannot be null or empty.");
+            if (String.IsNullOrWhiteSpace(address))
+                throw new ArgumentException("Address cannot be null or empty.");
             if (!await countryService.CheckIfCountryExistsAsync(countryName))
                 await countryService.CreateCountryAsync(countryName);
 

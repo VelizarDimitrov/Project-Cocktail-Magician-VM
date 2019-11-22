@@ -26,7 +26,6 @@
     <Folder Include="CountryServiceTests\" />
     <Folder Include="HashingTests\" />
     <Folder Include="IngredientService\" />
-    <Folder Include="BarServiceTests\" />
   </ItemGroup>
 
 </Project>

@@ -8,11 +8,13 @@ namespace CocktailMagician.Services.UnitTests
 {
     class TestUtilities
     {
+
         public static DbContextOptions<CocktailDatabaseContext> GetOptions(string databaseName)
         {
             return new DbContextOptionsBuilder<CocktailDatabaseContext>()
                 .UseInMemoryDatabase(databaseName)
                 .Options;
         }
+     
     }
 }
