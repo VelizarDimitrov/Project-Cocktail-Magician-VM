@@ -167,7 +167,7 @@ namespace ServiceLayer
             if (user == null) throw new ArgumentNullException("No user found.");
             return user;
         }
-            
+
 
         public async Task AddBarCommentAsync(int id, string createComment, int userId)
         {
@@ -304,8 +304,8 @@ namespace ServiceLayer
         }
         public async Task RemoveBarFromFavoritesAsync(int barId, int userId)
         {
-
             var barUser = await dbContext.UserBar.Where(p => (p.BarId == barId && p.UserId == userId)).FirstOrDefaultAsync();
+            if (barUser == null) throw new ArgumentNullException("Could not find bar in list of favorites.");
             dbContext.UserBar.Remove(barUser);
             await dbContext.SaveChangesAsync();
         }
@@ -313,13 +313,14 @@ namespace ServiceLayer
         {
 
             var cocktailUser = await dbContext.UserCocktail.Where(p => (p.CocktailId == cocktailId && p.UserId == userId)).FirstOrDefaultAsync();
+            if (cocktailUser == null) throw new ArgumentNullException("Could not find cocktail in list of favorites.");
             dbContext.UserCocktail.Remove(cocktailUser);
             await dbContext.SaveChangesAsync();
         }
         public async Task FavoriteBarAsync(int userId, int barId)
         {
             var user = await FindUserByIdAsync(userId);
-            var bar = await dbContext.Bars.Where(p => p.Id == barId).FirstOrDefaultAsync();
+            var bar = await barService.FindBarByIdAsync(barId);
             var userBar = new UserBar()
             {
                 UserId = userId,
@@ -347,7 +348,7 @@ namespace ServiceLayer
         public async Task FavoriteCocktailAsync(int userId, int cocktailId)
         {
             var user = await FindUserByIdAsync(userId);
-            var cocktail = await dbContext.Cocktails.Where(p => p.Id == cocktailId).FirstOrDefaultAsync();
+            var cocktail = await cService.FindCocktailByIdAsync(cocktailId);
             var userCocktail = new UserCocktail()
             {
                 UserId = userId,
