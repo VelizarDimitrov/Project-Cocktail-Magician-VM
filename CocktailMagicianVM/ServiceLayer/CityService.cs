@@ -2,6 +2,7 @@
 using Data.Models;
 using Microsoft.EntityFrameworkCore;
 using ServiceLayer.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -41,7 +42,8 @@ namespace ServiceLayer
 
         public async Task CreateCityAsync(string cityName, string countryName)
         {
-
+            if (String.IsNullOrWhiteSpace(cityName))
+                throw new ArgumentException("City name cannot be null or empty.");
             if (!(await countryService.CheckIfCountryExistsAsync(countryName)))
                 await countryService.CreateCountryAsync(countryName);
 
