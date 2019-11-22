@@ -137,6 +137,8 @@ namespace CocktailMagician.Areas.Magician.Controllers
         [HttpPost]
         public async Task<IActionResult> EditBar(EditBarViewModel barModel, IFormFile file)
         {
+            if (!this.ModelState.IsValid)
+                return View("EditBar", barModel);
             byte[] barPhoto = null;
             if (file != null && this.ModelState.IsValid)
             {
