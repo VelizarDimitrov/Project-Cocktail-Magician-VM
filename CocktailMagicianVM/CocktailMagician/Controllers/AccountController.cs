@@ -183,7 +183,7 @@ namespace CocktailMagician.Controllers
                 Keyword = keyword == null ? "" : keyword,
                 Page = int.Parse(page)
             };
-            cocktails = await cocktailService.FindCocktailsForCatalogAsync(model.Keyword, model.Page, int.Parse(pageSize), userId);
+            cocktails = await cocktailService.FindCocktailsForUserAsync(model.Keyword, model.Page, int.Parse(pageSize), userId);
 
             foreach (var cocktail in cocktails.Item1)
             {
