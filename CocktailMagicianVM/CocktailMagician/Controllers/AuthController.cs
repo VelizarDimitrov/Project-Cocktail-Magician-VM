@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using CocktailMagician.Infrastructure.Extensions;
 using CocktailMagician.Models;
 using Data.Models;
 using Microsoft.AspNetCore.Authentication;
@@ -120,7 +121,7 @@ namespace CocktailMagician.Controllers
         }
         public async Task<IActionResult> CheckIfPasswordIsCorrect(string password)
         {
-            var userId = int.Parse(this.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+            var userId = this.User.GetId();
             var validate = await aService.ValidateUserPasswordAsync(userId,password);
             if (validate)
             {
