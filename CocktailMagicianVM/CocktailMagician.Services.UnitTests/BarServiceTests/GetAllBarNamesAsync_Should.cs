@@ -40,6 +40,8 @@ namespace CocktailMagician.Services.UnitTests.BarServiceTests
                 var bars = await sut.GetAllBarNamesAsync();
                 Assert.AreEqual(bars[0],testBarName1);
                 Assert.AreEqual(bars[1], testBarName2);
+              
+
             }
         }
     }

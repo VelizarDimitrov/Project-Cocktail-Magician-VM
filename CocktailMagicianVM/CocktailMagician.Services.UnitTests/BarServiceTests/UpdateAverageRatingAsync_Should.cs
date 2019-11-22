@@ -6,49 +6,51 @@ using ServiceLayer;
 using ServiceLayer.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CocktailMagician.Services.UnitTests.BarServiceTests
 {
     [TestClass]
-    public class GetBarsFromCityAsync_Should
+    public class UpdateAverageRatingAsync_Should
     {
         [TestMethod]
-        public async Task ReturnAllBarNamesFromCityCorrectly()
+
+        public async Task UpdateCorrectlyAverageRating()
         {
             //arrange
-            string cityName = "testCity";
-            string cityName2 = "testCity2";
-            string testBarName1 = "TestName1";
-            string testBarName2 = "TestName2";
+            string barName = "testName";
+            int barId = 12;
+            double oldRating = 2.5;
             var mockCountryService = new Mock<ICountryService>().Object;
             var mockCityService = new Mock<ICityService>().Object;
             var mockCocktailService = new Mock<ICocktailService>().Object;
             var mockNotificationService = new Mock<INotificationService>().Object;
-            var options = TestUtilities.GetOptions(nameof(ReturnAllBarNamesFromCityCorrectly));
+            var options = TestUtilities.GetOptions(nameof(UpdateCorrectlyAverageRating));
 
             using (var arrangeContext = new CocktailDatabaseContext(options))
             {
-                arrangeContext.Cities.Add(new City() { Name = cityName, Id = 1 });
-                arrangeContext.Cities.Add(new City() { Name = cityName2, Id = 2 });
+                arrangeContext.Bars.Add(new Bar() { Name = barName, AverageRating = oldRating, Id = barId }); ;
+                arrangeContext.SaveChanges();
+            }
+            using (var arrangeContext = new CocktailDatabaseContext(options))
+            {
+                arrangeContext.Users.Add(new User { UserName = "test" });
+                arrangeContext.Users.Add(new User { UserName = "test2" });
                 arrangeContext.SaveChanges();
             }
             using (var actContext = new CocktailDatabaseContext(options))
             {
-                actContext.Bars.Add(new Bar() { Name = testBarName1, CityId = 2 }); ;
-                actContext.Bars.Add(new Bar() { Name = testBarName2, CityId = 2 });
+                actContext.BarRating.Add(new BarRating() { Bar = actContext.Bars.First(), User = actContext.Users.First(), Rating = 6 });
+                actContext.BarRating.Add(new BarRating() { Bar = actContext.Bars.First(), User = actContext.Users.Skip(1).First(), Rating = 4 });
                 actContext.SaveChanges();
             }
-
             using (var assertContext = new CocktailDatabaseContext(options))
             {
                 var sut = new BarService(assertContext, mockCountryService, mockCityService, mockCocktailService, mockNotificationService);
-                var bars = await sut.GetBarsFromCityAsync(cityName2);
-                Assert.AreEqual(bars[0], testBarName1);
-                Assert.AreEqual(bars[1], testBarName2);
-                
-
+                await sut.UpdateAverageRatingAsync(barId);
+                Assert.AreNotEqual(oldRating, assertContext.Bars.First().AverageRating);
             }
         }
     }

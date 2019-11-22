@@ -136,16 +136,24 @@ namespace ServiceLayer
         public async Task<BarPhoto> FindBarPhotoAsync(int id) =>
             await dbContext.BarPhotos.FirstOrDefaultAsync(p => p.BarId == id);
 
-        public async Task<Bar> FindBarByIdAsync(int id) =>
-            await dbContext.Bars
-                        .Where(p => p.Id == id)
-                        .Include(p => p.City)
-                        .Include(p => p.Country)
-                        .Include(p => p.Ratings)
-                        .Include(p => p.Comments)
-                        .Include(p => p.Cocktails)
-                        .Include(p => p.FavoritedBy)
-                        .FirstOrDefaultAsync();
+        public async Task<Bar> FindBarByIdAsync(int id)
+        {
+
+            var bar = await dbContext.Bars
+                         .Where(p => p.Id == id)
+                         .Include(p => p.City)
+                         .Include(p => p.Country)
+                         .Include(p => p.Ratings)
+                         .Include(p => p.Comments)
+                         .Include(p => p.Cocktails)
+                         .Include(p => p.FavoritedBy)
+                         .FirstOrDefaultAsync();
+            if (bar==null)
+            {
+                throw new ArgumentNullException("Bar with given Id does not exist.");
+            }
+            return bar;
+        }
 
         public async Task<Tuple<IList<Bar>, bool>> FindBarsForCatalogAsync(string keyword, string keywordCriteria, int page, string selectedOrderBy, string rating, string sortOrder, int pageSize)
         {
@@ -218,7 +226,7 @@ namespace ServiceLayer
         }
 
         // rename method and use it from manage and favorite pages 
-        public async Task<Tuple<IList<Bar>, bool>> FindBarsForCatalogAsync(string keyword, int page, int pageSize, int? userId = null)
+        public async Task<Tuple<IList<Bar>, bool>> FindBarsForUserAsync(string keyword, int page, int pageSize, int? userId = null)
         {
             bool lastPage = true;
 
@@ -274,8 +282,10 @@ namespace ServiceLayer
         //    return new Tuple<IList<Bar>, bool>(foundBars, lastPage);
         //}
 
-        public async Task<IList<Bar>> GetNewestBarsAsync() =>
-            await dbContext.Bars
+        public async Task<IList<Bar>> GetNewestBarsAsync()
+        {
+
+           var bars= await dbContext.Bars
                         .Include(p => p.City)
                         .Include(p => p.Country)
                         .Include(p => p.Ratings)
@@ -284,6 +294,12 @@ namespace ServiceLayer
                         .Include(p => p.FavoritedBy)
                         .Take(6)
                         .ToListAsync();
+            if (!bars.Any())
+            {
+                throw new ArgumentNullException("No bars exist.");
+            }
+            return bars;
+        }
 
         public async Task UpdateAverageRatingAsync(int barId)
         {
@@ -351,7 +367,7 @@ namespace ServiceLayer
                 await dbContext.SaveChangesAsync();
             }
             await nService.FavBarNotification(bar.Name, cocktail.Name);
-            await nService.FavCocktailNotification(bar.Name,cocktail.Name,bar.City.Name);
+            await nService.FavCocktailNotification(bar.Name, cocktail.Name, bar.City.Name);
         }
 
         public async Task RemoveCoctailBarAsync(int barId, int cocktailId)
@@ -368,7 +384,7 @@ namespace ServiceLayer
         public async Task UpdateBarAsync(int id, string name, string address, string description, string countryName, string cityName, byte[] barPhoto)
         {
             var bar = await FindBarByIdAsync(id);
-            if (barPhoto!=null)
+            if (barPhoto != null)
             {
                 var photo = await FindBarPhotoAsync(id);
                 photo.BarCover = barPhoto;

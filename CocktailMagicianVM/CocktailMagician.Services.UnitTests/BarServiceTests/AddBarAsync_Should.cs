@@ -124,9 +124,10 @@ namespace CocktailMagician.Services.UnitTests.BarServiceTests
                 Assert.AreEqual(1, assertContext.Bars.Count());
                 var bar = await assertContext.Bars.FirstOrDefaultAsync(u => u.Name == barName);
                 Assert.IsNotNull(bar);
+              
                 
             }
-
+            
         }
     }
 }

@@ -44,6 +44,8 @@ namespace CocktailMagician.Services.UnitTests.BarServiceTests
                 var sut = new BarService(assertContext, mockCountryService, mockCityService, mockCocktailService, mockNotificationService);
                 var barPhoto = await sut.FindBarPhotoAsync(barId);
                 Assert.AreEqual(assertContext.Bars.First().Photo.BarCover, barPhoto.BarCover);
+             
+
             }
         }
     }

@@ -39,6 +39,8 @@ namespace CocktailMagician.Services.UnitTests.BarServiceTests
                 var sut = new BarService(assertContext, mockCountryService, mockCityService, mockCocktailService, mockNotificationService);
                 var barsCount = await sut.BarsCountAsync();
                 Assert.AreEqual(count, barsCount);
+                
+
             }
         }
     }
