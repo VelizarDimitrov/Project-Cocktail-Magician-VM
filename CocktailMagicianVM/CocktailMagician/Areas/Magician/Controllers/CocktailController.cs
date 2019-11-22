@@ -42,7 +42,7 @@ namespace CocktailMagician.Areas.Magician.Controllers
             else
                 return View("AddCocktail", model);
 
-            if (!this.ModelState.IsValid && model.MainIngredients.All(p => String.IsNullOrWhiteSpace(p)) && file != null)
+            if (!this.ModelState.IsValid || model.MainIngredients.All(p => String.IsNullOrWhiteSpace(p)) || file == null)
             {
                 return View("AddCocktail", model);
             }
@@ -58,26 +58,6 @@ namespace CocktailMagician.Areas.Magician.Controllers
             return RedirectToAction("Manage");
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> CreateCocktail(string name, string primaryIngredients, string ingredients, string description)
-        //{
-        //    if (!Request.Form.Files.Any() || String.IsNullOrEmpty(name) || String.IsNullOrEmpty(primaryIngredients) || String.IsNullOrEmpty(ingredients) || String.IsNullOrEmpty(description))
-        //    {
-        //        throw new ArgumentException();
-        //    }
-        //    byte[] cocktailPhoto;
-        //    var file = Request.Form.Files[0];
-        //    using (var stream = new MemoryStream())
-        //    {
-        //        await file.CopyToAsync(stream);
-        //        cocktailPhoto = stream.ToArray();
-        //    }
-        //    var primaryIngredientsArr = primaryIngredients.Split(',');
-        //    var ingredientsArr = ingredients.Split(',');
-        //    await cocktailService.CreateCocktailAsync(name, description, primaryIngredientsArr, ingredientsArr, cocktailPhoto);
-        //    return Ok();
-        //}
-
         public IActionResult Manage()
         {
             return View("Cocktails");
@@ -91,7 +71,7 @@ namespace CocktailMagician.Areas.Magician.Controllers
                 Keyword = keyword == null ? "" : keyword,
                 Page = int.Parse(page)
             };
-            cocktails = await cocktailService.FindCocktailsForCatalogAsync(model.Keyword, model.Page, int.Parse(pageSize));
+            cocktails = await cocktailService.FindCocktailsForUserAsync(model.Keyword, model.Page, int.Parse(pageSize), null);
 
             foreach (var cocktail in cocktails.Item1)
             {
@@ -109,7 +89,7 @@ namespace CocktailMagician.Areas.Magician.Controllers
                 Page = int.Parse(page),
                 BarId = int.Parse(barId)
             };
-            cocktails = await cocktailService.FindCocktailsForCatalogAsync(model.Keyword, model.Page, int.Parse(pageSize));
+            cocktails = await cocktailService.FindCocktailsForUserAsync(model.Keyword, model.Page, int.Parse(pageSize), null);
 
             foreach (var cocktail in cocktails.Item1)
             {
@@ -153,7 +133,7 @@ namespace CocktailMagician.Areas.Magician.Controllers
             else
                 return View("EditCocktail", model);
 
-            if (!this.ModelState.IsValid && model.MainIngredients.All(p => String.IsNullOrWhiteSpace(p)))
+            if (!this.ModelState.IsValid || model.MainIngredients.All(p => String.IsNullOrWhiteSpace(p)))
             {
                 return View("EditCocktail", model);
             }
