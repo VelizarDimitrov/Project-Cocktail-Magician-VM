@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <Folder Include="NotificationServiceTests\" />
-    <Folder Include="CocktailServiceTests\" />
     <Folder Include="CountryServiceTests\" />
     <Folder Include="HashingTests\" />
     <Folder Include="IngredientService\" />

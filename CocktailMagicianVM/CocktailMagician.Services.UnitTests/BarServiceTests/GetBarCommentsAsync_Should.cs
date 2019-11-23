@@ -17,7 +17,7 @@ namespace CocktailMagician.Services.UnitTests.BarServiceTests
     {
         [TestMethod]
 
-        public async Task Shoud_ReturnCommentsCorrectly()
+        public async Task Shoud_ReturnBarCommentsCorrectly()
         {
             //arrange
             string barName = "testName";
@@ -27,7 +27,7 @@ namespace CocktailMagician.Services.UnitTests.BarServiceTests
             var mockCityService = new Mock<ICityService>().Object;
             var mockCocktailService = new Mock<ICocktailService>().Object;
             var mockNotificationService = new Mock<INotificationService>().Object;
-            var options = TestUtilities.GetOptions(nameof(Shoud_ReturnCommentsCorrectly));
+            var options = TestUtilities.GetOptions(nameof(Shoud_ReturnBarCommentsCorrectly));
 
             using (var arrangeContext = new CocktailDatabaseContext(options))
             {

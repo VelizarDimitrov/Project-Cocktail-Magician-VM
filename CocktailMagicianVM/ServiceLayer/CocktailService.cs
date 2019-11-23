@@ -99,6 +99,14 @@ namespace ServiceLayer
 
         public async Task CreateCocktailAsync(string name, string description, string[] primaryIngredients, string[] ingredients, byte[] photo)
         {
+            if (primaryIngredients==null)
+            {
+                throw new ArgumentNullException("Primary ingredients list cannot be null.");
+            }
+            if (String.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentNullException("Cocktail name cannot be null or whitespace.");
+            }
             var cocktail = new Cocktail()
             {
                 Name = name,
@@ -131,6 +139,10 @@ namespace ServiceLayer
 
         public async Task AddIngredientToCocktailAsync(string cocktailName, string ingredientName, byte ingredientPrimary)
         {
+            if (String.IsNullOrWhiteSpace(cocktailName))
+            {
+                throw new ArgumentNullException("Cocktail name cannot be null or whitespace.");
+            }
             var cocktail = await FindCocktailByNameAsync(cocktailName);
             var ingredient = await iService.GetIngredientByNameTypeAsync(ingredientName, ingredientPrimary);
             var link = new CocktailIngredient()
