@@ -39,7 +39,7 @@ namespace CocktailMagician.Services.UnitTests.CocktailServiceTests
          .Returns(Task.FromResult(new Ingredient() { Name = primaryIngredients[0], Primary = 1,Id =ingredientId }));
             mockIngredientService.Setup(p => p.GetIngredientByNameTypeAsync(primaryIngredients[0], 0))
          .Returns(Task.FromResult(new Ingredient() { Name = primaryIngredients[0], Primary = 0, Id = ingredientId2 }));
-            mockIngredientService.Setup(p => p.GetCocktailIngredientsByCocktail(cocktailId))
+            mockIngredientService.Setup(p => p.GetCocktailIngredientsByCocktailAsync(cocktailId))
         .Returns(Task.FromResult(testList));
             var options = TestUtilities.GetOptions(nameof(Should_UpdateCocktailCorrectly));
             using (var arrangeContext = new CocktailDatabaseContext(options))

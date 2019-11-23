@@ -120,7 +120,7 @@ namespace ServiceLayer
             await dbContext.BarPhotos.AddAsync(barPhoto);
             await dbContext.SaveChangesAsync();
 
-            await nService.CityNotification(name, cityName);
+            await nService.CityNotificationAsync(name, cityName);
         }
 
         public async Task<int> BarsCountAsync() =>
@@ -366,8 +366,8 @@ namespace ServiceLayer
                 await dbContext.BarCocktail.AddAsync(barCocktail);
                 await dbContext.SaveChangesAsync();
             }
-            await nService.FavBarNotification(bar.Name, cocktail.Name);
-            await nService.FavCocktailNotification(bar.Name, cocktail.Name, bar.City.Name);
+            await nService.FavBarNotificationAsync(bar.Name, cocktail.Name);
+            await nService.FavCocktailNotificationAsync(bar.Name, cocktail.Name, bar.City.Name);
         }
 
         public async Task RemoveCoctailBarAsync(int barId, int cocktailId)

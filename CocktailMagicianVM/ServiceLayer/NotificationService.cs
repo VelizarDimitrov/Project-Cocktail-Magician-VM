@@ -20,7 +20,7 @@ namespace ServiceLayer
             this.dbContext = dbContext;
         }
 
-        public async Task CityNotification(string barName, string cityName)
+        public async Task CityNotificationAsync(string barName, string cityName)
         {
             var users = await dbContext.Users.Where(p => p.City.ToLower() == cityName.ToLower()).ToListAsync();
             foreach (var user in users)
@@ -36,7 +36,7 @@ namespace ServiceLayer
             }
         }
 
-        public async Task FavBarNotification(string barName, string cocktailName)
+        public async Task FavBarNotificationAsync(string barName, string cocktailName)
         {
             var users = await dbContext.Users
                 .Where(p => p.FavoriteBars.Any(x=>x.BarName.ToLower()==barName.ToLower()))
@@ -55,7 +55,7 @@ namespace ServiceLayer
             }
         }
 
-        public async Task FavCocktailNotification(string barName, string cocktailName, string cityName)
+        public async Task FavCocktailNotificationAsync(string barName, string cocktailName, string cityName)
         {
             var users = await dbContext.Users
                 .Where(p=>p.FavoriteCocktails

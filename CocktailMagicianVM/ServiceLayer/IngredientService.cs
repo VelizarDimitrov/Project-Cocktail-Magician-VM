@@ -49,8 +49,8 @@ namespace ServiceLayer
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<Ingredient> GetIngredientByNameAsync(string name) =>
-            await dbContext.Ingredients.Where(p => p.Name == name.ToLower()).FirstOrDefaultAsync();
+        //public async Task<Ingredient> GetIngredientByNameAsync(string name) =>
+        //    await dbContext.Ingredients.Where(p => p.Name == name.ToLower()).FirstOrDefaultAsync();
 
         public async Task<IList<Ingredient>> GetAllMainIngredientsAsync() =>
             await dbContext.Ingredients.Where(p => p.Primary == 1).ToListAsync();
@@ -61,13 +61,13 @@ namespace ServiceLayer
         public async Task<Ingredient> GetIngredientByNameTypeAsync(string name, int primary) =>
             await dbContext.Ingredients.FirstOrDefaultAsync(p => (p.Name.ToLower() == name.ToLower() && p.Primary == primary));
 
-        public async Task<IList<Ingredient>> GetIngredientsByCocktail(int CocktailId) =>
+        public async Task<IList<Ingredient>> GetIngredientsByCocktailAsync(int CocktailId) =>
             await dbContext.Ingredients.Include(p => p.Cocktails).Where(p => p.Cocktails.Any(x => x.CocktailId == CocktailId)).ToListAsync();
 
         public async Task<bool> CheckIfIngredientExistsAsync(string name, byte primary) =>
             await dbContext.Ingredients.Where(p => (p.Name.ToLower() == name.ToLower() && p.Primary == primary)).AnyAsync();
 
-        public async Task<IList<CocktailIngredient>> GetCocktailIngredientsByCocktail(int CocktailId) =>
+        public async Task<IList<CocktailIngredient>> GetCocktailIngredientsByCocktailAsync(int CocktailId) =>
             await dbContext.CocktailIngredient.Where(x => x.CocktailId == CocktailId).ToListAsync();
        public async Task<Tuple<IList<Ingredient>, bool>> FindIngredientsForCatalogAsync(string keyword, int page, int pageSize)
         {

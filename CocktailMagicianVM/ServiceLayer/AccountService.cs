@@ -311,7 +311,6 @@ namespace ServiceLayer
         }
         public async Task RemoveCocktailFromFavoritesAsync(int cocktailId, int userId)
         {
-
             var cocktailUser = await dbContext.UserCocktail.Where(p => (p.CocktailId == cocktailId && p.UserId == userId)).FirstOrDefaultAsync();
             if (cocktailUser == null) throw new ArgumentNullException("Could not find cocktail in list of favorites.");
             dbContext.UserCocktail.Remove(cocktailUser);
@@ -335,8 +334,7 @@ namespace ServiceLayer
         }
         public async Task<string> CheckForFavoriteBarAsync(int userId, int barId)
         {
-            var user = await FindUserByIdAsync(userId);
-            if (user.FavoriteBars.Any(p => p.BarId == barId))
+            if (await dbContext.UserBar.AnyAsync(p => p.BarId == barId && p.UserId == userId))
             {
                 return "exist";
             }
@@ -363,8 +361,7 @@ namespace ServiceLayer
         }
         public async Task<string> CheckForFavoriteCocktailAsync(int userId, int cocktailId)
         {
-            var user = await FindUserByIdAsync(userId);
-            if (user.FavoriteCocktails.Any(p => p.CocktailId == cocktailId))
+            if (await dbContext.UserCocktail.AnyAsync(p => p.CocktailId == cocktailId && p.UserId == userId))
             {
                 return "exist";
             }
@@ -378,7 +375,6 @@ namespace ServiceLayer
             bool lastPage = true;
 
             var users = dbContext.Users
-
                 .AsQueryable();
 
             users = users.Where(p =>
@@ -398,7 +394,7 @@ namespace ServiceLayer
         }
         public async Task UnFreezeUserAsync(int userId)
         {
-            var user = await dbContext.Users.Where(p => p.Id == userId).FirstOrDefaultAsync();
+            var user = await FindUserByIdAsync(userId);
             if (user.AccountStatus == "Frozen")
             {
                 user.AccountStatus = "Active";
@@ -407,7 +403,7 @@ namespace ServiceLayer
         }
         public async Task FreezeUserAsync(int userId)
         {
-            var user = await dbContext.Users.Where(p => p.Id == userId).FirstOrDefaultAsync();
+            var user = await FindUserByIdAsync(userId);
             if (user.AccountStatus == "Active")
             {
                 user.AccountStatus = "Frozen";
@@ -416,7 +412,7 @@ namespace ServiceLayer
         }
         public async Task PromoteUserAsync(int userId)
         {
-            var user = await dbContext.Users.Where(p => p.Id == userId).FirstOrDefaultAsync();
+            var user = await FindUserByIdAsync(userId);
             if (user.AccountType == "Bar Crawler")
             {
                 user.AccountType = "Cocktail Magician";
@@ -425,7 +421,7 @@ namespace ServiceLayer
         }
         public async Task DemoteUserAsync(int userId)
         {
-            var user = await dbContext.Users.Where(p => p.Id == userId).FirstOrDefaultAsync();
+            var user = await FindUserByIdAsync(userId);
             if (user.AccountType == "Cocktail Magician")
             {
                 user.AccountType = "Bar Crawler";

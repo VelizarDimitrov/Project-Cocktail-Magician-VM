@@ -20,9 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="NotificationServiceTests\" />
     <Folder Include="HashingTests\" />
-    <Folder Include="IngredientService\" />
   </ItemGroup>
 
 </Project>

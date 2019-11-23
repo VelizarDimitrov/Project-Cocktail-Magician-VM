@@ -319,7 +319,7 @@ namespace ServiceLayer
             cocktail.Name = name;
             cocktail.Description = description;
 
-            var oldIngredients = await iService.GetCocktailIngredientsByCocktail(id);
+            var oldIngredients = await iService.GetCocktailIngredientsByCocktailAsync(id);
 
             foreach (var ingredient in oldIngredients)
             {

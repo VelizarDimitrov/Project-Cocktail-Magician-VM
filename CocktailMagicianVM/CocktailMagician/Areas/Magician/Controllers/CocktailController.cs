@@ -120,7 +120,7 @@ namespace CocktailMagician.Areas.Magician.Controllers
         {
             var id = int.Parse(cocktailId);
             var cocktail = await cocktailService.FindCocktailByIdAsync(id);
-            var ingredients = await iService.GetIngredientsByCocktail(id);
+            var ingredients = await iService.GetIngredientsByCocktailAsync(id);
             var vm = new EditCocktailViewModel(cocktail, ingredients);
             return View("EditCocktail", vm);
         }

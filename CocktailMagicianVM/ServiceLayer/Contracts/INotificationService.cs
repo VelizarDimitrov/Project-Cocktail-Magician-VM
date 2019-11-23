@@ -7,8 +7,8 @@ namespace ServiceLayer.Contracts
 {
     public interface INotificationService
     {
-        Task FavBarNotification(string barName, string cocktailName);
-        Task CityNotification(string barName, string cityName);
-        Task FavCocktailNotification(string barName, string cocktailName, string cityName);
+        Task FavBarNotificationAsync(string barName, string cocktailName);
+        Task CityNotificationAsync(string barName, string cityName);
+        Task FavCocktailNotificationAsync(string barName, string cocktailName, string cityName);
     }
 }
