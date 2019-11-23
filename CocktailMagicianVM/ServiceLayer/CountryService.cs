@@ -40,6 +40,10 @@ namespace ServiceLayer
 
         public async Task CreateCountryAsync(string countryName)
         {
+            if (string.IsNullOrWhiteSpace(countryName))
+            {
+                throw new ArgumentNullException("Country name cannot be null or whitespace.");
+            }
             if (!(await CheckIfCountryExistsAsync(countryName)))
             {
                 var country1 = new Country()

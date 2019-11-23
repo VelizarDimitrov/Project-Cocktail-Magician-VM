@@ -32,10 +32,7 @@ namespace CocktailMagician.Services.UnitTests.CityServiceTests
             using (var assertContext = new CocktailDatabaseContext(options))
             {
                 var sut = new CityService(assertContext, mockCountryService.Object);
-                await sut.CreateCityAsync(cityName, countryName);
-            }
-            using (var assertContext = new CocktailDatabaseContext(options))
-            {
+                await sut.CreateCityAsync(cityName, countryName);          
                 Assert.AreEqual(1, assertContext.Cities.Count());
                 var city = await assertContext.Cities.FirstOrDefaultAsync(u => u.Name == cityName);
                 Assert.IsNotNull(city);
