@@ -37,7 +37,7 @@ namespace ServiceLayer
                 item.PhotoPath = @"../../../../Data/SolutionPreload/CocktailPhotos/" + String.Join('-', item.Name.Split(" ")).ToLower() + ".jpg";
             }
 
-            if (dbContext.Cocktails.Count() == 0)
+            if (true)
             {
                 foreach (var item in listOfDrinks)
                 {
