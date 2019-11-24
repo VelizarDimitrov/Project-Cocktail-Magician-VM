@@ -18,21 +18,21 @@
                     <div class="col-lg-6">
                         <h6>@string.Join(", ", cocktail.Ingredients.CocktailIngredients.Select(p => p.IngredientName))</h6>
                     </div>
-                    <div class="col-lg-2">
+                    <div class="col-lg-1">
                         <form>
-                            <button asp-area="Magician" asp-action="Edit" asp-controller="Cocktail" value="@cocktail.Id" name="cocktailId" class="btn btn-primary label label-danger">
+                            <button asp-area="Magician" asp-action="Edit" asp-controller="Cocktail" value="@cocktail.Id" name="cocktailId" class="btn btn-primary label label-danger" style="width:-webkit-fill-available;">
                                 Edit
                             </button>
                         </form>
                         @if (cocktail.Hidden)
                         {
-                            <button value="@cocktail.Id" name="cocktailId" onclick="UnhideCocktail(@cocktail.Id)" class="btn btn-primary label label-danger">
+                            <button value="@cocktail.Id" name="cocktailId" onclick="UnhideCocktail(@cocktail.Id)" class="btn btn-primary label label-danger" style="width:-webkit-fill-available;">
                                 Unhide
                             </button>
                         }
                         else
                         {
-                            <button value="@cocktail.Id" name="cocktailId" onclick="HideCocktail(@cocktail.Id)" class="btn btn-primary label label-danger">
+                            <button value="@cocktail.Id" name="cocktailId" onclick="HideCocktail(@cocktail.Id)" class="btn btn-primary label label-danger" style="width:-webkit-fill-available;">
                                 Hide
                             </button>
                         }

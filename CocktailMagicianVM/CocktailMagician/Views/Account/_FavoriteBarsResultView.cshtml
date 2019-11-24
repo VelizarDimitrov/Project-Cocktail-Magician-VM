@@ -17,12 +17,12 @@
                             <h6>@bar.City, @bar.Country - @bar.Address</h6>
                         </div>
                         <div class="col-lg-3">
-                            <button  value="@bar.Id" onclick="unFavorite(this.value)" class="btn btn-primary label label-danger">
+                            <button  value="@bar.Id" onclick="unFavorite(this.value)" class="btn btn-primary label label-danger" style="width:-webkit-fill-available;">
                                 Unfavorite
                             </button>
 
                             <form method="post">
-                            <button asp-action="BarDetails" asp-controller="Bar" value="@bar.Id" name="barId" class="btn btn-primary label label-danger">
+                            <button asp-action="BarDetails" asp-controller="Bar" value="@bar.Id" name="barId" class="btn btn-primary label label-danger" style="width:-webkit-fill-available;">
                                 Details
                             </button>
                             </form>

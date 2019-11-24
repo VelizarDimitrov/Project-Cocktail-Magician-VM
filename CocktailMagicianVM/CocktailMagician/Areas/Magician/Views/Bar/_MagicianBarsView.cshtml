@@ -30,15 +30,15 @@
                         </form>
                         @if (bar.Hidden)
                         {
-                            <button value="@bar.Id" name="barId" onclick="unhideBar(@bar.Id)" class="btn btn-primary label label-danger">
+                            <a value="@bar.Id" name="barId" onclick="unhideBar(@bar.Id)" class="btn">
                                 Unhide
-                            </button>
+                            </a>
                         }
                         else
                         {
-                            <button value="@bar.Id" name="barId" onclick="hideBar(@bar.Id)" class="btn btn-primary label label-danger">
+                            <a value="@bar.Id" name="barId" onclick="hideBar(@bar.Id)" class="btn">
                                 Hide
-                            </button>
+                            </a>
                         }
                     </div>
                 </div>

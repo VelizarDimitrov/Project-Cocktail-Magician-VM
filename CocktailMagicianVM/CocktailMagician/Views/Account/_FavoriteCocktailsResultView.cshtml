@@ -18,12 +18,12 @@
                         <h5>@cocktail.ShortDescription</h5>
                     </div>
                     <div class="col-lg-3">
-                        <button value="@cocktail.Id" onclick="unFavorite(this.value)" class="btn btn-primary label label-danger">
+                        <button value="@cocktail.Id" onclick="unFavorite(this.value)" class="btn btn-primary label label-danger" style="width:-webkit-fill-available;">
                             Unfavorite
                         </button>
 
                         <form method="post">
-                            <button asp-action="CocktailDetails" asp-controller="Cocktail" value="@cocktail.Id" name="cocktailId" class="btn btn-primary label label-danger">
+                            <button asp-action="CocktailDetails" asp-controller="Cocktail" value="@cocktail.Id" name="cocktailId" class="btn btn-primary label label-danger" style="width:-webkit-fill-available;">
                                 Details
                             </button>
                         </form>
