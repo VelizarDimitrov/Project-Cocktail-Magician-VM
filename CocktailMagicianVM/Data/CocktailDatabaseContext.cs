@@ -52,7 +52,7 @@ namespace Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=CocktailMagician;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer(@"Data Source=tcp:cocktailmagician.database.windows.net,1433;Initial Catalog=cocktailMagician;User Id=MagicianVM@cocktailmagician.database.windows.net;Password=123abcVM;");
             }
         }
 

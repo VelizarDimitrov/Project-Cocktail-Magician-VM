@@ -21,8 +21,8 @@ namespace CLI.Core
         {
             //aService.AddAccount("Faithless", "Velizar", "Dimitrov", "123321", "Admin", "Italy", "Rome");
             aService.DatabaseUserFill();
-            cService.DatabaseCocktailFill();
-            bService.DatabaseBarFill();
+            //cService.DatabaseCocktailFill();
+            //bService.DatabaseBarFill();
 
         }
     }
