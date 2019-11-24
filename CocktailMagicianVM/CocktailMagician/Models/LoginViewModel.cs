@@ -10,7 +10,9 @@ namespace CocktailMagician.Models
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        [Required]
         public string UserName { get; set; }
+        [Required]
         [MinLength(6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]

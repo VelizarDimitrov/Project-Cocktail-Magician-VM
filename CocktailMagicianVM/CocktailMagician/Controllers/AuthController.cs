@@ -25,7 +25,7 @@ namespace CocktailMagician.Controllers
         public async Task<IActionResult> Login(LoginViewModel vm)
         {
             if (!this.ModelState.IsValid)
-                return BackToHome();
+                return View("Login", vm);
 
             try
             {
@@ -56,7 +56,7 @@ namespace CocktailMagician.Controllers
         public async Task<IActionResult> Register(LoginViewModel vm)
         {
             if (!this.ModelState.IsValid)
-                return BackToHome();
+                return View("Register", vm);
             try
             {
                 await this.aService.AddAccountAsync(vm.UserName, vm.FirstName, vm.LastName, vm.Password, "Bar Crawler", vm.Country, vm.City);
@@ -122,7 +122,7 @@ namespace CocktailMagician.Controllers
         public async Task<IActionResult> CheckIfPasswordIsCorrect(string password)
         {
             var userId = this.User.GetId();
-            var validate = await aService.ValidateUserPasswordAsync(userId,password);
+            var validate = await aService.ValidateUserPasswordAsync(userId, password);
             if (validate)
             {
                 return Json("correct");
