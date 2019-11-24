@@ -50,10 +50,10 @@ namespace Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //if (!optionsBuilder.IsConfigured)
-            //{
+            if (!optionsBuilder.IsConfigured)
+            {
                 optionsBuilder.UseSqlServer(@"Data Source=tcp:cocktailmagician.database.windows.net,1433;Initial Catalog=cocktailMagician;User Id=MagicianVM@cocktailmagician.database.windows.net;Password=123abcVM;");
-            //}
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
