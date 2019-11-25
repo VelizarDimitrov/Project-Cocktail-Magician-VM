@@ -67,7 +67,7 @@ namespace CocktailMagician
             }
 
             app.UseHttpsRedirection();
-            //app.UseWrongRouteHandler();
+            app.UseWrongRouteHandler();
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
