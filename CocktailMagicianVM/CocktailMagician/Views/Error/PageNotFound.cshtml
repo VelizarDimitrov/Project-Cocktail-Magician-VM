@@ -1,8 +1,55 @@
-﻿@{
-    ViewData["Title"] = "PageNotFound";
-}
+﻿<div class="main-wrapper">
 
-<div style="text-align: center">
-    <h2>The requested page is missing</h2>
-    <img src="~/images/PageNotFound.png">
+    <!-- start hero-header -->
+    <div class="breadcrumb-wrapper">
+
+        <div class="container">
+
+            <ol class="breadcrumb-list">
+                <li><a  asp-action="Index" asp-controller="Home">Home</a></li>
+                <li><span>Page not found</span></li>
+            </ol>
+
+        </div>
+
+    </div>
+    <!-- end hero-header -->
+
+    <div class="error-page-wrapper">
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+
+                    <div class="error-404">
+
+                        404
+
+                    </div>
+
+                    <h3>Oops... Page Not Found!</h3>
+
+                    <p>Drink less please.</p>
+
+
+                    <a class="btn btn-primary mt-15"
+                       asp-action="Index" asp-controller="Home">Back to home page</a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 </div>
+<script>
+     const transparency = function () {
+        $('body').attr('class', 'not-transparent-header');
+        $('footer').attr('class', 'footer-wrapper-area footer-atbottom');
+    }
+
+    window.onload = transparency;
+</script>

@@ -37,7 +37,7 @@ namespace ServiceLayer
             string barstoread = File.ReadAllText(@"../../../../Data/SolutionPreload/Bars.json");
             List<BarJson> listOfBars = JsonConvert.DeserializeObject<List<BarJson>>(barstoread);
 
-            if (dbContext.Bars.Count() == 0)
+            if (true)
             {
                 foreach (var item in listOfBars)
                 {
