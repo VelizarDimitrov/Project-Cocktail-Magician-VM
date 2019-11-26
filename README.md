@@ -2,7 +2,7 @@
 
 ## Team "Velizar & Manuel".
 
-![Team Logo](https://i.imgur.com/LumOPGN.jpg)
+![Cover Photo](https://i.imgur.com/LumOPGN.jpg)
 
 ## The Project
 Cocktail Magician allows creation of recipes for innovative, exotic, awesome cocktails and follows their distribution and success in amazing bars.
@@ -43,4 +43,17 @@ Cocktail Magicians can:
 #### Extra Functionality
 Bar Crawlers also can:
 -	Add cocktails or bars in their corresponding favorite lists (i.e. favorite bars, favorite cocktails)
--	
+-	Can change their password and account information (including their profile picture)
+- Can recieve notifications when:
+  - One of their favorite bars has a new cocktail available
+  - One of their favorite cocktails becomes available in a bar in their city
+  - A new bar opens in their city
+
+Added Administrator role:
+- Has the authority to promote and demote users
+- Has the authority to freeze and unfreeze accounts
+
+## Database
+
+### Diagram
+![Database Diagram](https://i.imgur.com/Vz6GIzO.png)
