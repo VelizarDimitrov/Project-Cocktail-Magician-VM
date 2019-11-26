@@ -8,6 +8,10 @@ namespace CocktailMagician.Models
 {
     public class LoginViewModel
     {
+        public LoginViewModel()
+        {
+            lockedMessage = false;
+        }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         [Required]
@@ -19,5 +23,6 @@ namespace CocktailMagician.Models
         public string Password { get; set; }
         public string Country { get; set; }
         public string City { get; set; }
+        public bool lockedMessage { get; set; }
     }
 }

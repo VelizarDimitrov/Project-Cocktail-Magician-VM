@@ -428,5 +428,11 @@ namespace ServiceLayer
                 await dbContext.SaveChangesAsync();
             }
         }
+
+        public async Task<bool> CheckIfAccountFrozen(string username)
+        {
+            var status = await dbContext.Users.Where(p => p.UserName == username).Select(p => p.AccountStatus).FirstOrDefaultAsync();
+            return status == "Frozen" ? true : false;
+        }
     }
 }

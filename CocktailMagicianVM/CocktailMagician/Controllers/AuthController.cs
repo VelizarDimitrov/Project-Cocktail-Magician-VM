@@ -27,6 +27,12 @@ namespace CocktailMagician.Controllers
             if (!this.ModelState.IsValid)
                 return View("Login", vm);
 
+            if (await aService.CheckIfAccountFrozen(vm.UserName))
+            {
+                vm.lockedMessage = true;
+                return View("Login", vm);
+            }
+
             try
             {
                 var user = await this.aService.FindUserWebAsync(vm.UserName, vm.Password);
@@ -44,7 +50,8 @@ namespace CocktailMagician.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            return View();
+            var vm = new LoginViewModel();
+            return View("Login",vm);
         }
         [HttpGet]
         public IActionResult Register()

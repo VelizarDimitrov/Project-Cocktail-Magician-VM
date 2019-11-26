@@ -36,5 +36,6 @@ namespace ServiceLayer.Contracts
         Task FreezeUserAsync(int userId);
         Task PromoteUserAsync(int userId);
         Task DemoteUserAsync(int userId);
+        Task<bool> CheckIfAccountFrozen(string username);
     }
 }

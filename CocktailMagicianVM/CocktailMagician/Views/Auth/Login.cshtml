@@ -58,9 +58,10 @@
                                             <button type="submit" class="btn btn-primary">Sign In</button>&nbsp;
                                             <button type="reset" class="btn btn-primary btn-inverse">Reset</button>
                                         </div>
-                                        <div class="form-group">
-                                            <a href="account-forgot-password-page.html" class="black">Forget Password ?</a>
-                                        </div>
+                                        @if (Model.lockedMessage)
+                                        {
+                                            <span class="text-danger">This account is frozen.</span>
+                                        }
                                     </form>
                                 </div>
                             </div>
