@@ -1,6 +1,6 @@
 # Cocktail Magician
 
-## Team "Velizar & Manuel".
+### Team "Velizar & Manuel"
 
 ![Cover Photo](https://i.imgur.com/LumOPGN.jpg)
 
@@ -53,7 +53,31 @@ Added Administrator role:
 - Has the authority to promote and demote users
 - Has the authority to freeze and unfreeze accounts
 
+## Technologies Used
+### Back-End
+- C# /.NET
+- Entity Framework
+
+### Front-End
+- JavaScript
+- JQuery
+- ASP.NET
+
+### Cloud Service
+- Microsoft Azure
+
 ## Database
 
 ### Diagram
 ![Database Diagram](https://i.imgur.com/Vz6GIzO.png)
+
+
+
+
+## Screenshots
+
+### Desktop
+<img src="https://i.imgur.com/MJeItbc.png" width="50%"/><img src="https://i.imgur.com/IwBSgHG.png" width="50%"/>
+
+### Mobile
+<img src="https://i.imgur.com/FkfGlsn.png" width="33%"/><img src="https://i.imgur.com/li2Ft1O.png" width="33%"/><img src="https://i.imgur.com/qNBJVVc.png" width="33%"/>
