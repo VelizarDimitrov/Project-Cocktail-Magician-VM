@@ -66,13 +66,13 @@ Added Administrator role:
 ### Cloud Service
 - Microsoft Azure
 
+## Kanban Board
+### [Trello](https://trello.com/b/rp8uad81/cocktail-magician)
+
 ## Database
 
 ### Diagram
 ![Database Diagram](https://i.imgur.com/Vz6GIzO.png)
-
-
-
 
 ## Screenshots
 
